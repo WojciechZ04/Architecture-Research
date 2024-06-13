@@ -5,3 +5,11 @@
 	padding: 2rem;
 	margin: 1rem;
 }
+
+.dashboard table {
+	width: 100%;
+}
+
+.centered {
+	text-align: center;
+}
