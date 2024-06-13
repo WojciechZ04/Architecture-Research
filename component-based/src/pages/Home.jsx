@@ -1,10 +1,13 @@
-import React from "react";
+import { Container } from "@mui/material";
+import Dashboard from "../components/Dashboard/Dashboard";
 
 export default function Home() {
-	return (
-		<div>
-			<h1>Home</h1>
-			<p>Welcome to the home page!</p>
-		</div>
-	);
+  return (
+    <Container>
+      <div id="leftColumn">
+		<Dashboard />
+      </div>
+      <div id="rightColumn"></div>
+    </Container>
+  );
 }
