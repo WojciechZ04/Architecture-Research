@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import Tasks from "./pages/Tasks";
 import Navbar from "./components/Navbar";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/projects" element={<Projects />}></Route>
           <Route path="/tasks" element={<Tasks />}></Route>
           <Route path="/" element={<Home />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </Router>
     </div>

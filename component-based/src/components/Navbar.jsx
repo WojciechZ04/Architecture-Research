@@ -22,6 +22,14 @@ export default function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+  const handlePageChange = (page) => {
+    if (page === 'Home') {
+      navigate('/');
+    } else {
+      navigate(`/${page.toLowerCase()}`);
+    }
+  };
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -117,7 +125,7 @@ export default function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={() => navigate(`/${page.toLowerCase()}`)}
+                onClick={() => handlePageChange(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
