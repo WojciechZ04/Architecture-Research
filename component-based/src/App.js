@@ -4,13 +4,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import Tasks from "./pages/Tasks";
-import Header from "./components/Header";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Header />
+        <Navbar />
         <Routes>
           <Route path="/projects" element={<Projects />}></Route>
           <Route path="/tasks" element={<Tasks />}></Route>
