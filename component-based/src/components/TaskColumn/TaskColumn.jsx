@@ -3,7 +3,7 @@ import Task from "./Task/Task";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import Input from "@mui/material/Input";
 import Modal from "@mui/material/Modal";
 
 const style = {
@@ -47,12 +47,11 @@ export default function TaskColumn(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <h2>Create task</h2>
+          <Input placeholder="Task title" />
+          <Input placeholder="Task description" />
+		  <Button onClick={handleClose}>Cancel</Button>
+		  <Button>Create</Button>
         </Box>
       </Modal>
     </div>
