@@ -1,8 +1,12 @@
-export default function Projects () {
+import { Container } from "@mui/material";
+import Project from "../components/Project/Project";
+
+export default function Projects() {
   return (
-	<div>
-	  <h2>Projects</h2>
-	  <p>Projects will go here</p>
-	</div>
-  )
+    <Container>
+      <h1>Projects</h1>
+      <Project />
+	  <Project />
+    </Container>
+  );
 }
