@@ -1,0 +1,17 @@
+:root {
+	--todo: #3d3d3d70;
+	--in-progress: #c7911e9c;
+	--done: #39ff49a1;
+}
+
+.to-do-column {
+	background-color: var(--todo);
+}
+
+.in-progress-column {
+	background-color: var(--in-progress);
+}
+
+.done-column {
+	background-color: var(--done);
+}

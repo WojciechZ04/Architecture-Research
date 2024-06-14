@@ -3,6 +3,8 @@ import Task from "../Task/Task";
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 
+
+//progress bar (to edit)
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
   borderRadius: 5,
@@ -22,7 +24,7 @@ export default function Dashboard() {
         <button>Project 1</button>
         <button>Project 2</button>
       </div>
-      <BorderLinearProgress variant="determinate" value={40} />
+      <BorderLinearProgress variant="determinate" value={40} /> 
       <div>
         <table>
           <thead>

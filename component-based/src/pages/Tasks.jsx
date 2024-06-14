@@ -1,8 +1,15 @@
+import { Container } from "@mui/material";
+import TaskColumn from "../components/TaskColumn/TaskColumn";
+import "./Tasks.css";
+
 export default function Tasks() {
-	  return (
-	<div>
-	  <h2>Tasks</h2>
-	  <p>Tasks will go here</p>
-	</div>
+  return (
+    <Container >
+      <div className="task-columns">
+        <TaskColumn value="To do" />
+        <TaskColumn value="In progress" />
+        <TaskColumn value="Done" />
+      </div>
+    </Container>
   );
 }
