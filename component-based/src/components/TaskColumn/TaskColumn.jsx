@@ -25,21 +25,23 @@ export default function TaskColumn(props) {
 
   const className =
     props.value === "To do"
-      ? "to-do-column"
+      ? "column to-do-column"
       : props.value === "In progress"
-      ? "in-progress-column"
+      ? "column in-progress-column"
       : props.value === "Done"
-      ? "done-column"
-      : "default-column";
+      ? "column done-column"
+      : "column default-column";
 
   return (
     <div className={className}>
-      {props.value}
+      <h2 className="label">{props.value}</h2>
+      <hr />
+      
       {props.tasks.map((task) => (
         <Task key={task.id} task={task} />
       ))}
 
-      <Button onClick={handleOpen}>Open modal</Button>
+      <button className="centered" onClick={handleOpen}>New task</button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -50,8 +52,8 @@ export default function TaskColumn(props) {
           <h2>Create task</h2>
           <Input placeholder="Task title" />
           <Input placeholder="Task description" />
-		  <Button onClick={handleClose}>Cancel</Button>
-		  <Button>Create</Button>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button>Create</Button>
         </Box>
       </Modal>
     </div>

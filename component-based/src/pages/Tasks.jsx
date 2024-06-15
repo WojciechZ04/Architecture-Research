@@ -12,6 +12,7 @@ export default function Tasks(props) {
 
   return (
     <Container >
+      <h1 className="centered">Your Tasks</h1>
       <div className="task-columns">
         <TaskColumn value="To do" tasks={todoTasks}/>
         <TaskColumn value="In progress" tasks={inProgressTasks}/>

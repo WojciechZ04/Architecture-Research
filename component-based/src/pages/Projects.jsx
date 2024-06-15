@@ -4,7 +4,7 @@ import Project from "../components/Project/Project";
 export default function Projects() {
   return (
     <Container>
-      <h1>Projects</h1>
+      <h1 className="centered">Projects</h1>
       <Project />
 	  <Project />
     </Container>
