@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Navbar.css";
 
-const pages = ["Home", "Projects", "Tasks"];
-const settings = ["Profile", "Settings", "Logout"];
+// const pages = ["Home", "Projects", "Tasks"];
+// const settings = ["Profile", "Settings", "Logout"];
 
 export default function ResponsiveAppBar({ setMainMargin }) {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ export default function ResponsiveAppBar({ setMainMargin }) {
   };
 
   return (
+    //edit anchors!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     <div
       id="mySidebar"
       className="sidebar"
@@ -45,33 +47,33 @@ export default function ResponsiveAppBar({ setMainMargin }) {
       onMouseOver={toggleSidebar}
       onMouseLeave={toggleSidebar}
     >
-      <a onClick={() => handlePageChange('Home')}>
+      <div onClick={() => handlePageChange('Home')}>
         <span>
-          <i className="material-icons">info</i>
-          <span className="icon-text">about</span>
+          <i className="material-icons">home</i>
+          <span className="icon-text">Home</span>
         </span>
-      </a>
+      </div>
       <br />
-      <a onClick={() => handlePageChange('Tasks')}>
+      <div onClick={() => handlePageChange('Projects')}>
         <span>
-          <i className="material-icons">spa</i>
-          <span className="icon-text">services</span>
+          <i className="material-icons">folder</i>
+          <span className="icon-text">Projects</span>
         </span>
-      </a>
+      </div>
       <br />
-      <a onClick={() => handlePageChange('Tasks')}>
+      <div onClick={() => handlePageChange('Tasks')}>
         <span>
-          <i className="material-icons">monetization_on</i>
-          <span className="icon-text">clients</span>
+          <i className="material-icons">assignment</i>
+          <span className="icon-text">Tasks</span>
         </span>
-      </a>
+      </div>
       <br />
-      <a onClick={() => handlePageChange('Projects')}>
+      <div onClick={() => handlePageChange('Teams')}>
         <span>
-          <i className="material-icons">email</i>
-          <span className="icon-text">contact</span>
+          <i className="material-icons">people</i>
+          <span className="icon-text">Teams</span>
         </span>
-      </a>
+      </div>
     </div>
   );
 }
