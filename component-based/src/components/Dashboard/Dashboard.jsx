@@ -1,26 +1,30 @@
 import "./Dashboard.css";
-import Task from "../Task/Task";
-import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
-import { styled } from '@mui/material/styles';
+// import Task from "../Task/Task";
+// import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+// import { styled } from '@mui/material/styles';
+import TasksSection from "./TasksSection/TasksSection";
+import ProjectsSection from "./ProjectsSection/ProjectsSection";
 
 
 //progress bar (to edit)
-const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  height: 10,
-  borderRadius: 5,
-  [`&.${linearProgressClasses.colorPrimary}`]: {
-    backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
-  },
-  [`& .${linearProgressClasses.bar}`]: {
-    borderRadius: 5,
-    backgroundColor: theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8',
-  },
-}));
+// const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+//   height: 10,
+//   borderRadius: 5,
+//   [`&.${linearProgressClasses.colorPrimary}`]: {
+//     backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+//   },
+//   [`& .${linearProgressClasses.bar}`]: {
+//     borderRadius: 5,
+//     backgroundColor: theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8',
+//   },
+// }));
 
 export default function Dashboard() {
   return (
     <div className="dashboard">
-      <div>
+      <TasksSection/>
+      <ProjectsSection/>
+      {/* <div>
         <button>Project 1</button>
         <button>Project 2</button>
       </div>
@@ -41,7 +45,7 @@ export default function Dashboard() {
               <Task></Task>
           </tbody>
         </table>
-      </div>
+      </div> */}
     </div>
   );
 }
