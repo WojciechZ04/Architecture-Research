@@ -4,8 +4,6 @@ import "./Dashboard.css";
 // import { styled } from '@mui/material/styles';
 import TasksSection from "./TasksSection/TasksSection";
 import ProjectsSection from "./ProjectsSection/ProjectsSection";
-
-
 //progress bar (to edit)
 // const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 //   height: 10,
@@ -22,8 +20,9 @@ import ProjectsSection from "./ProjectsSection/ProjectsSection";
 export default function Dashboard() {
   return (
     <div className="dashboard">
-      <TasksSection/>
-      <ProjectsSection/>
+      <TasksSection />
+      <ProjectsSection />
+
       {/* <div>
         <button>Project 1</button>
         <button>Project 2</button>
