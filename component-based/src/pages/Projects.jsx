@@ -20,7 +20,7 @@ export default function Projects() {
   return (
     <Container>
       <h1 className="centered">Projects</h1>
-      {projects.map((project, index) => (
+      {projects && projects.map((project, index) => (
         <Project key={index} project={project} />
       ))}
     </Container>
