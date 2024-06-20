@@ -1,9 +1,4 @@
 .dashboard {
-	background-color: var(--secondary-color);
-	color: var(--primary-color);
-	border-radius: 1rem;
-	padding: 2rem;
-	margin: 1rem;
 }
 
 .dashboard table {
@@ -12,4 +7,12 @@
 
 .centered {
 	text-align: center;
+}
+
+.section {
+	background-color: var(--secondary-color);
+	color: var(--primary-color);
+	border-radius: 1rem;
+	padding: 2rem;
+	margin: 1rem;
 }
