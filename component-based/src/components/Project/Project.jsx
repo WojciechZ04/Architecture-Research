@@ -16,12 +16,11 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 	},
   }));
 
-export default function Project() {
+export default function Project({ project }) {
   return (
 	<div className="project">
-	  <h2 className="project__title">Project1</h2>
+	  <h2 className="project__title">{ project.title }</h2>
 	  <BorderLinearProgress variant="determinate" value={40} /> 
-	  <p className="project__description">Lorem ipsum</p>
 	  <button>Details</button>
 	  <button>Tasks</button>
 	  <button>Teams</button>

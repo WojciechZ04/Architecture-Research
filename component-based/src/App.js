@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
@@ -10,19 +10,6 @@ import Teams from "./pages/Teams";
 
 function App() {
   const [mainMargin, setMainMargin] = useState('85px');
-  const [backendData, setBackendData] = useState(null);
-
-  useEffect(() => {
-    fetch("http://localhost:5000/api")
-      .then((res) => res.json())
-      .then((data) => {
-        setBackendData(data);
-        console.log("Data fetched:", data.users);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
   
   return (
     <div className="App">
