@@ -9,19 +9,19 @@
           "title": "Task 1",
           "dueDate": "2013-12-31",
           "priority": "high",
-          "status": "done"
+          "status": "Done"
         },
         {
           "title": "Task 2",
           "dueDate": "2013-12-31",
           "priority": "medium",
-          "status": "in progress"
+          "status": "In progress"
         },
         {
           "title": "Task 3",
           "dueDate": "2013-12-31",
           "priority": "low",
-          "status": "not started"
+          "status": "Not started"
         }
       ]
     },
@@ -34,19 +34,19 @@
           "title": "Task 1",
           "dueDate": "2013-12-31",
           "priority": "high",
-          "status": "done"
+          "status": "Done"
         },
         {
           "title": "Task 2",
           "dueDate": "2013-12-31",
           "priority": "medium",
-          "status": "done"
+          "status": "Done"
         },
         {
           "title": "Task 3",
           "dueDate": "2013-12-31",
           "priority": "low",
-          "status": "not started"
+          "status": "Not started"
         }
       ]
     }

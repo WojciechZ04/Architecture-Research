@@ -25,19 +25,19 @@ export default function Tasks(props) {
   };
 
   const notStartedTasks = tasks
-    ? tasks.filter((task) => task.status === "not started")
+    ? tasks.filter((task) => task.status === "Not started")
     : [];
   const inProgressTasks = tasks
-    ? tasks.filter((task) => task.status === "in progress")
+    ? tasks.filter((task) => task.status === "In progress")
     : [];
-  const doneTasks = tasks ? tasks.filter((task) => task.status === "done") : [];
+  const doneTasks = tasks ? tasks.filter((task) => task.status === "Done") : [];
 
   return (
     <Container>
       <h1 className="centered">Your Tasks</h1>
       <div className="task-columns">
         <TaskColumn
-          value="To do"
+          value="Not started"
           tasks={notStartedTasks}
           fetchTasks={fetchTasks}
         />

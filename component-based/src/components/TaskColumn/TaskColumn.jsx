@@ -23,7 +23,7 @@ export default function TaskColumn(props) {
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [projectId, setProjectId] = useState('');
-  const [taskStatus, setTaskStatus] = useState('');
+  const taskStatus = props.value;
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -46,7 +46,6 @@ export default function TaskColumn(props) {
       setTaskTitle('');
       setTaskDescription('');
       setProjectId('');
-      setTaskStatus('');
       props.fetchTasks();
     } else {
       console.error('Failed to create task');
@@ -54,7 +53,7 @@ export default function TaskColumn(props) {
   };
 
   const className =
-    props.value === "To do"
+    props.value === "Not started"
       ? "column to-do-column"
       : props.value === "In progress"
       ? "column in-progress-column"
@@ -94,11 +93,6 @@ export default function TaskColumn(props) {
             placeholder="Project id" 
             value={projectId} 
             onChange={(e) => setProjectId(e.target.value)} 
-          />
-          <Input 
-            placeholder="Status" 
-            value={taskStatus} 
-            onChange={(e) => setTaskStatus(e.target.value)} 
           />
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleCreateTask}>Create</Button>
