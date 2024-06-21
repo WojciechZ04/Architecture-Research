@@ -37,8 +37,8 @@ export default function TaskColumn(props) {
       <h2 className="label">{props.value}</h2>
       <hr />
       
-      {props.tasks.map((task) => (
-        <Task key={task.id} task={task} />
+      {props.tasks.map((task, index) => (
+        <Task key={index} task={task} />
       ))}
 
       <button className="centered" onClick={handleOpen}>New task</button>
