@@ -1,6 +1,6 @@
 import "./TaskColumn.css";
 import Task from "./Task/Task";
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
@@ -20,8 +20,38 @@ const style = {
 
 export default function TaskColumn(props) {
   const [open, setOpen] = React.useState(false);
+  const [taskTitle, setTaskTitle] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
+  const [projectId, setProjectId] = useState('');
+  const [taskStatus, setTaskStatus] = useState('');
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleCreateTask = async () => {
+    const response = await fetch("http://localhost:5000/api/tasks", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title: taskTitle,
+        description: taskDescription,
+        projectId: projectId,
+        status: taskStatus,
+      }),
+    });
+    
+    if (response.ok) {
+      handleClose();
+      setTaskTitle('');
+      setTaskDescription('');
+      setProjectId('');
+      setTaskStatus('');
+      props.fetchTasks();
+    } else {
+      console.error('Failed to create task');
+    }
+  };
 
   const className =
     props.value === "To do"
@@ -50,10 +80,28 @@ export default function TaskColumn(props) {
       >
         <Box sx={style}>
           <h2>Create task</h2>
-          <Input placeholder="Task title" />
-          <Input placeholder="Task description" />
+          <Input 
+            placeholder="Task title" 
+            value={taskTitle} 
+            onChange={(e) => setTaskTitle(e.target.value)} 
+          />
+          <Input 
+            placeholder="Task description" 
+            value={taskDescription} 
+            onChange={(e) => setTaskDescription(e.target.value)} 
+          />
+          <Input 
+            placeholder="Project id" 
+            value={projectId} 
+            onChange={(e) => setProjectId(e.target.value)} 
+          />
+          <Input 
+            placeholder="Status" 
+            value={taskStatus} 
+            onChange={(e) => setTaskStatus(e.target.value)} 
+          />
           <Button onClick={handleClose}>Cancel</Button>
-          <Button>Create</Button>
+          <Button onClick={handleCreateTask}>Create</Button>
         </Box>
       </Modal>
     </div>

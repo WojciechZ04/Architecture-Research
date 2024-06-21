@@ -1,6 +1,7 @@
 {
   "project": [
     {
+      "id": 1,
       "title": "Project Title",
       "dueDate": "2013-12-31",
       "tasks": [
@@ -25,28 +26,29 @@
       ]
     },
     {
-		"title": "Project Title 2",
-		"dueDate": "2013-12-31",
-		"tasks": [
-			{
-				"title": "Task 1",
-				"dueDate": "2013-12-31",
-				"priority": "high",
-        "status": "done"
-			},
-			{
-				"title": "Task 2",
-				"dueDate": "2013-12-31",
-				"priority": "medium",
-        "status": "done"
-			},
-			{
-				"title": "Task 3",
-				"dueDate": "2013-12-31",
-				"priority": "low",
-        "status": "not started"
-			}
-		]
-	}
+      "id": 2,
+      "title": "Project Title 2",
+      "dueDate": "2013-12-31",
+      "tasks": [
+        {
+          "title": "Task 1",
+          "dueDate": "2013-12-31",
+          "priority": "high",
+          "status": "done"
+        },
+        {
+          "title": "Task 2",
+          "dueDate": "2013-12-31",
+          "priority": "medium",
+          "status": "done"
+        },
+        {
+          "title": "Task 3",
+          "dueDate": "2013-12-31",
+          "priority": "low",
+          "status": "not started"
+        }
+      ]
+    }
   ]
 }
