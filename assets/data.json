@@ -6,18 +6,21 @@
       "dueDate": "2013-12-31",
       "tasks": [
         {
+          "id": 1,
           "title": "Task 1",
           "dueDate": "2013-12-31",
           "priority": "high",
           "status": "Done"
         },
         {
+          "id": 2,
           "title": "Task 2",
           "dueDate": "2013-12-31",
           "priority": "medium",
           "status": "In progress"
         },
         {
+          "id": 3,
           "title": "Task 3",
           "dueDate": "2013-12-31",
           "priority": "low",
@@ -31,18 +34,21 @@
       "dueDate": "2013-12-31",
       "tasks": [
         {
+          "id": 1,
           "title": "Task 1",
           "dueDate": "2013-12-31",
           "priority": "high",
           "status": "Done"
         },
         {
+          "id": 2,
           "title": "Task 2",
           "dueDate": "2013-12-31",
           "priority": "medium",
           "status": "Done"
         },
         {
+          "id": 3,
           "title": "Task 3",
           "dueDate": "2013-12-31",
           "priority": "low",

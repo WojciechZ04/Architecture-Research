@@ -67,7 +67,7 @@ export default function TaskColumn(props) {
       <hr />
       
       {props.tasks.map((task, index) => (
-        <Task key={index} task={task} />
+        <Task className={className} key={index} task={task} fetchTasks={props.fetchTasks}/>
       ))}
 
       <button className="centered" onClick={handleOpen}>New task</button>
