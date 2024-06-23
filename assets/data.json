@@ -7,23 +7,16 @@
       "tasks": [
         {
           "id": 1,
-          "title": "Task 1",
-          "dueDate": "2013-12-31",
-          "priority": "high",
-          "status": "Done"
+          "title": "Task1",
+          "description": "Lorem ipsum",
+          "projectId": "1",
+          "status": "Not started"
         },
         {
           "id": 2,
-          "title": "Task 2",
-          "dueDate": "2013-12-31",
-          "priority": "medium",
-          "status": "In progress"
-        },
-        {
-          "id": 3,
-          "title": "Task 3",
-          "dueDate": "2013-12-31",
-          "priority": "low",
+          "title": "Task 5",
+          "description": "Lorem ipsum",
+          "projectId": "1",
           "status": "Not started"
         }
       ]
@@ -35,24 +28,24 @@
       "tasks": [
         {
           "id": 1,
-          "title": "Task 1",
-          "dueDate": "2013-12-31",
-          "priority": "high",
+          "title": "Task 2",
+          "description": "Lorem ipsum",
+          "projectId": "2",
+          "status": "Not started"
+        },
+        {
+          "id": 3,
+          "title": "Task 4",
+          "description": "Lorem ipsum",
+          "projectId": "2",
           "status": "Done"
         },
         {
           "id": 2,
-          "title": "Task 2",
-          "dueDate": "2013-12-31",
-          "priority": "medium",
-          "status": "Done"
-        },
-        {
-          "id": 3,
-          "title": "Task 3",
-          "dueDate": "2013-12-31",
-          "priority": "low",
-          "status": "Not started"
+          "title": "Task 3 ",
+          "description": "Lorem ipsum",
+          "projectId": "2",
+          "status": "In progress"
         }
       ]
     }

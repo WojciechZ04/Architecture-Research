@@ -9,6 +9,14 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+function generateUniqueId(tasks) {
+  let newId = 1;
+  while (tasks.some((task) => task.id === newId)) {
+    newId++;
+  }
+  return newId;
+}
+
 app.get("/api/data", (req, res) => {
   const filePath = path.join(__dirname, "..", "assets", "data.json");
   res.sendFile(filePath);
@@ -38,6 +46,8 @@ app.post("/api/tasks", (req, res) => {
       return;
     }
 
+    const id = generateUniqueId(project.tasks);
+    newTask.id = id;
     project.tasks.push(newTask);
 
     fs.writeFile(

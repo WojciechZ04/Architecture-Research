@@ -23,6 +23,7 @@ export default function TaskColumn(props) {
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [projectId, setProjectId] = useState('');
+  const taskId = '';
   const taskStatus = props.value;
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -34,6 +35,7 @@ export default function TaskColumn(props) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        id: taskId,
         title: taskTitle,
         description: taskDescription,
         projectId: projectId,
