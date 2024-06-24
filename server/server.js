@@ -6,6 +6,11 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
+const users = {
+  "admin": { "mail": "admin@localhost", "password": "admin" },
+  "guest": { "mail": "guest@localhost", "password": "guest" }
+};
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -16,6 +21,19 @@ function generateUniqueId(tasks) {
   }
   return newId;
 }
+
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+  const user = users[username];
+  console.log("Username: ", username, "Password: ", password, "User: ", user);
+  if (user && user.password === password) {
+    // Authentication successful
+    res.json({ username, mail: user.mail });
+  } else {
+    // Authentication failed
+    res.status(401).json({ error: 'Invalid username or password' });
+  }
+});
 
 app.get("/api/data", (req, res) => {
   const filePath = path.join(__dirname, "..", "assets", "data.json");
