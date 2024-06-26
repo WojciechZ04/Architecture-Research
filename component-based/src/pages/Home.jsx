@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <Container>
       <div id="leftColumn">
-		<Dashboard />
+        <Dashboard />
       </div>
       <div id="rightColumn"></div>
     </Container>

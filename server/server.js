@@ -3,13 +3,22 @@ const path = require("path");
 const cors = require("cors");
 const fs = require("fs");
 const bodyParser = require("body-parser");
+const mysql2 = require("mysql2");
+const bcrypt = require("bcrypt");
 
 const app = express();
 
-const users = {
-  "admin": { "mail": "admin@localhost", "password": "admin" },
-  "guest": { "mail": "guest@localhost", "password": "guest" }
-};
+const pool = mysql2.createPool({
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "project_manager",
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+});
+
+const promisePool = pool.promise();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -22,16 +31,37 @@ function generateUniqueId(tasks) {
   return newId;
 }
 
-app.post('/api/login', (req, res) => {
+// app.get("/api/database", async (req, res) => {
+//   try {
+//     const [rows, fields] = await promisePool.query(
+//       "SELECT * FROM user"
+//     );
+//     res.json(rows);
+//   } catch (err) {
+//     console.error("Database query failed:", err);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
+app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
-  const user = users[username];
-  console.log("Username: ", username, "Password: ", password, "User: ", user);
-  if (user && user.password === password) {
-    // Authentication successful
-    res.json({ username, mail: user.mail });
-  } else {
-    // Authentication failed
-    res.status(401).json({ error: 'Invalid username or password' });
+  try {
+    const query = "SELECT * FROM user WHERE username = ?";
+    const [users] = await promisePool.query(query, [username]);
+
+    if (users.length > 0) {
+      const user = users[0];
+      if (password === user.password) { 
+        res.json({ message: "Login successful" });
+      } else {
+        res.status(401).json({ error: "Invalid username or password" });
+      }
+    } else {
+      res.status(401).json({ error: "Invalid username or password" });
+    }
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
