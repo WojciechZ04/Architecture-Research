@@ -20,10 +20,9 @@ const style = {
 
 export default function TaskColumn(props) {
   const [open, setOpen] = React.useState(false);
-  const [taskTitle, setTaskTitle] = useState('');
+  const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [projectId, setProjectId] = useState('');
-  const taskId = '';
   const taskStatus = props.value;
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -35,8 +34,7 @@ export default function TaskColumn(props) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: taskId,
-        title: taskTitle,
+        name: taskName,
         description: taskDescription,
         projectId: projectId,
         status: taskStatus,
@@ -45,7 +43,7 @@ export default function TaskColumn(props) {
     
     if (response.ok) {
       handleClose();
-      setTaskTitle('');
+      setTaskName('');
       setTaskDescription('');
       setProjectId('');
       props.fetchTasks();
@@ -76,15 +74,15 @@ export default function TaskColumn(props) {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
+        aria-labelledby="modal-modal-name"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <h2>Create task</h2>
           <Input 
-            placeholder="Task title" 
-            value={taskTitle} 
-            onChange={(e) => setTaskTitle(e.target.value)} 
+            placeholder="Task name" 
+            value={taskName} 
+            onChange={(e) => setTaskName(e.target.value)} 
           />
           <Input 
             placeholder="Task description" 

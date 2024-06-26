@@ -11,13 +11,10 @@ export default function Tasks(props) {
   }, []);
 
   const fetchTasks = () => {
-    fetch("http://localhost:5000/api/data")
+    fetch("http://localhost:5000/api/tasks")
       .then((res) => res.json())
       .then((data) => {
-        const tasks = (data.project || []).flatMap(
-          (project) => project.tasks || []
-        );
-        setTasks(tasks);
+        setTasks(data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);

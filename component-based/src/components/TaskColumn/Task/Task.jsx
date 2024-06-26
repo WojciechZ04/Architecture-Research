@@ -22,7 +22,7 @@ export default function Task({ task, fetchTasks }) {
     setShowModal(false);
     try {
       const response = await fetch(
-        `http://localhost:5000/api/tasks/${task.projectId}/${task.id}`,
+        `http://localhost:5000/api/tasks/${task.project_id}/${task.id}`,
         {
           method: "DELETE",
         }
@@ -31,15 +31,13 @@ export default function Task({ task, fetchTasks }) {
         throw new Error("Failed to delete task");
       }
       fetchTasks();
-      // Handle success (e.g., update UI or notify the user)
     } catch (error) {
       console.error("Failed to delete task:", error);
-      // Optionally, handle the error (e.g., show an error message)
     }
   };
 
   const confirmDelete = () => {
-    setShowModal(true); // Show the modal when delete is clicked
+    setShowModal(true);
   };
 
   return (
@@ -51,7 +49,7 @@ export default function Task({ task, fetchTasks }) {
           alignItems: "center",
         }}
       >
-        <h2 className="task__title">{task.title}</h2>
+        <h2 className="task__title">{task.name}</h2>
         <button onClick={confirmDelete}>Delete</button>
       </div>
       <p className="task__description">{task.description}</p>
