@@ -47,6 +47,16 @@ app.get("/api/data", (req, res) => {
   res.sendFile(filePath);
 });
 
+app.get("/api/organizations", async (req, res) => {
+  try {
+    const [organizations] = await pool.query('SELECT * FROM organization');
+    res.json(organizations);
+  } catch (err) {
+    console.error("Error fetching organizations from database:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 app.get("/api/tasks", async (req, res) => {
   try {
     const [tasks] = await pool.query('SELECT * FROM task');

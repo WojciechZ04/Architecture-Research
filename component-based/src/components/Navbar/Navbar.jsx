@@ -74,6 +74,12 @@ export default function ResponsiveAppBar({ setMainMargin }) {
           <span className="icon-text">Teams</span>
         </span>
       </div>
+      <div onClick={() => handlePageChange('Organizations')}>
+        <span>
+          <i className="material-icons">people</i>
+          <span className="icon-text">Organizations</span>
+        </span>
+      </div>
     </div>
   );
 }
