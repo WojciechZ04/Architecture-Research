@@ -57,6 +57,22 @@ app.get("/api/organizations", async (req, res) => {
   }
 });
 
+app.post("/api/organizations", async (req, res) => {
+  const { name } = req.body;
+
+  try {
+    const sql = 'INSERT INTO organization (name) VALUES (?)';
+    const values = [name];
+    const [result] = await pool.query(sql, values);
+
+    const insertedOrganization = { id: result.insertId, name };
+
+    res.status(201).json(insertedOrganization);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 app.get("/api/tasks", async (req, res) => {
   try {
     const [tasks] = await pool.query('SELECT * FROM task');
