@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
@@ -17,8 +18,9 @@ const style = {
 
 export default function Organizations() {
   const [organizations, setOrganizations] = useState([]);
-  const [orgName, setOrgName] = useState('');
+  const [orgName, setOrgName] = useState("");
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -47,17 +49,20 @@ export default function Organizations() {
         console.log(data);
         fetchOrganizations();
         handleClose();
-        setOrgName('');
+        setOrgName("");
       })
       .catch((error) => {
         console.error("Error creating organization:", error);
       });
-  }
-  
+  };
 
   useEffect(() => {
     fetchOrganizations();
   }, []);
+
+  const handleOrgClick = (id) => {
+    navigate(`/organizations/${id}`);
+  };
 
   return (
     <div>
@@ -65,11 +70,13 @@ export default function Organizations() {
       {organizations === null ? (
         <p>Loading organizations...</p>
       ) : organizations.length > 0 ? (
-        <ul>
+        <div>
           {organizations.map((org, index) => (
-            <li key={index}>{org.name}</li> // Access the name property of each organization object
+            <div onClick={() => handleOrgClick(org.id)}>
+              <p key={index}>{org.name}</p>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         <p>You are not in any organization.</p>
       )}
@@ -82,10 +89,10 @@ export default function Organizations() {
       >
         <Box sx={style}>
           <h2>Create organization</h2>
-          <Input 
-            placeholder="Organization name" 
-            value={orgName} 
-            onChange={(e) => setOrgName(e.target.value)} 
+          <Input
+            placeholder="Organization name"
+            value={orgName}
+            onChange={(e) => setOrgName(e.target.value)}
           />
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleCreateOrganization}>Create</Button>

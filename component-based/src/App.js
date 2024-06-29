@@ -9,7 +9,8 @@ import Tasks from "./pages/Tasks";
 import Navbar from "./components/Navbar/Navbar";
 import NotFound from "./pages/NotFound";
 import Teams from "./pages/Teams";
-import Organizations from "./pages/Organizations";
+import Organizations from "./pages/Organizations/Organizations";
+import Organization from "./pages/Organizations/Organization";
 
 function App() {
   const [mainMargin, setMainMargin] = useState('85px');
@@ -35,6 +36,7 @@ function App() {
             <Route path="login" element={<Login />}></Route>
             <Route path="signup" element={<Signup />}></Route>
             <Route path="/organizations" element={<Organizations />}></Route>
+            <Route path="/organizations/:id" element={<Organization />}></Route>
             <Route path="/teams" element={<Teams />}></Route>
             <Route path="/projects" element={<Projects />}></Route>
             <Route path="/tasks" element={<Tasks />}></Route>

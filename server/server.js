@@ -73,6 +73,27 @@ app.post("/api/organizations", async (req, res) => {
   }
 });
 
+app.get("/api/organizations/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const sql = 'SELECT * FROM organization WHERE id = ?';
+    const values = [id];
+    const [organizations] = await pool.query(sql, values);
+
+    if (organizations.length === 0) {
+      // No organization found with the given ID
+      return res.status(404).json({ error: "Organization not found" });
+    }
+
+    // Return the found organization
+    res.json(organizations[0]);
+  } catch (err) {
+    console.error("Error fetching organization from database:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 app.get("/api/tasks", async (req, res) => {
   try {
     const [tasks] = await pool.query('SELECT * FROM task');
