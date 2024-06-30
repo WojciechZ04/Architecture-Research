@@ -9,6 +9,9 @@ export default function ResponsiveAppBar({ setMainMargin }) {
   const navigate = useNavigate();
   const [sidebarWidth, setSidebarWidth] = useState("85px");
   const [mini, setMini] = useState(true);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
   const handlePageChange = (page) => {
     if (page === "Home") {
@@ -74,12 +77,25 @@ export default function ResponsiveAppBar({ setMainMargin }) {
           <span className="icon-text">Teams</span>
         </span>
       </div>
+      <br />
       <div onClick={() => handlePageChange('Organizations')}>
         <span>
-          <i className="material-icons">people</i>
+          <i className="material-icons">work</i>
           <span className="icon-text">Organizations</span>
         </span>
       </div>
+      <br />
+
+      <div className="navbar-avatar" onClick={toggleDropdown}>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png" alt="Profile" className="avatar-image" />
+      </div>
+      {dropdownOpen && (
+        <div className="dropdown-menu">
+          <div onClick={() => handlePageChange('Profile')}>Profile</div>
+          <div onClick={() => handlePageChange('Settings')}>Settings</div>
+          <div onClick={() => handlePageChange('Logout')}>Logout</div>
+        </div>
+      )}
     </div>
   );
 }

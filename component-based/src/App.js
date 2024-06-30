@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import Teams from "./pages/Teams";
 import Organizations from "./pages/Organizations/Organizations";
 import Organization from "./pages/Organizations/Organization";
+import Profile from "./pages/Profile";
 
 function App() {
   const [mainMargin, setMainMargin] = useState('85px');
@@ -33,8 +34,9 @@ function App() {
         {showNavbar && <Navbar setMainMargin={setMainMargin} />}
         <div id="main" style={{ marginLeft: showNavbar ? mainMargin : '0px' }}>
           <Routes>
-            <Route path="login" element={<Login />}></Route>
-            <Route path="signup" element={<Signup />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/signup" element={<Signup />}></Route>
+            <Route path="/profile" element={<Profile />}></Route>
             <Route path="/organizations" element={<Organizations />}></Route>
             <Route path="/organizations/:id" element={<Organization />}></Route>
             <Route path="/teams" element={<Teams />}></Route>
