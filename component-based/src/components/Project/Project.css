@@ -1,6 +1,16 @@
 .project {
 	background-color: var(--secondary-color);
+	display: flex;
+	align-items: center;
 	margin: 1rem;
+	gap: 20px;
+}
+
+.indicator {
+	width: 20px;
+	height: 100%;
+    min-height: 50px;
+	background-color: green;
 }
 
 .projectsNav {
