@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
-import { Container } from "@mui/material";
 import Project from "../components/Project/Project";
+import { Box } from "@mui/material";
 
 export default function Projects() {
   const [projects, setProjects] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/tasks") // Change this URL to match your server
+    fetch("http://localhost:5000/api/project") // Change this URL to match your server
       .then((res) => res.json())
       .then((data) => {
-        setProjects(data.project);
-        console.log("Data fetched:", data.project);
+        setProjects(data);
+        console.log("Data fetched:", data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -18,11 +18,13 @@ export default function Projects() {
   }, []);
 
   return (
-    <Container>
-      <h1 className="centered">Projects</h1>
+    <div>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2} className="projectsNav">
+        <h1>Projects</h1>
+      </Box>
       {projects && projects.map((project, index) => (
         <Project key={index} project={project} />
       ))}
-    </Container>
+    </div>
   );
 }

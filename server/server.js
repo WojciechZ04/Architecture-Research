@@ -20,6 +20,16 @@ const pool = mysql2.createPool({
 app.use(cors());
 app.use(bodyParser.json());
 
+app.get("/api/project", async (req, res) => {
+  try {
+    const [projects] = await pool.query('SELECT * FROM project');
+    res.json(projects);
+  } catch(err) {
+    console.error("Error fetching projects from database:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
   try {
