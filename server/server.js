@@ -3,11 +3,11 @@ const path = require("path");
 const cors = require("cors");
 const fs = require("fs");
 const bodyParser = require("body-parser");
-const mysql2 = require("mysql2/promise");
+const mysql = require("mysql2");
 
 const app = express();
 
-const pool = mysql2.createPool({
+const pool = mysql.createPool({
   host: "localhost",
   user: "root",
   password: "password",
@@ -16,6 +16,8 @@ const pool = mysql2.createPool({
   connectionLimit: 10,
   queueLimit: 0,
 });
+
+const promisePool = pool.promise();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -48,6 +50,18 @@ app.post("/api/login", async (req, res) => {
     }
   } catch (err) {
     console.error("Login error:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post("/api/signup", async (req, res) => {
+  const { username, email, password } = req.body;
+  try {
+    const query = "INSERT INTO user (username, email, password) VALUES (?, ?, ?)";
+    const [result] = await promisePool.query(query, [username, email, password]);
+    res.json({ message: "Signup successful" });
+  } catch (err) {
+    console.error("Signup error:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });
