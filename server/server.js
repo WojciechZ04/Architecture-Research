@@ -4,6 +4,7 @@ const cors = require("cors");
 const fs = require("fs");
 const bodyParser = require("body-parser");
 const mysql = require("mysql2");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 
@@ -24,7 +25,7 @@ app.use(bodyParser.json());
 
 app.get("/api/project", async (req, res) => {
   try {
-    const [projects] = await pool.query('SELECT * FROM project');
+    const [projects] = await promisePool.query('SELECT * FROM project');
     res.json(projects);
   } catch(err) {
     console.error("Error fetching projects from database:", err);
@@ -41,7 +42,8 @@ app.post("/api/login", async (req, res) => {
     if (users.length > 0) {
       const user = users[0];
       if (password === user.password) { 
-        res.json({ message: "Login successful" });
+        const token = jwt.sign({ userId: user.id }, 'your_secret_key', { expiresIn: '1h' });
+        res.json({ message: "Login successful", token: token });
       } else {
         res.status(401).json({ error: "Invalid username or password" });
       }
@@ -73,7 +75,7 @@ app.get("/api/data", (req, res) => {
 
 app.get("/api/organizations", async (req, res) => {
   try {
-    const [organizations] = await pool.query('SELECT * FROM organization');
+    const [organizations] = await promisePool.query('SELECT * FROM organization');
     res.json(organizations);
   } catch (err) {
     console.error("Error fetching organizations from database:", err);
@@ -87,7 +89,7 @@ app.post("/api/organizations", async (req, res) => {
   try {
     const sql = 'INSERT INTO organization (name) VALUES (?)';
     const values = [name];
-    const [result] = await pool.query(sql, values);
+    const [result] = await promisePool.query(sql, values);
 
     const insertedOrganization = { id: result.insertId, name };
 
@@ -103,7 +105,7 @@ app.get("/api/organizations/:id", async (req, res) => {
   try {
     const sql = 'SELECT * FROM organization WHERE id = ?';
     const values = [id];
-    const [organizations] = await pool.query(sql, values);
+    const [organizations] = await promisePool.query(sql, values);
 
     if (organizations.length === 0) {
       // No organization found with the given ID
@@ -120,7 +122,7 @@ app.get("/api/organizations/:id", async (req, res) => {
 
 app.get("/api/tasks", async (req, res) => {
   try {
-    const [tasks] = await pool.query('SELECT * FROM task');
+    const [tasks] = await promisePool.query('SELECT * FROM task');
     res.json(tasks);
   } catch (err) {
     console.error("Error fetching tasks from database:", err);
@@ -134,7 +136,7 @@ app.post("/api/tasks", async (req, res) => {
   try {
     const sql = 'INSERT INTO task (name, description, project_id, status) VALUES (?, ?, ?, ?)';
     const values = [name, description, projectId, status];
-    const [result] = await pool.query(sql, values);
+    const [result] = await promisePool.query(sql, values);
 
     const insertedTask = { id: result.insertId, name, description, projectId, status };
 
@@ -150,7 +152,7 @@ app.delete("/api/tasks/:projectId/:taskId", async (req, res) => {
   try {
     const sql = 'DELETE FROM task WHERE id = ? AND project_id = ?';
     const values = [taskId, projectId];
-    const [result] = await pool.query(sql, values);
+    const [result] = await promisePool.query(sql, values);
 
     if (result.affectedRows > 0) {
       res.status(200).json({ message: `Task ${taskId} deleted successfully.` });

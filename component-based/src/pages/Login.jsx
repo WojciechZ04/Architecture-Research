@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useSignIn from 'react-auth-kit/hooks/useSignIn';
 
-function Login({ onLogin }) {
+function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
+  const signIn = useSignIn();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -21,9 +23,16 @@ function Login({ onLogin }) {
 		if (response.ok) {
 		  const data = await response.json();
 		  console.log('Login successful:', data);
-		  navigate('/');
+      localStorage.setItem('token', data.token);
+      if (signIn({
+        auth: {
+          token: data.token,
+          type: 'Bearer'
+        }
+      })) {
+        navigate('/');
+      }
 		} else {
-		  // Handle non-200 responses
 		  setLoginError('Invalid username or password');
 		}
 	  } catch (error) {
