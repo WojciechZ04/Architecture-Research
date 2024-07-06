@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useSignOut from 'react-auth-kit/hooks/useSignOut';
+
 import "./Navbar.css";
 
 // const pages = ["Home", "Projects", "Tasks"];
 // const settings = ["Profile", "Settings", "Logout"];
 
 export default function ResponsiveAppBar({ setMainMargin }) {
-  const navigate = useNavigate();
   const [sidebarWidth, setSidebarWidth] = useState("85px");
   const [mini, setMini] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  
+  const navigate = useNavigate();
+  const signOut = useSignOut();
+  
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
   const handlePageChange = (page) => {
@@ -93,7 +97,7 @@ export default function ResponsiveAppBar({ setMainMargin }) {
         <div className="dropdown-menu">
           <div onClick={() => handlePageChange('Profile')}>Profile</div>
           <div onClick={() => handlePageChange('Settings')}>Settings</div>
-          <div onClick={() => handlePageChange('Logout')}>Logout</div>
+          <div onClick={() => signOut()}>Logout</div>
         </div>
       )}
     </div>

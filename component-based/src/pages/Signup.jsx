@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useSignIn from 'react-auth-kit/hooks/useSignIn';
 
-function Signup({ onSignup }) {
+
+function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [signupError, setSignupError] = useState('');
+  const [signupError, setSignupError] = useState("");
+
   const navigate = useNavigate();
+  const signIn = useSignIn();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,19 +25,29 @@ function Signup({ onSignup }) {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Signup successful:', data);
-        navigate('/');
-      } 
-      } catch (error) {
-      console.error('Signup error:', error);
-      setSignupError('An error occurred. Please try again later.');
+        console.log("Signup successful:", data);
+        localStorage.setItem("token", data.token);
+        if (
+          signIn({
+            auth: {
+              token: data.token,
+              type: "Bearer",
+            },
+          })
+        ) {
+          navigate("/");
+        }
       }
+    } catch (error) {
+      console.error("Signup error:", error);
+      setSignupError("An error occurred. Please try again later.");
+    }
   };
 
   return (
     <div>
       <h2>Signup</h2>
-      {signupError && <p style={{ color: 'red' }}>{signupError}</p>}
+      {signupError && <p style={{ color: "red" }}>{signupError}</p>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Username</label>
@@ -60,6 +74,7 @@ function Signup({ onSignup }) {
           />
         </div>
         <button type="submit">Signup</button>
+        <button onClick={() => navigate("/login")}>Login</button>
       </form>
     </div>
   );

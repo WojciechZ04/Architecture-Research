@@ -6,7 +6,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import AuthOutlet from '@auth-kit/react-router/AuthOutlet'
+import AuthOutlet from "@auth-kit/react-router/AuthOutlet";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -19,7 +19,6 @@ import Teams from "./pages/Teams";
 import Organizations from "./pages/Organizations/Organizations";
 import Organization from "./pages/Organizations/Organization";
 import Profile from "./pages/Profile";
-
 
 function App() {
   const [mainMargin, setMainMargin] = useState("85px");
@@ -55,8 +54,8 @@ function App() {
               <Route path="/projects" element={<Projects />}></Route>
               <Route path="/tasks" element={<Tasks />}></Route>
               <Route path="/" element={<Home />}></Route>
+              <Route path="*" element={<NotFound />}></Route>
             </Route>
-            <Route path="*" element={<NotFound />}></Route>
           </Routes>
         </div>
       </>

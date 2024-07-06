@@ -63,6 +63,7 @@ function Login() {
           />
         </div>
         <button type="submit">Login</button>
+        <button onClick={() => navigate("/signup")}>Signup</button>
       </form>
     </div>
   );

@@ -61,7 +61,9 @@ app.post("/api/signup", async (req, res) => {
   try {
     const query = "INSERT INTO user (username, email, password) VALUES (?, ?, ?)";
     const [result] = await promisePool.query(query, [username, email, password]);
-    res.json({ message: "Signup successful" });
+    const token = jwt.sign({ userId: result.id }, 'your_secret_key', { expiresIn: '1h' });
+    console.log(result.id);
+    res.json({ message: "Signup successful", token: token  });
   } catch (err) {
     console.error("Signup error:", err);
     res.status(500).json({ error: "Internal server error" });
