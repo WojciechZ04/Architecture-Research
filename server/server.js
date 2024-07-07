@@ -18,6 +18,26 @@ const pool = mysql.createPool({
   queueLimit: 0,
 });
 
+const TOKEN_SECRET = "your_secret_key";
+
+const authenticateToken = (req, res, next) => {
+
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (token == null) {
+    return res.sendStatus(401);
+  }
+
+  jwt.verify(token, TOKEN_SECRET, (err, user) => {
+    if (err) {
+      return res.sendStatus(403);
+    }
+    req.userId = user.userId;
+    next();
+  });
+};
+
 const promisePool = pool.promise();
 
 app.use(cors());
@@ -25,9 +45,9 @@ app.use(bodyParser.json());
 
 app.get("/api/project", async (req, res) => {
   try {
-    const [projects] = await promisePool.query('SELECT * FROM project');
+    const [projects] = await promisePool.query("SELECT * FROM projects");
     res.json(projects);
-  } catch(err) {
+  } catch (err) {
     console.error("Error fetching projects from database:", err);
     res.status(500).json({ error: "Internal server error" });
   }
@@ -36,13 +56,15 @@ app.get("/api/project", async (req, res) => {
 app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
   try {
-    const query = "SELECT * FROM user WHERE username = ?";
+    const query = "SELECT * FROM users WHERE username = ?";
     const [users] = await promisePool.query(query, [username]);
 
     if (users.length > 0) {
       const user = users[0];
-      if (password === user.password) { 
-        const token = jwt.sign({ userId: user.id }, 'your_secret_key', { expiresIn: '1h' });
+      if (password === user.password) {
+        const token = jwt.sign({ userId: user.id }, TOKEN_SECRET, {
+          expiresIn: "1h",
+        });
         res.json({ message: "Login successful", token: token });
       } else {
         res.status(401).json({ error: "Invalid username or password" });
@@ -59,11 +81,18 @@ app.post("/api/login", async (req, res) => {
 app.post("/api/signup", async (req, res) => {
   const { username, email, password } = req.body;
   try {
-    const query = "INSERT INTO user (username, email, password) VALUES (?, ?, ?)";
-    const [result] = await promisePool.query(query, [username, email, password]);
-    const token = jwt.sign({ userId: result.id }, 'your_secret_key', { expiresIn: '1h' });
+    const query =
+      "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+    const [result] = await promisePool.query(query, [
+      username,
+      email,
+      password,
+    ]);
+    const token = jwt.sign({ userId: result.id }, TOKEN_SECRET, {
+      expiresIn: "1h",
+    });
     console.log(result.id);
-    res.json({ message: "Signup successful", token: token  });
+    res.json({ message: "Signup successful", token: token });
   } catch (err) {
     console.error("Signup error:", err);
     res.status(500).json({ error: "Internal server error" });
@@ -75,12 +104,20 @@ app.get("/api/data", (req, res) => {
   res.sendFile(filePath);
 });
 
-app.get("/api/organizations", async (req, res) => {
+app.get("/api/organizations", authenticateToken, async (req, res) => {
+  const userId = req.userId;
+
   try {
-    const [organizations] = await promisePool.query('SELECT * FROM organization');
+    const sql = `
+      SELECT o.* FROM organizations o
+      JOIN organization_user_memberships oum ON o.id = oum.organization_id
+      WHERE oum.user_id = ?
+    `;
+    const values = [userId];
+    const [organizations] = await promisePool.query(sql, values);
     res.json(organizations);
   } catch (err) {
-    console.error("Error fetching organizations from database:", err);
+    console.error("Error fetching user's organizations from database:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -89,7 +126,7 @@ app.post("/api/organizations", async (req, res) => {
   const { name } = req.body;
 
   try {
-    const sql = 'INSERT INTO organization (name) VALUES (?)';
+    const sql = "INSERT INTO organizations (name) VALUES (?)";
     const values = [name];
     const [result] = await promisePool.query(sql, values);
 
@@ -105,7 +142,7 @@ app.get("/api/organizations/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const sql = 'SELECT * FROM organization WHERE id = ?';
+    const sql = "SELECT * FROM organizations WHERE id = ?";
     const values = [id];
     const [organizations] = await promisePool.query(sql, values);
 
@@ -117,14 +154,14 @@ app.get("/api/organizations/:id", async (req, res) => {
     // Return the found organization
     res.json(organizations[0]);
   } catch (err) {
-    console.error("Error fetching organization from database:", err);
+    console.error("Error fetching organizations from database:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
 app.get("/api/tasks", async (req, res) => {
   try {
-    const [tasks] = await promisePool.query('SELECT * FROM task');
+    const [tasks] = await promisePool.query("SELECT * FROM tasks");
     res.json(tasks);
   } catch (err) {
     console.error("Error fetching tasks from database:", err);
@@ -136,11 +173,18 @@ app.post("/api/tasks", async (req, res) => {
   const { name, description, projectId, status } = req.body;
 
   try {
-    const sql = 'INSERT INTO task (name, description, project_id, status) VALUES (?, ?, ?, ?)';
+    const sql =
+      "INSERT INTO tasks (name, description, project_id, status) VALUES (?, ?, ?, ?)";
     const values = [name, description, projectId, status];
     const [result] = await promisePool.query(sql, values);
 
-    const insertedTask = { id: result.insertId, name, description, projectId, status };
+    const insertedTask = {
+      id: result.insertId,
+      name,
+      description,
+      projectId,
+      status,
+    };
 
     res.status(201).json(insertedTask);
   } catch (err) {
@@ -152,7 +196,7 @@ app.delete("/api/tasks/:projectId/:taskId", async (req, res) => {
   const { projectId, taskId } = req.params;
 
   try {
-    const sql = 'DELETE FROM task WHERE id = ? AND project_id = ?';
+    const sql = "DELETE FROM tasks WHERE id = ? AND project_id = ?";
     const values = [taskId, projectId];
     const [result] = await promisePool.query(sql, values);
 

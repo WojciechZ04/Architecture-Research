@@ -25,7 +25,14 @@ export default function Organizations() {
   const handleClose = () => setOpen(false);
 
   const fetchOrganizations = () => {
-    fetch("http://localhost:5000/api/organizations")
+    const yourTokenVariable = localStorage.getItem('token');
+    fetch("http://localhost:5000/api/organizations", {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + yourTokenVariable,
+        'Content-Type': 'application/json'
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setOrganizations(data);
