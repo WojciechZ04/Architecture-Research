@@ -6,7 +6,7 @@ export default function Projects() {
   const [projects, setProjects] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/project") // Change this URL to match your server
+    fetch("http://localhost:5000/api/projects")
       .then((res) => res.json())
       .then((data) => {
         setProjects(data);
