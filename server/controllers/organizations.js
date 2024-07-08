@@ -29,7 +29,8 @@ exports.createOrganization = async (req, res) => {
 
     const insertedOrganizationId = orgResult.insertId;
 
-    const insertMembershipSql = "INSERT INTO organization_user_memberships (user_id, organization_id) VALUES (?, ?)";
+    const insertMembershipSql =
+      "INSERT INTO organization_user_memberships (user_id, organization_id) VALUES (?, ?)";
     const membershipValues = [userId, insertedOrganizationId];
     await promisePool.query(insertMembershipSql, membershipValues);
 
@@ -42,21 +43,60 @@ exports.createOrganization = async (req, res) => {
 
 exports.getOrganization = async (req, res) => {
   const { id } = req.params;
-
+  
   try {
     const sql = "SELECT * FROM organizations WHERE id = ?";
     const values = [id];
     const [organizations] = await promisePool.query(sql, values);
-
+    
     if (organizations.length === 0) {
       // No organization found with the given ID
       return res.status(404).json({ error: "Organization not found" });
     }
-
+    
     // Return the found organization
     res.json(organizations[0]);
   } catch (err) {
     console.error("Error fetching organizations from database:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+exports.joinOrganization = async (req, res) => {
+  const { code } = req.body;
+  const userId = req.userId;
+
+  try {
+    const orgSql =
+      "SELECT organization_id FROM organization_invitation_codes WHERE code = ?";
+    const [invitations] = await promisePool.query(orgSql, [code]);
+
+    if (invitations.length === 0) {
+      return res.status(404).json({ error: "Invalid invitation code" });
+    }
+
+    const organizationId = invitations[0].organization_id;
+
+    const memberCheckSql =
+      "SELECT * FROM organization_user_memberships WHERE user_id = ? AND organization_id = ?";
+    const [members] = await promisePool.query(memberCheckSql, [
+      userId,
+      organizationId,
+    ]);
+
+    if (members.length > 0) {
+      return res
+        .status(400)
+        .json({ error: "User is already a member of the organization" });
+    }
+
+    const joinSql =
+      "INSERT INTO organization_user_memberships (user_id, organization_id) VALUES (?, ?)";
+    await promisePool.query(joinSql, [userId, organizationId]);
+
+    res.json({ message: "Successfully joined the organization" });
+  } catch (err) {
+    console.error("Error joining organization:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 };

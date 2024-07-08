@@ -19,10 +19,14 @@ const style = {
 export default function Organizations() {
   const [organizations, setOrganizations] = useState([]);
   const [orgName, setOrgName] = useState("");
-  const [open, setOpen] = React.useState(false);
+  const [joinCode, setJoinCode] = useState("");
+  const [openCreateModal, setOpenCreateModal] = React.useState(false);
+  const [openJoinModal, setOpenJoinModal] = React.useState(false);
+  const handleOpenJoinModal = () => setOpenJoinModal(true);
+  const handleCloseJoinModal = () => setOpenJoinModal(false);
+  const handleOpenCreateModal = () => setOpenCreateModal(true);
+  const handleCloseCreateModal = () => setOpenCreateModal(false);
   const navigate = useNavigate();
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const fetchOrganizations = () => {
     const yourTokenVariable = localStorage.getItem('token');
@@ -57,7 +61,7 @@ export default function Organizations() {
       .then((data) => {
         console.log(data);
         fetchOrganizations();
-        handleClose();
+        handleCloseCreateModal();
         setOrgName("");
       })
       .catch((error) => {
@@ -68,6 +72,32 @@ export default function Organizations() {
   useEffect(() => {
     fetchOrganizations();
   }, []);
+
+  const handleJoinOrganization = () => {
+    fetch('http://localhost:5000/api/organizations/join', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ code: joinCode })
+    })
+    .then((res) => {
+      if(!res.ok) {
+        throw new Error('Failed to join organization');
+      }
+      return res.json();
+    })
+    .then((data) => {
+      console.log("Successfully joined organization", data);
+      fetchOrganizations();
+      handleCloseJoinModal();
+      setJoinCode("");
+    })
+    .catch((error) => {
+      console.error("Error joining organization:", error);
+    });
+  }
 
   const handleOrgClick = (id) => {
     navigate(`/organizations/${id}`);
@@ -89,10 +119,10 @@ export default function Organizations() {
       ) : (
         <p>You are not in any organization.</p>
       )}
-      <button onClick={handleOpen}>Create organization</button>
+      <button onClick={handleOpenCreateModal}>Create organization</button>
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={openCreateModal}
+        onClose={handleCloseCreateModal}
         aria-labelledby="modal-modal-name"
         aria-describedby="modal-modal-description"
       >
@@ -103,8 +133,26 @@ export default function Organizations() {
             value={orgName}
             onChange={(e) => setOrgName(e.target.value)}
           />
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleCloseCreateModal}>Cancel</Button>
           <Button onClick={handleCreateOrganization}>Create</Button>
+        </Box>
+      </Modal>
+      <button onClick={handleOpenJoinModal}>Join organization</button>
+      <Modal
+        open={openJoinModal}
+        onClose={handleCloseJoinModal}
+        aria-labelledby="modal-modal-name"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <h2>Join organization</h2>
+          <Input
+            placeholder="Join code"
+            value={joinCode}
+            onChange={(e) => setJoinCode(e.target.value)}
+          />
+          <Button onClick={handleCloseJoinModal}>Cancel</Button>
+          <Button onClick={handleJoinOrganization}>Join</Button>
         </Box>
       </Modal>
     </div>
