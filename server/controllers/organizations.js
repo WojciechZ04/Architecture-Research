@@ -20,14 +20,20 @@ exports.getOrganizations = async (req, res) => {
 
 exports.createOrganization = async (req, res) => {
   const { name } = req.body;
+  const userId = req.userId;
 
   try {
-    const sql = "INSERT INTO organizations (name) VALUES (?)";
-    const values = [name];
-    const [result] = await promisePool.query(sql, values);
+    const insertOrgSql = "INSERT INTO organizations (name) VALUES (?)";
+    const orgValues = [name];
+    const [orgResult] = await promisePool.query(insertOrgSql, orgValues);
 
-    const insertedOrganization = { id: result.insertId, name };
+    const insertedOrganizationId = orgResult.insertId;
 
+    const insertMembershipSql = "INSERT INTO organization_user_memberships (user_id, organization_id) VALUES (?, ?)";
+    const membershipValues = [userId, insertedOrganizationId];
+    await promisePool.query(insertMembershipSql, membershipValues);
+
+    const insertedOrganization = { id: insertedOrganizationId, name };
     res.status(201).json(insertedOrganization);
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });

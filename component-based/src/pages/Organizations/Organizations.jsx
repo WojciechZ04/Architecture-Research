@@ -44,9 +44,11 @@ export default function Organizations() {
   };
 
   const handleCreateOrganization = () => {
+    const yourTokenVariable = localStorage.getItem('token');
     fetch("http://localhost:5000/api/organizations", {
       method: "POST",
       headers: {
+        "Authorization": "Bearer " + yourTokenVariable,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ name: orgName }),
