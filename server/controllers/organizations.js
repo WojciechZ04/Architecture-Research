@@ -43,17 +43,17 @@ exports.createOrganization = async (req, res) => {
 
 exports.getOrganization = async (req, res) => {
   const { id } = req.params;
-  
+
   try {
     const sql = "SELECT * FROM organizations WHERE id = ?";
     const values = [id];
     const [organizations] = await promisePool.query(sql, values);
-    
+
     if (organizations.length === 0) {
       // No organization found with the given ID
       return res.status(404).json({ error: "Organization not found" });
     }
-    
+
     // Return the found organization
     res.json(organizations[0]);
   } catch (err) {
@@ -100,3 +100,34 @@ exports.joinOrganization = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+  exports.getOrganizationDetails = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const orgDetailsSql = "SELECT * FROM organizations WHERE id = ?";
+      const [orgDetails] = await promisePool.query(orgDetailsSql, [id]);
+
+      if (orgDetails.length === 0) {
+        return res.status(404).json({ error: "Organization not found" });
+      }
+
+      const usersSql = `
+        SELECT users.* FROM users
+        JOIN organization_user_memberships ON users.id = organization_user_memberships.user_id
+        WHERE organization_user_memberships.organization_id = ?`;
+      const [users] = await promisePool.query(usersSql, [id]);
+
+      
+      const response = {
+        organization: orgDetails[0],
+        users: users,
+      };
+      
+      console.log('response', response);
+      res.json(response);
+    } catch (err) {
+      console.error("Error fetching organization details:", err);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  };

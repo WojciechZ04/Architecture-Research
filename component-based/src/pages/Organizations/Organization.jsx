@@ -34,8 +34,19 @@ export default function Organization() {
       <h1>Organization</h1>
       {organization && (
         <div>
-          <p>Name: {organization.name}</p>
-          {/* Display other organization details here */}
+          <p>Name: {organization.organization.name}</p>
+          <div>
+            <h2>Current projects</h2>
+            {/* Assuming projects data might be added similarly in the future */}
+          </div>
+          <div>
+            <h2>Members</h2>
+            <ul>
+              {organization.users.map(user => (
+                <li key={user.id}>{user.username}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
     </div>

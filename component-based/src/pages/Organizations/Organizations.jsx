@@ -40,7 +40,6 @@ export default function Organizations() {
       .then((res) => res.json())
       .then((data) => {
         setOrganizations(data);
-        console.log(data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -59,7 +58,6 @@ export default function Organizations() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         fetchOrganizations();
         handleCloseCreateModal();
         setOrgName("");

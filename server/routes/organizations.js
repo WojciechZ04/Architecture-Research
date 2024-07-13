@@ -6,6 +6,6 @@ const authenticateToken = require('../authenticateToken');
 router.get('/', authenticateToken, organizationsController.getOrganizations);
 router.post('/', authenticateToken, organizationsController.createOrganization);
 router.post('/join', authenticateToken, organizationsController.joinOrganization);
-router.get('/:id', organizationsController.getOrganization);
+router.get('/:id', organizationsController.getOrganizationDetails);
 
 module.exports = router;
