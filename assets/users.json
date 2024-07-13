@@ -1,0 +1,12 @@
+{
+	"users": {
+		"admin": {
+			"mail": "admin@localhost",
+			"password": "admin"
+		},
+		"guest": {
+			"mail": "guest@localhost",
+			"password": "guest"
+		}
+	}
+}

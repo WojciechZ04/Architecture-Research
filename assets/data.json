@@ -1,52 +1,53 @@
 {
   "project": [
     {
+      "id": 1,
       "title": "Project Title",
       "dueDate": "2013-12-31",
       "tasks": [
         {
-          "title": "Task 1",
-          "dueDate": "2013-12-31",
-          "priority": "high",
-          "status": "done"
+          "id": 1,
+          "title": "Task1",
+          "description": "Lorem ipsum",
+          "projectId": "1",
+          "status": "Not started"
         },
         {
-          "title": "Task 2",
-          "dueDate": "2013-12-31",
-          "priority": "medium",
-          "status": "in progress"
+          "id": 2,
+          "title": "Task 5",
+          "description": "Lorem ipsum",
+          "projectId": "1",
+          "status": "Not started"
         },
         {
-          "title": "Task 3",
-          "dueDate": "2013-12-31",
-          "priority": "low",
-          "status": "not started"
+          "id": 3,
+          "title": "Task 6",
+          "description": "Lorem ipsum",
+          "projectId": "1",
+          "status": "In progress"
         }
       ]
     },
     {
-		"title": "Project Title 2",
-		"dueDate": "2013-12-31",
-		"tasks": [
-			{
-				"title": "Task 1",
-				"dueDate": "2013-12-31",
-				"priority": "high",
-        "status": "done"
-			},
-			{
-				"title": "Task 2",
-				"dueDate": "2013-12-31",
-				"priority": "medium",
-        "status": "done"
-			},
-			{
-				"title": "Task 3",
-				"dueDate": "2013-12-31",
-				"priority": "low",
-        "status": "not started"
-			}
-		]
-	}
+      "id": 2,
+      "title": "Project Title 2",
+      "dueDate": "2013-12-31",
+      "tasks": [
+        {
+          "id": 1,
+          "title": "Task 2",
+          "description": "Lorem ipsum",
+          "projectId": "2",
+          "status": "Not started"
+        },
+        {
+          "id": 3,
+          "title": "Task 4",
+          "description": "Lorem ipsum",
+          "projectId": "2",
+          "status": "Done"
+        }
+      ]
+    }
   ]
 }

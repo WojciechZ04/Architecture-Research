@@ -1,6 +1,6 @@
 import "./TaskColumn.css";
 import Task from "./Task/Task";
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
@@ -20,11 +20,40 @@ const style = {
 
 export default function TaskColumn(props) {
   const [open, setOpen] = React.useState(false);
+  const [taskName, setTaskName] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
+  const [projectId, setProjectId] = useState('');
+  const taskStatus = props.value;
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handleCreateTask = async () => {
+    const response = await fetch("http://localhost:5000/api/tasks", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: taskName,
+        description: taskDescription,
+        projectId: projectId,
+        status: taskStatus,
+      }),
+    });
+    
+    if (response.ok) {
+      handleClose();
+      setTaskName('');
+      setTaskDescription('');
+      setProjectId('');
+      props.fetchTasks();
+    } else {
+      console.error('Failed to create task');
+    }
+  };
+
   const className =
-    props.value === "To do"
+    props.value === "Not started"
       ? "column to-do-column"
       : props.value === "In progress"
       ? "column in-progress-column"
@@ -37,23 +66,36 @@ export default function TaskColumn(props) {
       <h2 className="label">{props.value}</h2>
       <hr />
       
-      {props.tasks.map((task) => (
-        <Task key={task.id} task={task} />
+      {props.tasks.map((task, index) => (
+        <Task className={className} key={index} task={task} fetchTasks={props.fetchTasks}/>
       ))}
 
       <button className="centered" onClick={handleOpen}>New task</button>
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
+        aria-labelledby="modal-modal-name"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <h2>Create task</h2>
-          <Input placeholder="Task title" />
-          <Input placeholder="Task description" />
+          <Input 
+            placeholder="Task name" 
+            value={taskName} 
+            onChange={(e) => setTaskName(e.target.value)} 
+          />
+          <Input 
+            placeholder="Task description" 
+            value={taskDescription} 
+            onChange={(e) => setTaskDescription(e.target.value)} 
+          />
+          <Input 
+            placeholder="Project id" 
+            value={projectId} 
+            onChange={(e) => setProjectId(e.target.value)} 
+          />
           <Button onClick={handleClose}>Cancel</Button>
-          <Button>Create</Button>
+          <Button onClick={handleCreateTask}>Create</Button>
         </Box>
       </Modal>
     </div>
