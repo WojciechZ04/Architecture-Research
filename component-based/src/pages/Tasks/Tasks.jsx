@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "@mui/material";
-import TaskColumn from "../components/TaskColumn/TaskColumn";
+import TaskColumn from "./components/TaskColumn";
 import "./Tasks.css";
 
 export default function Tasks(props) {
@@ -30,8 +30,13 @@ export default function Tasks(props) {
   const doneTasks = tasks ? tasks.filter((task) => task.status === "Done") : [];
 
   return (
-    <Container>
-      <h1 className="centered">Your Tasks</h1>
+    <div>
+      <div className="title">
+        <h1>Your Tasks</h1>
+      </div>
+      <div className="control-panel">
+
+      </div>
       <div className="task-columns">
         <TaskColumn
           value="Not started"
@@ -45,6 +50,6 @@ export default function Tasks(props) {
         />
         <TaskColumn value="Done" tasks={doneTasks} fetchTasks={fetchTasks} />
       </div>
-    </Container>
+    </div>
   );
 }

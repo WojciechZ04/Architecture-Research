@@ -50,7 +50,7 @@ export default function Task({ task, fetchTasks }) {
         }}
       >
         <h2 className="task__title">{task.name}</h2>
-        <button onClick={confirmDelete}>Delete</button>
+        <button onClick={confirmDelete}>X</button>
       </div>
       <p className="task__description">{task.description}</p>
       <Modal

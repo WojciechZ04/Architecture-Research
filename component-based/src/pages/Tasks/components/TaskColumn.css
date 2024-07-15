@@ -1,0 +1,10 @@
+.column {
+	background-color: var(--primary-color-light);
+}
+
+.label {
+	padding-left: 20px;
+	font-size: 1.2rem;
+}
+
+

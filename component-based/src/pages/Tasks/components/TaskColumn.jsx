@@ -1,5 +1,5 @@
 import "./TaskColumn.css";
-import Task from "./Task/Task";
+import Task from "./Task";
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";

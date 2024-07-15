@@ -12,7 +12,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Projects from "./pages/Projects";
-import Tasks from "./pages/Tasks";
+import Tasks from "./pages/Tasks/Tasks";
 import Navbar from "./components/Navbar/Navbar";
 import NotFound from "./pages/NotFound";
 import Teams from "./pages/Teams";
