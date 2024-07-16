@@ -18,7 +18,7 @@ export default function Projects() {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2} className="projectsNav">
         <h1>Projects</h1>
       </Box>

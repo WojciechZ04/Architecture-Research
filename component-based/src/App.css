@@ -9,6 +9,10 @@
     margin-right: auto;
 }
 
+.container {
+	margin-left: 85px;
+}
+
 .title {
 	box-shadow: 0 0 10px var(--accent-color);
 

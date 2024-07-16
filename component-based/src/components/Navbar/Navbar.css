@@ -48,10 +48,6 @@
 	margin-right: 30px;
   }
   
-  #main {
-	margin-left: 85px;
-  }
-  
   @media screen and (max-height: 450px) {
 	.sidebar {
 	  padding-top: 15px;

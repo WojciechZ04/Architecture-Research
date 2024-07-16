@@ -30,7 +30,7 @@ export default function Organization() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
+    <div className="container">
       <h1>Organization</h1>
       {organization && (
         <div>

@@ -9,8 +9,8 @@ import {
 import AuthOutlet from "@auth-kit/react-router/AuthOutlet";
 
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Login from "./pages/Sign/Login";
+import Signup from "./pages/Sign/Signup";
 import Projects from "./pages/Projects";
 import Tasks from "./pages/Tasks/Tasks";
 import Navbar from "./components/Navbar/Navbar";

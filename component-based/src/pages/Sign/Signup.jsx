@@ -45,38 +45,52 @@ function Signup() {
   };
 
   return (
-    <div>
+    <div className="sign">
+      <div className="sign-container">
       <h2>Signup</h2>
       {signupError && <p style={{ color: "red" }}>{signupError}</p>}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Email</label>
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+      <div class="input-group">
+            <label class="label">Username</label>
+      <input
+              autocomplete="off"
+              name="Username"
+              id="Username"
+              class="input"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div class="input-group">
+            <label class="label">Email</label>
+            <input
+              autocomplete="off"
+              name="Email"
+              id="Email"
+              class="input"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div class="input-group">
+            <label class="label">Password</label>
+            <input
+              autocomplete="off"
+              name="Password"
+              id="Password"
+              class="input"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
         <button type="submit">Signup</button>
-        <button onClick={() => navigate("/login")}>Login</button>
       </form>
     </div>
+    <p>Already have an account? <a href="/signin">Sign Ip</a></p>
+  </div>
   );
 }
 

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "@mui/material";
 import TaskColumn from "./components/TaskColumn";
 import "./Tasks.css";
 
@@ -30,7 +29,7 @@ export default function Tasks(props) {
   const doneTasks = tasks ? tasks.filter((task) => task.status === "Done") : [];
 
   return (
-    <div>
+    <div className="container">
       <div className="title">
         <h1>Your Tasks</h1>
       </div>
