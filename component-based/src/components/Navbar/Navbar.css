@@ -1,15 +1,19 @@
 .sidebar {
 	height: 100%;
+	transition: width 0.5s ease;
 	width: 85px;
 	position: fixed;
 	z-index: 1;
 	top: 0;
 	left: 0;
 	background-color: var(--accent-color);
-	transition: 0.5s;
 	overflow-x: hidden;
 	padding-top: 60px;
 	white-space: nowrap;
+  }
+
+  .sidebar:hover {
+	width: 300px;
   }
   
   .sidebar div {
@@ -46,7 +50,6 @@
   
   #main {
 	margin-left: 85px;
-	transition: margin-left 0.5s;
   }
   
   @media screen and (max-height: 450px) {

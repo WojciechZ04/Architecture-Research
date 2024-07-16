@@ -21,7 +21,7 @@ import Organization from "./pages/Organizations/Organization";
 import Profile from "./pages/Profile";
 
 function App() {
-  const [mainMargin, setMainMargin] = useState("85px");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Custom hook to get the current location
   function usePathname() {
@@ -38,8 +38,8 @@ function App() {
     const showNavbar = pathname !== "/login" && pathname !== "/signup";
     return (
       <>
-        {showNavbar && <Navbar setMainMargin={setMainMargin} />}
-        <div id="main" style={{ marginLeft: showNavbar ? mainMargin : "0px" }}>
+        {showNavbar && <Navbar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />}
+        <div id="main" className={isSidebarOpen ? 'sidebar-open' : ''}>
           <Routes>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>

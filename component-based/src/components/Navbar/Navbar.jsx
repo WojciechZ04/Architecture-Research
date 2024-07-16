@@ -4,11 +4,7 @@ import useSignOut from 'react-auth-kit/hooks/useSignOut';
 
 import "./Navbar.css";
 
-// const pages = ["Home", "Projects", "Tasks"];
-// const settings = ["Profile", "Settings", "Logout"];
-
-export default function ResponsiveAppBar({ setMainMargin }) {
-  const [sidebarWidth, setSidebarWidth] = useState("85px");
+export default function ResponsiveAppBar({ setIsSidebarOpen }) {
   const [mini, setMini] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   
@@ -31,16 +27,15 @@ export default function ResponsiveAppBar({ setMainMargin }) {
       relatedTarget = relatedTarget.parentNode;
     }
     if (relatedTarget) return; // Mouse is still inside the div
-  
+
+    
     if (mini) {
       console.log("opening sidebar");
-      setSidebarWidth("250px");
-      setMainMargin("250px");
+      setIsSidebarOpen(true);
       setMini(false);
     } else {
       console.log("closing sidebar");
-      setSidebarWidth("85px");
-      setMainMargin("85px");
+      setIsSidebarOpen(false);
       setMini(true);
     }
   };
@@ -50,7 +45,6 @@ export default function ResponsiveAppBar({ setMainMargin }) {
     <div
       id="mySidebar"
       className="sidebar"
-      style={{ width: sidebarWidth }}
       onMouseOver={toggleSidebar}
       onMouseLeave={toggleSidebar}
     >
