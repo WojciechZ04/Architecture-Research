@@ -1,0 +1,16 @@
+.data-controls {
+	display: flex;
+	gap: 30px;
+}
+
+.projects {
+	margin: 2rem 0;
+	display: grid;
+	gap: 20px;
+}
+
+.project-descriptions, .project-content {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr; /* Adjust based on the number of columns */
+	text-align: center;
+  }

@@ -13,6 +13,10 @@
 	margin-left: 85px;
 }
 
+.content {
+	margin: 3rem 5rem;
+}
+
 .title {
 	box-shadow: 0 0 10px var(--accent-color);
 

@@ -11,7 +11,7 @@ import AuthOutlet from "@auth-kit/react-router/AuthOutlet";
 import Home from "./pages/Home";
 import Login from "./pages/Sign/Login";
 import Signup from "./pages/Sign/Signup";
-import Projects from "./pages/Projects";
+import Projects from "./pages/Projects/Projects";
 import Tasks from "./pages/Tasks/Tasks";
 import Navbar from "./components/Navbar/Navbar";
 import NotFound from "./pages/NotFound";
