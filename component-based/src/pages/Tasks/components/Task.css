@@ -1,3 +1,8 @@
 .task {
 	border-bottom: solid 1px var(--accent-color);
 }
+
+.project-assigned {
+	color: var(--secondary-color);
+	font-size: 0.8rem;
+}

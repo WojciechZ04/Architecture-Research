@@ -33,9 +33,7 @@ export default function Tasks(props) {
       <div className="title">
         <h1>Your Tasks</h1>
       </div>
-      <div className="control-panel">
-
-      </div>
+      <div className="control-panel"></div>
       <div className="task-columns">
         <TaskColumn
           value="Not started"
@@ -47,7 +45,11 @@ export default function Tasks(props) {
           tasks={inProgressTasks}
           fetchTasks={fetchTasks}
         />
-        <TaskColumn value="Done" tasks={doneTasks} fetchTasks={fetchTasks} />
+        <TaskColumn 
+          value="Done" 
+          tasks={doneTasks} 
+          fetchTasks={fetchTasks} 
+        />
       </div>
     </div>
   );
