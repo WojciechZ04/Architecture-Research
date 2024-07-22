@@ -14,3 +14,38 @@
 	background-color: var(--neutral-color) !important;
 	padding: 1rem !important;
 }
+
+.project-action {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;	
+}
+
+.project-action i {
+	background-color: var(--primary-color-light);
+	transition: filter 0.3s ease;
+}
+
+.project-action i:hover {
+	cursor: pointer;
+	filter: brightness(80%); /* Darken on hover */
+}
+
+.selection-panel {
+	position: absolute;
+	top: 100%; /* This positions the panel right below the .project-action */
+	left: 0; /* Adjust this to align with the left edge of .project-action */
+	background-color: white;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+	z-index: 10;
+  }
+  
+  .selection-panel button {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	border: none;
+	background: none;
+	text-align: left;
+  }

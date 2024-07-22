@@ -11,6 +11,6 @@
 
 .project-descriptions, .project-content {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr; /* Adjust based on the number of columns */
-	text-align: center;
-  }
+	grid-template-columns: 1fr 1fr 1fr 53px; /* Adjust based on the number of columns */
+	text-align: center;  
+}
