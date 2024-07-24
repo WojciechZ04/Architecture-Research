@@ -14,3 +14,8 @@
 	grid-template-columns: 1fr 1fr 1fr 53px; /* Adjust based on the number of columns */
 	text-align: center;  
 }
+
+.no-projects {
+	margin-top: 2rem;
+	text-align: center;
+}
