@@ -1,7 +1,7 @@
 import React from "react";
 import "./DataControls.css";
 
-export default function DataControls({ onSearchChange }) {
+export default function DataControls({ onSearchChange, onSortChange }) {
   return (
     <div className="data-controls">
       <div className="show-completed-checkbox">
@@ -22,9 +22,11 @@ export default function DataControls({ onSearchChange }) {
       </div>
 
       <div className="sorter">
-        <select name="sorter" id="sorter">
-          <option value="date">Date</option>
-          <option value="name">Name</option>
+        <select name="sorter" id="sorter" onChange={(e) => onSortChange(e.target.value)}>
+          <option value="date-asc">Date (Ascending)</option>
+          <option value="date-desc">Date (Descending)</option>
+          <option value="name-asc">Name (A-Z)</option>
+          <option value="name-desc">Name (Z-A)</option>
         </select>
       </div>
     </div>

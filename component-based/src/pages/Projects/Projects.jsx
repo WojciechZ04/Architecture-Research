@@ -6,7 +6,7 @@ import "./Projects.css";
 export default function Projects() {
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  
   useEffect(() => {
     fetch("http://localhost:5000/api/projects")
       .then((res) => res.json())
@@ -22,6 +22,30 @@ export default function Projects() {
   const handleSearchChange = (searchTerm) => {
     setSearchTerm(searchTerm);
   };
+
+  const onSortChange = (value) => {
+    const sortedProjects = [...projects].sort((a, b) => {
+      let fieldA, fieldB;
+      const [criteria, direction] = value.split("-");
+
+      if (criteria === "date") {
+        fieldA = new Date(a.deadline);
+        fieldB = new Date(b.deadline);
+      } else if (criteria === "name") {
+        fieldA = a.name.toLowerCase();
+        fieldB = b.name.toLowerCase();
+      }
+
+      if (direction === "asc") {
+        return fieldA < fieldB ? -1 : fieldA > fieldB ? 1 : 0;
+      } else {
+        return fieldA > fieldB ? -1 : fieldA < fieldB ? 1 : 0;
+      }
+    });
+
+      setProjects(sortedProjects);
+  };
+
   const filteredProjects =
     projects &&
     projects.filter((project) =>
@@ -35,7 +59,10 @@ export default function Projects() {
       </div>
 
       <div className="content">
-        <DataControls onSearchChange={handleSearchChange} />
+        <DataControls
+          onSearchChange={handleSearchChange}
+          onSortChange={onSortChange}
+        />
 
         <div className="projects">
           <div className="project-descriptions">

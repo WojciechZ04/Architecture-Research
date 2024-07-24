@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import "./Project.css";
 
 export default function Project({ project }) {
-  // State to manage the visibility of the selection panel
   const [showPanel, setShowPanel] = useState(false);
 
-  // Event handler to toggle the selection panel
   const togglePanel = () => {
     setShowPanel(!showPanel);
   };
