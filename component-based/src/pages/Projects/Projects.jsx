@@ -1,23 +1,30 @@
 import { useState, useEffect } from "react";
 import Project from "./components/Project";
 import DataControls from "./components/DataControls";
+import CreateProjectModal from "./components/CreateProjectModal";
 import "./Projects.css";
 
-export default function Projects() {
+export default function Projects(props) {
+  const [open, setOpen] = useState(false);
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   
+  const handleOpen = () => setOpen(true);
+
   useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = () => {
     fetch("http://localhost:5000/api/projects")
       .then((res) => res.json())
       .then((data) => {
         setProjects(data);
-        console.log("Data fetched:", data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  };
 
   const handleSearchChange = (searchTerm) => {
     setSearchTerm(searchTerm);
@@ -79,8 +86,14 @@ export default function Projects() {
           ) : (
             <div className="no-projects">No projects found.</div>
           )}
+          <div className="new-project" onClick={handleOpen}>
+            <p>
+              Create a new project.
+            </p>
+          </div>
         </div>
       </div>
+      <CreateProjectModal open={open} setOpen={setOpen} fetchProjects={fetchProjects}/>
     </div>
   );
 }

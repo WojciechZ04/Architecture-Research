@@ -19,3 +19,19 @@
 	margin-top: 2rem;
 	text-align: center;
 }
+
+.new-project {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    border: solid 3px var(--secondary-color);
+    opacity: 0.5; /* Reduce opacity */
+}
+
+.new-project:hover {
+	cursor: pointer;
+	background-color: var(--primary-color-light);
+    opacity: 1	; /* Reduce opacity */
+}
