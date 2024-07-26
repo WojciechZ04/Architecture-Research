@@ -5,5 +5,6 @@ const authenticateToken = require('../authenticateToken');
 
 router.get('/', projectsController.getProjects);
 router.post('/', projectsController.createProject);
+router.get('/:projectId', projectsController.getProject);
 
 module.exports = router;

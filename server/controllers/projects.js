@@ -28,3 +28,23 @@ exports.createProject = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+exports.getProject = async (req, res) => {
+  const { projectId } = req.params;
+
+  try {
+    const [projects] = await promisePool.query(
+      "SELECT * FROM projects WHERE id = ?",
+      [projectId]
+    );
+
+    if (projects.length === 0) {
+      res.status(404).json({ error: "Project not found" });
+    } else {
+      res.json(projects[0]);
+    }
+  } catch (err) {
+    console.error("Error fetching project from database:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}

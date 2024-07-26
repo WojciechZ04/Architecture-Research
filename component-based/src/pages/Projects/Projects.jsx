@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Project from "./components/Project";
 import DataControls from "./components/DataControls";
 import CreateProjectModal from "./components/CreateProjectModal";
@@ -8,7 +9,7 @@ export default function Projects(props) {
   const [open, setOpen] = useState(false);
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   const handleOpen = () => setOpen(true);
 
   useEffect(() => {
@@ -50,7 +51,7 @@ export default function Projects(props) {
       }
     });
 
-      setProjects(sortedProjects);
+    setProjects(sortedProjects);
   };
 
   const filteredProjects =
@@ -80,20 +81,24 @@ export default function Projects(props) {
           {filteredProjects.length > 0 ? (
             <div className="projects">
               {filteredProjects.map((project, index) => (
-                <Project key={index} project={project} />
+                <Link key={project.id} to={`/projects/${project.id}`} className="project-link">
+                  <Project key={index} project={project} />
+                </Link>
               ))}
             </div>
           ) : (
             <div className="no-projects">No projects found.</div>
           )}
           <div className="new-project" onClick={handleOpen}>
-            <p>
-              Create a new project.
-            </p>
+            <p>Create a new project.</p>
           </div>
         </div>
       </div>
-      <CreateProjectModal open={open} setOpen={setOpen} fetchProjects={fetchProjects}/>
+      <CreateProjectModal
+        open={open}
+        setOpen={setOpen}
+        fetchProjects={fetchProjects}
+      />
     </div>
   );
 }
