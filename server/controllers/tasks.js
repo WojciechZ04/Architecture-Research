@@ -17,12 +17,12 @@ exports.getTasks = async (req, res) => {
 };
 
 exports.createTask = async (req, res) => {
-  const { name, description, projectId, status } = req.body;
+  const { name, description, projectId, deadline, status } = req.body;
 
   try {
     const sql =
-      "INSERT INTO tasks (name, description, project_id, status) VALUES (?, ?, ?, ?)";
-    const values = [name, description, projectId, status];
+      "INSERT INTO tasks (name, description, project_id, deadline, status) VALUES (?, ?, ?, ?, ?)";
+    const values = [name, description, projectId, deadline, status];
     const [result] = await promisePool.query(sql, values);
 
     const insertedTask = {
@@ -30,6 +30,7 @@ exports.createTask = async (req, res) => {
       name,
       description,
       projectId,
+      deadline,
       status,
     };
 

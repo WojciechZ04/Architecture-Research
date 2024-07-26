@@ -25,6 +25,7 @@ export default function CreateTaskModal({
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [projectId, setProjectId] = useState("");
+  const [deadline, setDeadline] = useState("");
 
   if (!open) return null;
   const handleCreateTask = async () => {
@@ -38,6 +39,7 @@ export default function CreateTaskModal({
         description: taskDescription,
         projectId: projectId,
         status: taskStatus,
+        deadline: deadline,
       }),
     });
 
@@ -77,6 +79,11 @@ export default function CreateTaskModal({
           placeholder="Project id"
           value={projectId}
           onChange={(e) => setProjectId(e.target.value)}
+        />
+        <Input
+          type="date"
+          value={deadline}
+          onChange={(e) => setDeadline(e.target.value)}
         />
         <Button onClick={handleClose}>Cancel</Button>
         <Button onClick={handleCreateTask}>Create</Button>
