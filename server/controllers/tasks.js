@@ -2,7 +2,13 @@ const promisePool = require("../database");
 
 exports.getTasks = async (req, res) => {
   try {
-    const [tasks] = await promisePool.query("SELECT * FROM tasks");
+    const sql = `
+      SELECT tasks.*, projects.name AS project_name
+      FROM tasks
+      LEFT JOIN projects ON tasks.project_id = projects.id
+    `;
+    const [tasks] = await promisePool.query(sql);
+    console.log('Tasks', tasks);
     res.json(tasks);
   } catch (err) {
     console.error("Error fetching tasks from database:", err);

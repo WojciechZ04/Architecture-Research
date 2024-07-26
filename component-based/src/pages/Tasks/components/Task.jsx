@@ -20,7 +20,7 @@ export default function Task({ task, fetchTasks }) {
   return (
     <div className="task">
       <div>
-        <p className="project-assigned"> {">"}Personal</p>
+        <p className="project-assigned"> {">"}{task.project_name}</p>
         <h2 className="task__title">{task.name}</h2>
         <p className="task__description">{task.description}</p>
       </div>

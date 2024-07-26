@@ -40,11 +40,24 @@ exports.getProject = async (req, res) => {
 
     if (projects.length === 0) {
       res.status(404).json({ error: "Project not found" });
-    } else {
-      res.json(projects[0]);
-    }
+      return;
+    } 
+
+      const project = projects[0];
+
+      const [tasks] = await promisePool.query(
+        "SELECT * FROM tasks WHERE project_id = ?",
+        [projectId]
+      );
+
+      const response = {
+        ...project,
+        tasks: tasks
+      };
+
+      res.json(response);
   } catch (err) {
     console.error("Error fetching project from database:", err);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};

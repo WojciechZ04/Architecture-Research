@@ -20,6 +20,12 @@ export default function ProjectDetails() {
   return (
     <div className='container'>
       <h1>{project.name}</h1>
+
+      <ul>
+        {project.tasks.map((task) => (
+          <li key={task.id}>{task.name}</li>
+        ))}
+      </ul>
     </div>
   );
 }
