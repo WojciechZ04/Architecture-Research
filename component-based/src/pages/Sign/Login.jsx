@@ -66,8 +66,8 @@ function Login() {
             <label class="label">Password</label>
             <input
               autocomplete="off"
-              name="Email"
-              id="Email"
+              name="Password"
+              id="Password"
               class="input"
               type="password"
               value={password}

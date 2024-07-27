@@ -61,3 +61,38 @@ exports.getProject = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+exports.deleteProject = async (req, res) => {
+  const { projectId } = req.params;
+
+  try {
+    await promisePool.query("DELETE FROM tasks WHERE project_id = ?", [projectId]);
+    await promisePool.query("DELETE FROM projects WHERE id = ?", [projectId]);
+
+    res.status(204).end();
+  } catch (err) {
+    console.error("Error deleting project from database:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+exports.editProject = async (req, res) => {
+  const { projectId } = req.params;
+  const { name } = req.body;
+
+  try {
+    const [result] = await promisePool.query(
+      "UPDATE projects SET name = ? WHERE id = ?",
+      [name, projectId]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Project not found" });
+    }
+
+    res.status(200).json({ message: "Project updated successfully" });
+  } catch (err) {
+    console.error("Error updating project in database:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

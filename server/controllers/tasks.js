@@ -8,7 +8,6 @@ exports.getTasks = async (req, res) => {
       LEFT JOIN projects ON tasks.project_id = projects.id
     `;
     const [tasks] = await promisePool.query(sql);
-    console.log('Tasks', tasks);
     res.json(tasks);
   } catch (err) {
     console.error("Error fetching tasks from database:", err);

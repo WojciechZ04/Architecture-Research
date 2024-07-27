@@ -1,9 +1,23 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Project.css";
+import EditProjectModal from "./EditProjectModal";
+import DeleteProjectModal from "./DeleteProjectModal";
 
 export default function Project({ project }) {
   const [showPanel, setShowPanel] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const confirmDelete = () => {
+    setShowDeleteModal(true);
+    setShowEditModal(false);
+  };
+
+  const confirmEdit = () => {
+    setShowEditModal(true);
+    setShowDeleteModal(false);
+  }
 
   const togglePanel = () => {
     setShowPanel(!showPanel);
@@ -28,11 +42,14 @@ export default function Project({ project }) {
         </span>
         {showPanel && (
           <div className="selection-panel">
-            <button onClick={() => console.log("Edit")}>Edit</button>
-            <button onClick={() => console.log("Delete")}>Delete</button>
+            <button onClick={confirmEdit}>Edit</button>
+            <button onClick={confirmDelete}>Delete</button>
           </div>
         )}
       </div>
+
+      <DeleteProjectModal showModal={showDeleteModal} setShowModal={setShowDeleteModal} project={project} />
+      <EditProjectModal showModal={showEditModal} setShowModal={setShowEditModal} project={project} />
     </div>
   );
 }

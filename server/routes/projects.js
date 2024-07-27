@@ -6,5 +6,7 @@ const authenticateToken = require('../authenticateToken');
 router.get('/', projectsController.getProjects);
 router.post('/', projectsController.createProject);
 router.get('/:projectId', projectsController.getProject);
+router.delete('/:projectId', projectsController.deleteProject);
+router.put('/:projectId', projectsController.editProject);
 
 module.exports = router;
