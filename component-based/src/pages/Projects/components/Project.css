@@ -39,13 +39,25 @@
 	background-color: white;
 	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 	z-index: 10;
-  }
+}
   
-  .selection-panel button {
+.selection-panel button {
 	display: block;
 	width: 100%;
 	padding: 10px;
 	border: none;
 	background: none;
 	text-align: left;
-  }
+}
+
+.project {
+	display: grid;
+	grid-template-columns: 3fr 53px; /* Adjust based on the number of columns */
+	text-align: center;  
+}
+
+.project-content {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	text-align: center;
+}

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Project from "./components/Project";
 import DataControls from "./components/DataControls";
 import CreateProjectModal from "./components/CreateProjectModal";
@@ -81,9 +80,7 @@ export default function Projects(props) {
           {filteredProjects.length > 0 ? (
             <div className="projects">
               {filteredProjects.map((project, index) => (
-                <Link key={project.id} to={`/projects/${project.id}`} className="project-link">
-                  <Project key={index} project={project} />
-                </Link>
+                <Project key={index} project={project} />
               ))}
             </div>
           ) : (
