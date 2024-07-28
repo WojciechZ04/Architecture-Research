@@ -12,25 +12,57 @@ export default function Task({ task, fetchTasks }) {
     setShowEditModal(false);
   };
 
-  const confirmEdit = () => {
-    setShowEditModal(true);
-    setShowDeleteModal(false);
-  }
+  // const confirmEdit = () => {
+  //   setShowEditModal(true);
+  //   setShowDeleteModal(false);
+  // };
 
   return (
     <div className="task">
-      <div>
-        <p className="project-assigned"> {">"}{task.project_name}</p>
+      <div className="checkbox">
+        <label class="checkbox-btn">
+          <label for="checkbox"></label>
+          <input id="checkbox" type="checkbox" />
+          <span class="checkmark"></span>
+        </label>
+      </div>
+      <div className="task-details">
+        <p className="project-assigned">
+          {" "}
+          {">"}
+          {task.project_name}
+        </p>
         <h2 className="task__title">{task.name}</h2>
         <p className="task__description">{task.description}</p>
-        <p className="task__deadline">Deadline: {task.deadline ? new Date(task.deadline).toLocaleDateString() : "No deadline"}</p>
+        <p className="task__deadline">
+          Deadline:{" "}
+          {task.deadline
+            ? new Date(task.deadline).toLocaleDateString()
+            : "No deadline"}
+        </p>
       </div>
 
-      <button onClick={confirmDelete}>X</button>
-      <button onClick={confirmEdit}>Edit</button>
+      <div className="task-controls">
+        {/* <span onClick={confirmEdit}>
+          <i className="material-icons task-icon">edit</i>
+        </span> */}
+        <span onClick={confirmDelete}>
+          <i className="material-icons task-icon">close</i>
+        </span>
+      </div>
 
-      <DeleteTaskModal showModal={showDeleteModal} setShowModal={setShowDeleteModal} task={task} fetchTasks={fetchTasks} />
-      <EditTaskModal showModal={showEditModal} setShowModal={setShowEditModal} task={task} fetchTasks={fetchTasks} />
+      <DeleteTaskModal
+        showModal={showDeleteModal}
+        setShowModal={setShowDeleteModal}
+        task={task}
+        fetchTasks={fetchTasks}
+      />
+      <EditTaskModal
+        showModal={showEditModal}
+        setShowModal={setShowEditModal}
+        task={task}
+        fetchTasks={fetchTasks}
+      />
     </div>
   );
 }

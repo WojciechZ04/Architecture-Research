@@ -33,9 +33,14 @@ export default function TaskColumn(props) {
         />
       ))}
 
-      <button className="centered" onClick={handleOpen}>
+      <div className="create-task-section" onClick={handleOpen}>
+        <p>Add a Task</p>
+        <i className="material-icons">add</i>
+      </div>
+
+      {/* <button className="centered" onClick={handleOpen}>
         New task
-      </button>
+      </button> */}
 
       <CreateTaskModal open={open} setOpen={setOpen} taskStatus={taskStatus} fetchTasks={props.fetchTasks}/>
     </div>

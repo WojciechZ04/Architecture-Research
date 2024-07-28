@@ -61,7 +61,6 @@ app.post("/api/signup", async (req, res) => {
     const token = jwt.sign({ userId: result.id }, TOKEN_SECRET, {
       expiresIn: "1h",
     });
-    console.log(result.id);
     res.json({ message: "Signup successful", token: token });
   } catch (err) {
     console.error("Signup error:", err);

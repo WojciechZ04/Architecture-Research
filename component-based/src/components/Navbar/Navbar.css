@@ -42,10 +42,11 @@
   .icon-text {
 	vertical-align: middle;
   }
-  
-  .material-icons {
-	margin-right: 30px;
+
+  .icon-text {
+	margin-left: 30px;
   }
+
   
   @media screen and (max-height: 450px) {
 	.sidebar {

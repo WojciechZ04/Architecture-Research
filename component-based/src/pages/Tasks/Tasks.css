@@ -1,6 +1,7 @@
 .task-columns {
 	display: flex;
 	justify-content: space-between;
+	margin: 40px;
   }
   
   .task-columns > div {
