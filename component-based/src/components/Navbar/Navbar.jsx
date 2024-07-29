@@ -69,7 +69,7 @@ export default function ResponsiveAppBar({ setIsSidebarOpen }) {
         </span>
       </div>
       <br />
-      <div onClick={() => handlePageChange('Teams')}>
+      {/* <div onClick={() => handlePageChange('Teams')}>
         <span>
           <i className="material-icons">people</i>
           <span className="icon-text">Teams</span>
@@ -82,7 +82,7 @@ export default function ResponsiveAppBar({ setIsSidebarOpen }) {
           <span className="icon-text">Organizations</span>
         </span>
       </div>
-      <br />
+      <br /> */}
 
       <div className="navbar-avatar" onClick={toggleDropdown}>
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png" alt="Profile" className="avatar-image" />
