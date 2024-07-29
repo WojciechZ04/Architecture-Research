@@ -57,3 +57,25 @@ exports.deleteTask = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+exports.completeTask = async (req, res) => {
+  const { taskId } = req.params;
+  const { status } = req.body;
+
+  try {
+    const sql = "UPDATE tasks SET status = ? WHERE id = ?";
+    const values = [status, taskId];
+    const [result] = await promisePool.query(sql, values);
+
+    if (result.affectedRows > 0) {
+      res
+        .status(200)
+        .json({ message: `Task ${taskId} completed successfully.` });
+    } else {
+      res.status(404).json({ message: "Task not found." });
+    }
+  } catch (err) {
+    console.error("Error completing task from database:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

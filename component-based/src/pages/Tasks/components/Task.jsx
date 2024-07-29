@@ -12,6 +12,29 @@ export default function Task({ task, fetchTasks }) {
     setShowEditModal(false);
   };
 
+  
+  const handleCheckboxChange = async (e) => {
+    if (e.target.checked) {
+      try {
+        const response = await fetch(`http://localhost:5000/api/tasks/${task.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: "Done" }),
+        });
+
+        if (response.ok) {
+          fetchTasks(); // Refresh the task list
+        } else {
+          console.error("Failed to update task status");
+        }
+      } catch (error) {
+        console.error("Error updating task status", error);
+      }
+    }
+  };
+
   // const confirmEdit = () => {
   //   setShowEditModal(true);
   //   setShowDeleteModal(false);
@@ -22,7 +45,7 @@ export default function Task({ task, fetchTasks }) {
       <div className="checkbox">
         <label class="checkbox-btn">
           <label for="checkbox"></label>
-          <input id="checkbox" type="checkbox" />
+          <input id="checkbox" type="checkbox" onChange={handleCheckboxChange} checked={task.status === "Done"}/>
           <span class="checkmark"></span>
         </label>
       </div>
