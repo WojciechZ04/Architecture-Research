@@ -59,22 +59,26 @@
 
   .navbar-avatar {
 	cursor: pointer;
-	/* Positioning and styling for the avatar */
   }
   
   .avatar-image {
-	width: 40px; /* Adjust size as needed */
-	height: 40px;
+	width: 24px; /* Adjust size as needed */
+	height: 24px;
 	border-radius: 50%; /* Circular avatar */
 	background-image: url('https://example.com/path/to/image.jpg');
-	background-size: cover; /* Cover the entire area of the element */
+	background-size: cover; 
+	position: absolute;
+	bottom: 110px;
   }
   
   .dropdown-menu {
 	position: absolute;
-	right: 0;
+	top: 68%; /* Position the dropdown below the avatar */
+  	left: 24%;
 	min-width: 160px;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	background-color: var(--secondary-color);
+
 	z-index: 1;
   }
   

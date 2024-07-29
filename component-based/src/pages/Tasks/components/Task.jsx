@@ -35,10 +35,10 @@ export default function Task({ task, fetchTasks }) {
           </p>
           <h2 className="task__title">{task.name}</h2>
           <p className="task__deadline">
-            Deadline:{" "}
+            {" "}
             {task.deadline
               ? new Date(task.deadline).toLocaleDateString()
-              : "No deadline"}
+              : ""}
           </p>
         </div>
         <p className="task__description">{task.description}</p>

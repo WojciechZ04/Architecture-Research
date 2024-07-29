@@ -62,7 +62,7 @@ h2 {
 .checkbox {
 	width: 70px;
 	display: flex;
-	align-items: center;
+	margin-top: 20px;
 	justify-content: center;
 }
 

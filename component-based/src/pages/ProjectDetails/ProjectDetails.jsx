@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 export default function ProjectDetails() {
   const { projectId } = useParams();
   const [project, setProject] = useState(null);
 
   useEffect(() => {
-	console.log('Project Id: ', projectId);
+    console.log("Project Id: ", projectId);
     // Replace with your actual API endpoint
     fetch(`http://localhost:5000/api/projects/${projectId}`)
       .then((response) => response.json())
@@ -18,8 +18,10 @@ export default function ProjectDetails() {
     return <div>Loading...</div>;
   }
   return (
-    <div className='container'>
-      <h1>{project.name}</h1>
+    <div className="container">
+      <div className="title">
+        <h1>{project.name}</h1>
+      </div>
 
       <ul>
         {project.tasks.map((task) => (
