@@ -1,5 +1,6 @@
 .column {
 	background-color: var(--primary-color-light);
+	box-shadow: 0px 0px 15px -5px var(--secondary-color);
 }
 
 .label {
@@ -14,7 +15,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: auto;
 }
 
 .create-task-section:hover {

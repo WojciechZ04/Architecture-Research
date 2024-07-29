@@ -27,19 +27,21 @@ export default function Task({ task, fetchTasks }) {
         </label>
       </div>
       <div className="task-details">
-        <p className="project-assigned">
-          {" "}
-          {">"}
-          {task.project_name}
-        </p>
-        <h2 className="task__title">{task.name}</h2>
+        <div className="grid">
+          <p className="project-assigned">
+            {" "}
+            {">"}
+            {task.project_name}
+          </p>
+          <h2 className="task__title">{task.name}</h2>
+          <p className="task__deadline">
+            Deadline:{" "}
+            {task.deadline
+              ? new Date(task.deadline).toLocaleDateString()
+              : "No deadline"}
+          </p>
+        </div>
         <p className="task__description">{task.description}</p>
-        <p className="task__deadline">
-          Deadline:{" "}
-          {task.deadline
-            ? new Date(task.deadline).toLocaleDateString()
-            : "No deadline"}
-        </p>
       </div>
 
       <div className="task-controls">
