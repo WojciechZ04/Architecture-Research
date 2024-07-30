@@ -19,20 +19,15 @@ import NotFound from "./pages/NotFound";
 import Teams from "./pages/Teams";
 import Organizations from "./pages/Organizations/Organizations";
 import Organization from "./pages/Organizations/Organization";
-import Profile from "./pages/Profile";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Custom hook to get the current location
   function usePathname() {
     const location = useLocation();
     return location.pathname;
   }
-
-  // Using the custom hook inside the main App component will cause an error
-  // because hooks cannot be called conditionally or outside of a function component body.
-  // We need to create a separate component that uses this hook and renders conditionally based on the path.
 
   const Layout = () => {
     const pathname = usePathname();
