@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const profileController = require('../controllers/profile');
+const authenticateToken = require('../authenticateToken');
 
-router.get('/', profileController.getProfile);
-router.put('/:id', profileController.updateProfile);
+router.get('/', authenticateToken, profileController.getProfile);
+router.put('/:id', authenticateToken, profileController.updateProfile);
 
 module.exports = router;

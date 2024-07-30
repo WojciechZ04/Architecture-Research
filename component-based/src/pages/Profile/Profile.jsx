@@ -6,14 +6,18 @@ export default function Profile() {
   const [profile, setProfile] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editType, setEditType] = useState('');
-  const [initialValue, setInitialValue] = useState('');
 
   useEffect(() => {
     fetchProfile();
   }, []);
 
   const fetchProfile = () => {
-    fetch("http://localhost:5000/api/profile")
+    const token = localStorage.getItem('token');
+    fetch("http://localhost:5000/api/profile", {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
       .then((res) => res.json())
       .then((data) => {
         setProfile(data[0]);
@@ -25,7 +29,6 @@ export default function Profile() {
 
   const handleEditClick = (type) => {
     setEditType(type);
-    setInitialValue(profile[type]);
     setIsModalOpen(true);
   };
 
@@ -35,10 +38,12 @@ export default function Profile() {
       [type]: newValue,
     };
 
+    const token = localStorage.getItem('token');
     fetch(`http://localhost:5000/api/profile/${profile.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(updatedProfile),
     })
@@ -83,7 +88,6 @@ export default function Profile() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         editType={editType}
-        initialValue={initialValue}
         onSave={handleSave}
       />
     </div>

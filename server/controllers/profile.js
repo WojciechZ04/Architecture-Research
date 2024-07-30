@@ -2,8 +2,10 @@ const promisePool = require("../database");
 
 exports.getProfile = async (req, res) => {
   try {
+    const userId = req.userId;
     const [profile] = await promisePool.query(
-      "SELECT * FROM users WHERE id = 1"
+      "SELECT * FROM users WHERE id = ?",
+      [userId]
     );
     res.json(profile);
   } catch (err) {
@@ -13,7 +15,7 @@ exports.getProfile = async (req, res) => {
 };
 
 exports.updateProfile = async (req, res) => {
-  const { id } = req.params;
+  const userId = req.userId;
   const { username, email, password } = req.body;
 
   try {
@@ -22,10 +24,10 @@ exports.updateProfile = async (req, res) => {
 		SET username = ?, email = ?, password = ?
 		WHERE id = ?
 	  `;
-    await promisePool.query(query, [username, email, password, id]);
+    await promisePool.query(query, [username, email, password, userId]);
     const [updatedProfile] = await promisePool.query(
       "SELECT * FROM users WHERE id = ?",
-      [id]
+      [userId]
     );
     res.json(updatedProfile[0]);
   } catch (err) {
