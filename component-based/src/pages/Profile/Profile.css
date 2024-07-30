@@ -66,3 +66,12 @@
 .profile-data {
 	margin-top: 40px;
 }
+
+.profile Button {
+	color: red;
+	border-radius: 0;
+}
+
+.profile Button:hover {
+	background-color: rgba(250, 167, 167, 0.192);
+}

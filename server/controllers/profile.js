@@ -35,3 +35,15 @@ exports.updateProfile = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+exports.deleteProfile = async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    await promisePool.query("DELETE FROM users WHERE id = ?", [userId]);
+    res.status(204).end();
+  } catch (err) {
+    console.error("Error deleting profile from database:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

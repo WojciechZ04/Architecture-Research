@@ -3,7 +3,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
-import './EditModal.css';
+import './Modal.css';
 
 export default function EditModal({ isOpen, onClose, editType, onSave }) {
 	const [value, setValue] = useState('');

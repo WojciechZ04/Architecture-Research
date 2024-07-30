@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from "react";
 import EditModal from "./components/EditModal";
+import DeleteModal from "./components/DeleteModal";
+import Button from "@mui/material/Button";
 import "./Profile.css";
 
 export default function Profile() {
   const [profile, setProfile] = useState({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editType, setEditType] = useState('');
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [editType, setEditType] = useState("");
 
   useEffect(() => {
     fetchProfile();
   }, []);
 
   const fetchProfile = () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     fetch("http://localhost:5000/api/profile", {
       headers: {
-        'Authorization': `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -29,7 +32,11 @@ export default function Profile() {
 
   const handleEditClick = (type) => {
     setEditType(type);
-    setIsModalOpen(true);
+    setIsEditModalOpen(true);
+  };
+
+  const handleDeleteClick = () => {
+    setIsDeleteModalOpen(true);
   };
 
   const handleSave = (type, newValue) => {
@@ -38,24 +45,47 @@ export default function Profile() {
       [type]: newValue,
     };
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     fetch(`http://localhost:5000/api/profile/${profile.id}`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(updatedProfile),
     })
       .then((res) => res.json())
       .then((data) => {
         setProfile(data);
-        setIsModalOpen(false);
+        setIsEditModalOpen(false);
       })
       .catch((error) => {
         console.error("Error updating data:", error);
       });
   };
+
+  const handleDelete = () => {
+    const token = localStorage.getItem("token");
+    fetch(`http://localhost:5000/api/profile/${profile.id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => {
+      if (res.ok) {
+        console.log("Profile deleted successfully");
+        window.location.href = "/login";
+      } else {
+        return res.json().then((data) => {
+          throw new Error(data.message);
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Error deleting profile:", error);
+    });
+    };
 
   return (
     <div className="container profile">
@@ -71,24 +101,48 @@ export default function Profile() {
         <div className="inline">
           <p>Username: </p>
           <p>{profile.username}</p>
-          <i className="material-icons profile-icon" onClick={() => handleEditClick('username')}>edit</i>
+          <i
+            className="material-icons profile-icon"
+            onClick={() => handleEditClick("username")}
+          >
+            edit
+          </i>
         </div>
         <div className="inline">
           <p>Email: </p>
           <p>{profile.email}</p>
-          <i className="material-icons profile-icon" onClick={() => handleEditClick('email')}>edit</i>
+          <i
+            className="material-icons profile-icon"
+            onClick={() => handleEditClick("email")}
+          >
+            edit
+          </i>
         </div>
         <div className="inline">
           <p>Password: </p>
           <p>****************</p>
-          <i className="material-icons profile-icon" onClick={() => handleEditClick('password')}>edit</i>
+          <i
+            className="material-icons profile-icon"
+            onClick={() => handleEditClick("password")}
+          >
+            edit
+          </i>
         </div>
       </div>
+      <Button className="delete" onClick={handleDeleteClick}>
+        DELETE ACCOUNT
+      </Button>
+
       <EditModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
         editType={editType}
         onSave={handleSave}
+      />
+      <DeleteModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onDelete={handleDelete}
       />
     </div>
   );
