@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
+import EditModal from "./components/EditModal";
 import "./Profile.css";
 
 export default function Profile() {
   const [profile, setProfile] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editType, setEditType] = useState('');
+  const [initialValue, setInitialValue] = useState('');
 
   useEffect(() => {
     fetchProfile();
@@ -16,6 +20,35 @@ export default function Profile() {
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+      });
+  };
+
+  const handleEditClick = (type) => {
+    setEditType(type);
+    setInitialValue(profile[type]);
+    setIsModalOpen(true);
+  };
+
+  const handleSave = (type, newValue) => {
+    const updatedProfile = {
+      ...profile,
+      [type]: newValue,
+    };
+
+    fetch(`http://localhost:5000/api/profile/${profile.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedProfile),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setProfile(data);
+        setIsModalOpen(false);
+      })
+      .catch((error) => {
+        console.error("Error updating data:", error);
       });
   };
 
@@ -33,19 +66,26 @@ export default function Profile() {
         <div className="inline">
           <p>Username: </p>
           <p>{profile.username}</p>
-          <i className="material-icons profile-icon">edit</i>
+          <i className="material-icons profile-icon" onClick={() => handleEditClick('username')}>edit</i>
         </div>
         <div className="inline">
           <p>Email: </p>
           <p>{profile.email}</p>
-          <i className="material-icons profile-icon">edit</i>
+          <i className="material-icons profile-icon" onClick={() => handleEditClick('email')}>edit</i>
         </div>
         <div className="inline">
           <p>Password: </p>
           <p>****************</p>
-          <i className="material-icons profile-icon">edit</i>
+          <i className="material-icons profile-icon" onClick={() => handleEditClick('password')}>edit</i>
         </div>
       </div>
+      <EditModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        editType={editType}
+        initialValue={initialValue}
+        onSave={handleSave}
+      />
     </div>
   );
 }
