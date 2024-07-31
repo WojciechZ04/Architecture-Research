@@ -1,0 +1,15 @@
+.home-task {
+	width: 300px;
+	flex: 1 1 0;
+	display: flex;
+	flex-direction: column;
+	padding: 20px 40px;
+}
+
+.home-task:not(:last-child) {
+    border-right: solid 1px var(--primary-color);
+}
+
+.home-task h3 {
+	font-size: 1.5rem;
+}

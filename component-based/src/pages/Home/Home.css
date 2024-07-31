@@ -1,0 +1,36 @@
+.home h1 {
+	text-align: center;
+}
+
+.home-wrapper {
+	display: flex;
+	margin: 50px 100px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.home-content {
+	flex: 0 0 90%;
+	background-color: var(--primary-color-light);
+}
+
+.home-content h2 {
+	text-align: center;
+	padding: 20px;
+	border-bottom: solid 1px var(--primary-color);
+}
+  
+.home-sidebar {
+	flex: 0 0 10%;
+	background-color: #e0e0e0; /* Optional: for better visualization */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.home-tasks {
+	display: flex;
+	flex: 1 1 auto;
+	border-bottom: solid 1px var(--primary-color);
+}

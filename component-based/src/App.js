@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import AuthOutlet from "@auth-kit/react-router/AuthOutlet";
 
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import Login from "./pages/Sign/Login";
 import Signup from "./pages/Sign/Signup";
 import Projects from "./pages/Projects/Projects";
