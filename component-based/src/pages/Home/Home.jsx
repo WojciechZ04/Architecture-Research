@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Task from "./components/Task";
+import Project from "./components/Project";
 import "./Home.css";
 
 export default function Home() {
@@ -19,9 +20,18 @@ export default function Home() {
         setUser(data.users[0]);
         const filteredTasks = data.tasks.filter(task => task.status !== 'Done');
         const sortedTasks = filteredTasks.sort((a, b) => new Date(a.deadline) - new Date(b.deadline)).slice(0, 3);
-        
+      
         setTasks(sortedTasks);
-        setProjects(data.projects);
+
+        const projectsWithCompletion = data.projects.map(project => {
+          const projectTasks = data.tasks.filter(task => task.project_id === project.id);
+          const completedTasks = projectTasks.filter(task => task.status === 'Done').length;
+          const totalTasks = projectTasks.length;
+          const completionPercentage = totalTasks === 0 ? 0 : (completedTasks / totalTasks) * 100;
+          return { ...project, completionPercentage };
+        });
+
+        setProjects(projectsWithCompletion);
       });
   }, []);
 
@@ -38,7 +48,11 @@ export default function Home() {
             ))}
           </div>
           <h2>Active projects</h2>
-          <div className="home-projects"></div>
+          <div className="home-projects">
+            {projects.map((project) => (
+              <Project key={project.id} project={project} completionPercentage={project.completionPercentage} />
+            ))}
+          </div>
         </div>
         <div className="home-sidebar">
           <i className="material-icons">notifications</i>
