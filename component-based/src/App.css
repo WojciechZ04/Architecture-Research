@@ -31,3 +31,7 @@
 .sidebar-open {
 	opacity: 50%;
 }
+
+.error {
+	color: red;
+}

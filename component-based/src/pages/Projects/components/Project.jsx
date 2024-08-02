@@ -18,7 +18,7 @@ export default function Project({ project }) {
   const confirmEdit = () => {
     setShowEditModal(true);
     setShowDeleteModal(false);
-  }
+  };
 
   const togglePanel = () => {
     setShowPanel(!showPanel);
@@ -46,14 +46,18 @@ export default function Project({ project }) {
       >
         <div className="project-content">
           <p className="project__title">{project.name}</p>
-          <p>{" "}
-          {project.deadline ? new Date(project.deadline).toLocaleDateString() : ""}</p>
+          <p>
+            {" "}
+            {project.deadline
+              ? new Date(project.deadline).toLocaleDateString()
+              : "-"}
+          </p>
           <p>Milestone 2</p>
         </div>
       </Link>
       <div className="project-action" ref={panelRef}>
         <span onClick={togglePanel}>
-          <i className="material-icons">more_vert</i>
+          <i className="material-icons" >more_vert</i>
         </span>
         {showPanel && (
           <div className="selection-panel">
@@ -63,8 +67,16 @@ export default function Project({ project }) {
         )}
       </div>
 
-      <DeleteProjectModal showModal={showDeleteModal} setShowModal={setShowDeleteModal} project={project} />
-      <EditProjectModal showModal={showEditModal} setShowModal={setShowEditModal} project={project} />
+      <DeleteProjectModal
+        showModal={showDeleteModal}
+        setShowModal={setShowDeleteModal}
+        project={project}
+      />
+      <EditProjectModal
+        showModal={showEditModal}
+        setShowModal={setShowEditModal}
+        project={project}
+      />
     </div>
   );
 }
