@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Task from "./components/Task";
 import Project from "./components/Project";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import "./Home.css";
 
 export default function Home() {
@@ -18,23 +21,31 @@ export default function Home() {
       .then((response) => response.json())
       .then((data) => {
         setUser(data.users[0]);
-        const filteredTasks = data.tasks.filter(task => task.status !== 'Done');
-        const sortedTasks = filteredTasks.sort((a, b) => new Date(a.deadline) - new Date(b.deadline)).slice(0, 3);
-      
+        const filteredTasks = data.tasks.filter(
+          (task) => task.status !== "Done"
+        );
+        const sortedTasks = filteredTasks
+          .sort((a, b) => new Date(a.deadline) - new Date(b.deadline))
+          .slice(0, 3);
+
         setTasks(sortedTasks);
 
-        const projectsWithCompletion = data.projects.map(project => {
-          const projectTasks = data.tasks.filter(task => task.project_id === project.id);
-          const completedTasks = projectTasks.filter(task => task.status === 'Done').length;
+        const projectsWithCompletion = data.projects.map((project) => {
+          const projectTasks = data.tasks.filter(
+            (task) => task.project_id === project.id
+          );
+          const completedTasks = projectTasks.filter(
+            (task) => task.status === "Done"
+          ).length;
           const totalTasks = projectTasks.length;
-          const completionPercentage = totalTasks === 0 ? 0 : (completedTasks / totalTasks) * 100;
+          const completionPercentage =
+            totalTasks === 0 ? 0 : (completedTasks / totalTasks) * 100;
           return { ...project, completionPercentage };
         });
 
         setProjects(projectsWithCompletion);
       });
   }, []);
-
 
   return (
     <div className="container home">
@@ -50,14 +61,22 @@ export default function Home() {
           <h2>Active projects</h2>
           <div className="home-projects">
             {projects.map((project) => (
-              <Project key={project.id} project={project} completionPercentage={project.completionPercentage} />
+              <Project
+                key={project.id}
+                project={project}
+                completionPercentage={project.completionPercentage}
+              />
             ))}
           </div>
         </div>
         <div className="home-sidebar">
-          <i className="material-icons">notifications</i>
-          <p>[calendar]</p>
-          <i className="material-icons">logout</i>
+          <div className="home-sidebar-header">
+            <i className="material-icons">notifications</i>
+            <i className="material-icons">logout</i>
+          </div>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DateCalendar />
+          </LocalizationProvider>
         </div>
       </div>
     </div>

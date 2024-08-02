@@ -9,7 +9,7 @@
 }
 
 .home-content {
-	flex: 0 0 90%;
+	flex: 0 0 80%;
 	background-color: var(--primary-color-light);
 }
 
@@ -20,14 +20,14 @@
 }
   
 .home-sidebar {
-	flex: 0 0 10%;
+	flex: 0 0 20%;
 	background-color: #e0e0e0; 
+	margin-top: 20px;
 	display: flex;
 	align-items: center;
-	justify-content: center;
 	display: flex;
 	flex-direction: column;
-}
+}	
 
 .home-tasks {
 	display: flex;

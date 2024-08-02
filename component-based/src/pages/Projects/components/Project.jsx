@@ -32,7 +32,8 @@ export default function Project({ project }) {
       >
         <div className="project-content">
           <p className="project__title">{project.name}</p>
-          <p>15 May 2024</p>
+          <p>{" "}
+          {project.deadline ? new Date(project.deadline).toLocaleDateString() : ""}</p>
           <p>Milestone 2</p>
         </div>
       </Link>
