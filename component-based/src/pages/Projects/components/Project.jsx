@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Project.css";
 import EditProjectModal from "./EditProjectModal";
@@ -8,6 +8,7 @@ export default function Project({ project }) {
   const [showPanel, setShowPanel] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const panelRef = useRef(null);
 
   const confirmDelete = () => {
     setShowDeleteModal(true);
@@ -23,6 +24,19 @@ export default function Project({ project }) {
     setShowPanel(!showPanel);
   };
 
+  const handleClickOutside = (event) => {
+    if (panelRef.current && !panelRef.current.contains(event.target)) {
+      setShowPanel(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="project">
       <Link
@@ -37,14 +51,14 @@ export default function Project({ project }) {
           <p>Milestone 2</p>
         </div>
       </Link>
-      <div className="project-action">
+      <div className="project-action" ref={panelRef}>
         <span onClick={togglePanel}>
           <i className="material-icons">more_vert</i>
         </span>
         {showPanel && (
           <div className="selection-panel">
-            <button onClick={confirmEdit}>Edit</button>
-            <button onClick={confirmDelete}>Delete</button>
+            <div onClick={confirmEdit}>Edit</div>
+            <div onClick={confirmDelete}>Delete</div>
           </div>
         )}
       </div>

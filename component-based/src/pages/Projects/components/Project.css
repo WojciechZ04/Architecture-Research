@@ -18,7 +18,8 @@
 
 .project-action {
 	position: relative;
-	display: flex;
+  	display: inline-block;
+	margin: auto auto;
 	justify-content: center;
 	align-items: center;	
 }
@@ -35,20 +36,28 @@
 
 .selection-panel {
 	position: absolute;
-	top: 100%; /* This positions the panel right below the .project-action */
-	left: 0; /* Adjust this to align with the left edge of .project-action */
-	background-color: white;
-	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-	z-index: 10;
-  }
+	float:right;
+  	right: 0;
+  	background-color: var(--accent-color);
+	
+  	min-width: 100px;
+  	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  	z-index: 1;
+}
   
-  .selection-panel button {
+  .selection-panel div {
+	font-size: large;
 	display: block;
-	width: 100%;
-	padding: 10px;
+	padding: 20px;
+	color: var(--primary-color);
 	border: none;
 	background: none;
-	text-align: left;
+	text-align: center;
+  }
+
+  .selection-panel div:hover {
+	cursor: pointer;
+	color: var(--neutral-color);
   }
 
   .project {
@@ -56,6 +65,8 @@
 	grid-template-columns: 3fr 53px; /* Adjust based on the number of columns */
 	text-align: center;  
 }
+
+
 
 .project-content {
 	display: grid; 
