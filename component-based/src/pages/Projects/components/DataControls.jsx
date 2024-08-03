@@ -1,7 +1,8 @@
 import React from "react";
+import { TextField, Select, MenuItem } from "@mui/material";
 import "./DataControls.css";
 
-export default function DataControls({ onSearchChange, onSortChange }) {
+export default function DataControls({ onSearchChange, onSortChange, sortValue }) {
   return (
     <div className="data-controls">
       <div className="show-completed-checkbox">
@@ -10,24 +11,24 @@ export default function DataControls({ onSearchChange, onSortChange }) {
       </div>
 
       <div className="search-bar">
-        <input type="text" placeholder="Search projects" onChange={(e) => onSearchChange(e.target.value)}/>
+        <TextField type="text" placeholder="Search projects" onChange={(e) => onSearchChange(e.target.value)}/>
       </div>
 
       <div className="filter">
-        <select name="filter" id="filter">
-          <option value="all">All</option>
-          <option value="active">Active</option>
-          <option value="completed">Completed</option>
-        </select>
+        <Select name="filter" id="filter">
+          <MenuItem  value="all">All</MenuItem>
+          <MenuItem  value="active">Active</MenuItem>
+          <MenuItem  value="completed">Completed</MenuItem>
+        </Select>
       </div>
 
       <div className="sorter">
-        <select name="sorter" id="sorter" onChange={(e) => onSortChange(e.target.value)}>
-          <option value="date-asc">Date (Ascending)</option>
-          <option value="date-desc">Date (Descending)</option>
-          <option value="name-asc">Name (A-Z)</option>
-          <option value="name-desc">Name (Z-A)</option>
-        </select>
+        <Select name="sorter" id="sorter" value={sortValue} onChange={(e) => onSortChange(e.target.value)}>
+          <MenuItem value="date-asc">Date (Ascending)</MenuItem>
+          <MenuItem value="date-desc">Date (Descending)</MenuItem>
+          <MenuItem value="name-asc">Name (A-Z)</MenuItem>
+          <MenuItem value="name-desc">Name (Z-A)</MenuItem>
+        </Select>
       </div>
     </div>
   );

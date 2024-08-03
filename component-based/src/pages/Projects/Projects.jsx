@@ -8,6 +8,7 @@ export default function Projects(props) {
   const [open, setOpen] = useState(false);
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortValue, setSortValue] = useState("date-asc"); // Default sort value
 
   const handleOpen = () => setOpen(true);
 
@@ -19,7 +20,8 @@ export default function Projects(props) {
     fetch("http://localhost:5000/api/projects")
       .then((res) => res.json())
       .then((data) => {
-        setProjects(data);
+        const sortedData = sortProjects(data, sortValue);
+        setProjects(sortedData);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -30,8 +32,8 @@ export default function Projects(props) {
     setSearchTerm(searchTerm);
   };
 
-  const onSortChange = (value) => {
-    const sortedProjects = [...projects].sort((a, b) => {
+  const sortProjects = (projects, value) => {
+    return projects.sort((a, b) => {
       let fieldA, fieldB;
       const [criteria, direction] = value.split("-");
 
@@ -49,9 +51,14 @@ export default function Projects(props) {
         return fieldA > fieldB ? -1 : fieldA < fieldB ? 1 : 0;
       }
     });
-
-    setProjects(sortedProjects);
   };
+
+  const onSortChange = (value) => {
+    setSortValue(value);
+    const sortedProjects = sortProjects([...projects], value);
+    setProjects(sortedProjects);
+  }
+
 
   const filteredProjects =
     projects &&
@@ -69,6 +76,7 @@ export default function Projects(props) {
         <DataControls
           onSearchChange={handleSearchChange}
           onSortChange={onSortChange}
+          sortValue={sortValue}
         />
 
         <div className="projects">
