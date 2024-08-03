@@ -1,18 +1,7 @@
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
-
+import Button from "@mui/material/Button";
+import "./Modal.css";
 
 export default function DeleteProjectModal({showModal, setShowModal, project}) {
 	if (!showModal) return null;
@@ -43,11 +32,11 @@ export default function DeleteProjectModal({showModal, setShowModal, project}) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box className="modal">
           <h2 id="modal-modal-title">Confirm Delete</h2>
           <p id="modal-modal-description">Are you sure you want to delete this task?</p>
-          <button onClick={handleDelete}>Yes</button>
-          <button onClick={() => setShowModal(false)}>No</button>
+          <Button onClick={handleDelete}>Yes</Button>
+          <Button onClick={() => setShowModal(false)}>No</Button>
         </Box>
       </Modal>
   );

@@ -14,7 +14,6 @@
 
 .search-bar .MuiOutlinedInput-root {
 	width: 400px; 
-	background-color: var(--primary-color-light);
 }
 
 .data-controls .MuiOutlinedInput-root {
