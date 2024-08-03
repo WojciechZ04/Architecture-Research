@@ -5,11 +5,6 @@ import "./DataControls.css";
 export default function DataControls({ onSearchChange, onSortChange, onFilterChange, sortValue, filterValue }) {
   return (
     <div className="data-controls">
-      <div className="show-completed-checkbox">
-        <input type="checkbox" id="show-completed" name="show-completed" />
-        <label htmlFor="show-completed">Show completed</label>
-      </div>
-
       <div className="search-bar">
         <TextField type="text" placeholder="Search projects" onChange={(e) => onSearchChange(e.target.value)}/>
       </div>

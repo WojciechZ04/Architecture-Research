@@ -20,7 +20,7 @@ export default function Project({ project }) {
     setShowDeleteModal(false);
   };
 
-  const togglePanel = () => {
+  const togglePanel = () => {    
     setShowPanel(!showPanel);
   };
 
@@ -38,7 +38,7 @@ export default function Project({ project }) {
   }, []);
 
   return (
-    <div className="project">
+    <div className={`project ${project.status}`}>
       <Link
         key={project.id}
         to={`/projects/${project.id}`}

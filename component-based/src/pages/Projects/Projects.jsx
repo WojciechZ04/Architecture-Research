@@ -64,7 +64,22 @@ export default function Projects(props) {
     setFilterValue(value);
   };
 
-  const filteredProjects = projects.filter((project) => {
+  const getProjectStatus = (project) => {
+    if (project.tasks.length > 0 && project.tasks.every(task => task.status === "Done")) {
+      return "completed";
+    }
+    if (project.tasks.length > 0 && project.tasks.some(task => task.status === "In progress" || task.status === "Done") && !project.tasks.every(task => task.status === "Done")) {
+      return "active";
+    }
+    return "inactive"; // Default status if no tasks or other conditions
+  };
+  
+  const projectsWithStatus = projects.map(project => ({
+    ...project,
+    status: getProjectStatus(project)
+  }));
+
+  const filteredProjects = projectsWithStatus.filter((project) => {
     if (filterValue === "all") return true;
     if (filterValue === "completed") {
       return project.tasks.length > 0 && project.tasks.every(task => task.status === "Done");

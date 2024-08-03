@@ -1,8 +1,20 @@
 .project {
 	background-color: var(--primary-color-light);
-	border-left: 5px solid var(--neutral-color);
+	border-left: 5px solid;
 	box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.2);
 }
+
+.project.completed {
+	border-left-color: green;
+  }
+  
+  .project.active {
+	border-left-color: blue;
+  }
+  
+  .project.inactive {
+	border-left-color: gray;
+  }
 
 .indicator {
 	width: 20px;
