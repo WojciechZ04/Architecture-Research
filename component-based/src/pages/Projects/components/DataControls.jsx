@@ -10,7 +10,7 @@ export default function DataControls({ onSearchChange, onSortChange, onFilterCha
       </div>
 
       <div className="filter">
-        <Select name="filter" id="filter" value={filterValue} onChange={(e) => onFilterChange(e.target.value)}>
+        <Select value={filterValue} onChange={(e) => onFilterChange(e.target.value)}>
           <MenuItem  value="all">All</MenuItem>
           <MenuItem  value="active">Active</MenuItem>
           <MenuItem  value="completed">Completed</MenuItem>
@@ -18,7 +18,7 @@ export default function DataControls({ onSearchChange, onSortChange, onFilterCha
       </div>
 
       <div className="sorter">
-        <Select name="sorter" id="sorter" value={sortValue} onChange={(e) => onSortChange(e.target.value)}>
+        <Select value={sortValue} onChange={(e) => onSortChange(e.target.value)}>
           <MenuItem value="date-asc">Date (Ascending)</MenuItem>
           <MenuItem value="date-desc">Date (Descending)</MenuItem>
           <MenuItem value="name-asc">Name (A-Z)</MenuItem>
