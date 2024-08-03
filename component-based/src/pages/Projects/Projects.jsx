@@ -8,7 +8,8 @@ export default function Projects(props) {
   const [open, setOpen] = useState(false);
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortValue, setSortValue] = useState("date-asc"); // Default sort value
+  const [sortValue, setSortValue] = useState("date-asc");
+  const [filterValue, setFilterValue] = useState("all");
 
   const handleOpen = () => setOpen(true);
 
@@ -57,12 +58,27 @@ export default function Projects(props) {
     setSortValue(value);
     const sortedProjects = sortProjects([...projects], value);
     setProjects(sortedProjects);
-  }
+  };
 
+  const onFilterChange = (value) => {
+    setFilterValue(value);
+  };
 
-  const filteredProjects =
-    projects &&
-    projects.filter((project) =>
+  const filteredProjects = projects.filter((project) => {
+    if (filterValue === "all") return true;
+    if (filterValue === "completed") {
+      return project.tasks.length > 0 && project.tasks.every(task => task.status === "Done");
+    }
+    if (filterValue === "active") 
+    {
+      return project.tasks.length > 0 && project.tasks.some(task => task.status === "In progress" || task.status === "Done") && !project.tasks.every(task => task.status === "Done");
+    }
+    return true;
+  });
+
+  const searchedProjects =
+    filteredProjects &&
+    filteredProjects.filter((project) =>
       project.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -76,7 +92,9 @@ export default function Projects(props) {
         <DataControls
           onSearchChange={handleSearchChange}
           onSortChange={onSortChange}
+          onFilterChange={onFilterChange}
           sortValue={sortValue}
+          filterValue={filterValue}
         />
 
         <div className="projects">
@@ -85,9 +103,9 @@ export default function Projects(props) {
             <div>Deadline</div>
             <div>Progress</div>
           </div>
-          {filteredProjects.length > 0 ? (
+          {searchedProjects.length > 0 ? (
             <div className="projects">
-              {filteredProjects.map((project, index) => (
+              {searchedProjects.map((project, index) => (
                 <Project key={index} project={project} />
               ))}
             </div>

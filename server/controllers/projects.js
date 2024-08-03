@@ -2,7 +2,54 @@ const promisePool = require("../database");
 
 exports.getProjects = async (req, res) => {
   try {
-    const [projects] = await promisePool.query("SELECT * FROM projects");
+    const query = `
+      SELECT 
+        p.id AS project_id, 
+        p.name AS project_name, 
+        p.deadline AS project_deadline, 
+        p.description AS project_description,
+        t.id AS task_id, 
+        t.name AS task_name, 
+        t.deadline AS task_deadline, 
+        t.description AS task_description,
+        t.status AS task_status
+      FROM 
+        projects p
+      LEFT JOIN 
+        tasks t 
+      ON 
+        p.id = t.project_id
+    `;
+    const [projectsWithTasks] = await promisePool.query(query);
+    
+    const projects = projectsWithTasks.reduce((acc, row) => {
+      const project = acc.find(p => p.id === row.project_id);
+      if (project) {
+        project.tasks.push({
+          id: row.task_id, 
+          name: row.task_name, 
+          deadline: row.task_deadline, 
+          description: row.task_description, 
+          status: row.task_status
+        });
+      } else {
+        acc.push({
+          id: row.project_id,
+          name: row.project_name,
+          deadline: row.project_deadline,
+          description: row.project_description,
+          tasks: row.task_id ? [{
+            id: row.task_id, 
+            name: row.task_name, 
+            deadline: row.task_deadline, 
+            description: row.task_description, 
+            status: row.task_status
+          }] : []
+        });
+      }
+      return acc;
+    }, []);
+  
     res.json(projects);
   } catch (err) {
     console.error("Error fetching projects from database:", err);
@@ -11,16 +58,18 @@ exports.getProjects = async (req, res) => {
 };
 
 exports.createProject = async (req, res) => {
-  const { name } = req.body;
+  const { name, deadline, description } = req.body;
 
   try {
-    const sql = "INSERT INTO projects (name) VALUES (?)";
-    const values = [name];
+    const sql = "INSERT INTO projects (name, deadline, description) VALUES (?, ?, ?)";
+    const values = [name, deadline, description];
     const [result] = await promisePool.query(sql, values);
 
     const insertedProject = {
       id: result.insertId,
       name,
+      deadline,
+      description,
     };
 
     res.status(201).json(insertedProject);

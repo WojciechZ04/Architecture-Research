@@ -2,7 +2,7 @@ import React from "react";
 import { TextField, Select, MenuItem } from "@mui/material";
 import "./DataControls.css";
 
-export default function DataControls({ onSearchChange, onSortChange, sortValue }) {
+export default function DataControls({ onSearchChange, onSortChange, onFilterChange, sortValue, filterValue }) {
   return (
     <div className="data-controls">
       <div className="show-completed-checkbox">
@@ -15,7 +15,7 @@ export default function DataControls({ onSearchChange, onSortChange, sortValue }
       </div>
 
       <div className="filter">
-        <Select name="filter" id="filter">
+        <Select name="filter" id="filter" value={filterValue} onChange={(e) => onFilterChange(e.target.value)}>
           <MenuItem  value="all">All</MenuItem>
           <MenuItem  value="active">Active</MenuItem>
           <MenuItem  value="completed">Completed</MenuItem>

@@ -30,11 +30,9 @@ export default function ResponsiveAppBar({ setIsSidebarOpen }) {
 
     
     if (mini) {
-      console.log("opening sidebar");
       setIsSidebarOpen(true);
       setMini(false);
     } else {
-      console.log("closing sidebar");
       setIsSidebarOpen(false);
       setMini(true);
     }
