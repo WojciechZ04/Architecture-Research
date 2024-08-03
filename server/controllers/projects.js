@@ -128,11 +128,13 @@ exports.deleteProject = async (req, res) => {
 exports.editProject = async (req, res) => {
   const { projectId } = req.params;
   const { name } = req.body;
+  const { deadline } = req.body;
+  const { description } = req.body;
 
   try {
     const [result] = await promisePool.query(
-      "UPDATE projects SET name = ? WHERE id = ?",
-      [name, projectId]
+      "UPDATE projects SET name = ?, deadline = ?, description = ? WHERE id = ?",
+      [name, deadline, description, projectId]
     );
 
     if (result.affectedRows === 0) {
