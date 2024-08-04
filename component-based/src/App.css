@@ -19,14 +19,13 @@
 
 .title {
 	box-shadow: 0 0 10px var(--accent-color);
-
-}
-
-.title h1 { 
+	background-color: var(--secondary-color);
+	color: var(--primary-color);
 	margin-top: 0;
 	margin-bottom: 20px;
-	padding: 20px;
+	padding: 30px 60px;
 }
+
 
 .sidebar-open {
 	opacity: 50%;
