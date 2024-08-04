@@ -1,22 +1,54 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 
 export default function ProjectDetails() {
   const { projectId } = useParams();
   const [project, setProject] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const hasFetched = useRef(false);
 
   useEffect(() => {
-    console.log("Project Id: ", projectId);
-    // Replace with your actual API endpoint
-    fetch(`http://localhost:5000/api/projects/${projectId}`)
-      .then((response) => response.json())
-      .then((data) => setProject(data))
-      .catch((error) => console.error("Error fetching project:", error));
+    const fetchProject = async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:5000/api/projects/${projectId}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (res.status === 403) {
+          throw new Error("Forbidden");
+        }
+
+        const data = await res.json();
+        setProject(data);
+      } catch (error) {
+        if (error.message.includes("Forbidden")) {
+          window.location.href = "/projects";
+          alert("You are not authorized to access these projects.");
+        } else {
+          console.error("Error fetching data:", error);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (!hasFetched.current) {
+      fetchProject();
+      hasFetched.current = true;
+    }
   }, [projectId]);
 
-  if (!project) {
+  if (loading) {
     return <div>Loading...</div>;
   }
+
   return (
     <div className="container">
       <div className="title">

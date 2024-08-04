@@ -23,6 +23,7 @@ export default function CreateProjectModal({ open, setOpen, fetchProjects }) {
     const response = await fetch("http://localhost:5000/api/projects", {
       method: "POST",
       headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -61,27 +62,27 @@ export default function CreateProjectModal({ open, setOpen, fetchProjects }) {
         />
         {error && <p className="error">{error}</p>}
         <br />
-          <label className="custom-checkbox">
-            <Checkbox
-              checked={hasDeadline}
-              onChange={(e) => setHasDeadline(e.target.checked)}
-              sx={{
+        <label className="custom-checkbox">
+          <Checkbox
+            checked={hasDeadline}
+            onChange={(e) => setHasDeadline(e.target.checked)}
+            sx={{
+              color: "var(--neutral-color)",
+              "&.Mui-checked": {
                 color: "var(--neutral-color)",
-                "&.Mui-checked": {
-                  color: "var(--neutral-color)",
-                },
-              }}
-            />
-            <span>Set a finish date</span>
-          </label>
-          {hasDeadline && (
-            <TextField
-              sx={{ marginTop: "10px" }}
-              type="date"
-              value={projectDeadline}
-              onChange={(e) => setProjectDeadline(e.target.value)}
-            />
-          )}
+              },
+            }}
+          />
+          <span>Set a finish date</span>
+        </label>
+        {hasDeadline && (
+          <TextField
+            sx={{ marginTop: "10px" }}
+            type="date"
+            value={projectDeadline}
+            onChange={(e) => setProjectDeadline(e.target.value)}
+          />
+        )}
         <br />
         <TextField
           multiline

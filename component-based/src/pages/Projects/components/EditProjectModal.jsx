@@ -18,7 +18,7 @@ export default function EditProjectModal({ showModal, setShowModal, project }) {
       if (project.deadline) {
         const date = new Date(project.deadline);
         date.setDate(date.getDate() + 1);
-        setProjectDeadline(date.toISOString().split('T')[0]);
+        setProjectDeadline(date.toISOString().split("T")[0]);
       } else {
         setProjectDeadline("");
       }
@@ -33,6 +33,7 @@ export default function EditProjectModal({ showModal, setShowModal, project }) {
       {
         method: "PUT",
         headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
           "Content-Type": "application/json",
         },
         body: JSON.stringify({

@@ -4,7 +4,7 @@ import DataControls from "./components/DataControls";
 import CreateProjectModal from "./components/CreateProjectModal";
 import "./Projects.css";
 
-export default function Projects(props) {
+export default function Projects() {
   const [open, setOpen] = useState(false);
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,7 +18,13 @@ export default function Projects(props) {
   }, []);
 
   const fetchProjects = () => {
-    fetch("http://localhost:5000/api/projects")
+    fetch("http://localhost:5000/api/projects", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         const projectsWithCompletion = data.map((project) => {
