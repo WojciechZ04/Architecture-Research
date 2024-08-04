@@ -12,6 +12,7 @@ export default function DataControls({ onSearchChange, onSortChange, onFilterCha
       <div className="filter">
         <Select value={filterValue} onChange={(e) => onFilterChange(e.target.value)}>
           <MenuItem  value="all">All</MenuItem>
+          <MenuItem  value="inactive">Inactive</MenuItem>
           <MenuItem  value="active">Active</MenuItem>
           <MenuItem  value="completed">Completed</MenuItem>
         </Select>

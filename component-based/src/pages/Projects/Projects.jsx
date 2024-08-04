@@ -21,7 +21,17 @@ export default function Projects(props) {
     fetch("http://localhost:5000/api/projects")
       .then((res) => res.json())
       .then((data) => {
-        const sortedData = sortProjects(data, sortValue);
+        const projectsWithCompletion = data.map((project) => {
+          const completedTasks = project.tasks.filter(
+            (task) => task.status === "Done"
+          ).length;
+          const totalTasks = project.tasks.length;
+          const completionPercentage =
+            totalTasks === 0 ? 0 : (completedTasks / totalTasks) * 100;
+          const roundedCompletionPercentage = Math.ceil(completionPercentage);
+          return { ...project, roundedCompletionPercentage };
+        });
+        const sortedData = sortProjects(projectsWithCompletion, sortValue);
         setProjects(sortedData);
       })
       .catch((error) => {
@@ -65,29 +75,52 @@ export default function Projects(props) {
   };
 
   const getProjectStatus = (project) => {
-    if (project.tasks.length > 0 && project.tasks.every(task => task.status === "Done")) {
+    if (
+      project.tasks.length > 0 &&
+      project.tasks.every((task) => task.status === "Done")
+    ) {
       return "completed";
     }
-    if (project.tasks.length > 0 && project.tasks.some(task => task.status === "In progress" || task.status === "Done") && !project.tasks.every(task => task.status === "Done")) {
+    if (
+      project.tasks.length > 0 &&
+      project.tasks.some(
+        (task) => task.status === "In progress" || task.status === "Done"
+      ) &&
+      !project.tasks.every((task) => task.status === "Done")
+    ) {
       return "active";
     }
-    return "inactive"; // Default status if no tasks or other conditions
+    return "inactive";
   };
-  
-  const projectsWithStatus = projects.map(project => ({
+
+  const projectsWithStatus = projects.map((project) => ({
     ...project,
-    status: getProjectStatus(project)
+    status: getProjectStatus(project),
   }));
 
   const filteredProjects = projectsWithStatus.filter((project) => {
     if (filterValue === "all") return true;
     if (filterValue === "completed") {
-      return project.tasks.length > 0 && project.tasks.every(task => task.status === "Done");
+      return (
+        project.tasks.length > 0 &&
+        project.tasks.every((task) => task.status === "Done")
+      );
     }
-    if (filterValue === "active") 
-    {
-      return project.tasks.length > 0 && project.tasks.some(task => task.status === "In progress" || task.status === "Done") && !project.tasks.every(task => task.status === "Done");
+    if (filterValue === "active") {
+      return (
+        project.tasks.length > 0 &&
+        project.tasks.some(
+          (task) => task.status === "In progress" || task.status === "Done"
+        ) &&
+        !project.tasks.every((task) => task.status === "Done")
+      );
     }
+    if (filterValue === "inactive") {
+      return !project.tasks.some(
+        (task) => task.status === "In progress" || task.status === "Done"
+      );
+    }
+
     return true;
   });
 
