@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Project from "./components/Project";
 import DataControls from "./components/DataControls";
 import CreateProjectModal from "./components/CreateProjectModal";
@@ -13,11 +13,7 @@ export default function Projects() {
 
   const handleOpen = () => setOpen(true);
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const fetchProjects = () => {
+  const fetchProjects = useCallback(() => {
     fetch("http://localhost:5000/api/projects", {
       method: "GET",
       headers: {
@@ -43,7 +39,11 @@ export default function Projects() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  };
+  }, [sortValue]);
+
+  useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
 
   const handleSearchChange = (searchTerm) => {
     setSearchTerm(searchTerm);
@@ -151,7 +151,7 @@ export default function Projects() {
           filterValue={filterValue}
         />
 
-        <div className="projects">
+        <div className="projects-grid">
           <div className="project-descriptions">
             <div>Name</div>
             <div>Deadline</div>

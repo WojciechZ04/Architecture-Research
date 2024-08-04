@@ -3,8 +3,13 @@
 	gap: 30px;
 }
 
-.projects {
+.projects-grid {
 	margin: 2rem 0;
+	display: grid;
+	gap: 20px;
+}
+
+.projects {
 	display: grid;
 	gap: 20px;
 }
@@ -13,6 +18,8 @@
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 53px; /* Adjust based on the number of columns */
 	text-align: center;  
+	font-size: 1.3rem;
+	font-weight: bold;
 }
 
 .no-projects {

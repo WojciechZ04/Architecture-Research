@@ -1,15 +1,28 @@
 .project {
 	background-color: var(--primary-color-light);
-	border-left: 5px solid;
+	border-left: 10px solid;
 	box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.2);
+	font-size: 1.2rem;
+	transition: box-shadow 0.3s, transform 0.3s;
+	z-index: 2;
+	display: grid;
+	grid-template-columns: 3fr 53px; /* Adjust based on the number of columns */
+	text-align: center;  
+}
+
+.project:hover {
+	cursor: pointer;
+	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.4);
+	transform: scale(1.03); /* Slightly scale up */
+	z-index: 3;
 }
 
 .project.completed {
-	border-left-color: green;
+	border-left-color: #82eb58;
   }
   
   .project.active {
-	border-left-color: blue;
+	border-left-color: rgb(0, 238, 255);
   }
   
   .project.inactive {
@@ -23,20 +36,13 @@
   
   .project__progress .border-linear-progress {
 	flex: 1; 
-	min-width: 100px; 
+	min-width: 80px; 
   }
   
   .project__progress p {
 	margin-left: 20px;
-	width: 50px; 
+	width: 60px; 
   }
-
-.indicator {
-	width: 20px;
-	height: 100%;
-    min-height: 50px;
-	background-color: green;
-}
 
 .projectsNav {
 	background-color: var(--neutral-color) !important;
@@ -74,7 +80,7 @@
 	
   	min-width: 100px;
   	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  	z-index: 1;
+	  z-index: 10;
 }
   
   .selection-panel div {
@@ -92,15 +98,6 @@
 	color: var(--neutral-color);
 	background-color: var(--neutral-color-background);
   }
-
-  .project {
-	display: grid;
-	grid-template-columns: 3fr 53px; /* Adjust based on the number of columns */
-	text-align: center;  
-}
-
-
-
 
 .project-content {
 	display: grid; 

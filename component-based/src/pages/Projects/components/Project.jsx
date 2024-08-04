@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Project.css";
 import EditProjectModal from "./EditProjectModal";
@@ -25,21 +25,13 @@ export default function Project({ project }) {
     setShowPanel(!showPanel);
   };
 
-  const handleClickOutside = (event) => {
-    if (panelRef.current && !panelRef.current.contains(event.target)) {
-      setShowPanel(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
-
   return (
-    <div className={`project ${project.status}`}>
+    <div
+      className={`project ${project.status}`}
+      onMouseLeave={() => {
+        setShowPanel(false);
+      }}
+    >
       <Link
         key={project.id}
         to={`/projects/${project.id}`}
