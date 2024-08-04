@@ -12,11 +12,13 @@ export default function Project({ project }) {
   const panelRef = useRef(null);
 
   const confirmDelete = () => {
+    setShowPanel(false);
     setShowDeleteModal(true);
     setShowEditModal(false);
   };
 
   const confirmEdit = () => {
+    setShowPanel(false);
     setShowEditModal(true);
     setShowDeleteModal(false);
   };

@@ -10,7 +10,13 @@ export default function Tasks(props) {
   }, []);
 
   const fetchTasks = () => {
-    fetch("http://localhost:5000/api/tasks")
+    fetch("http://localhost:5000/api/tasks", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setTasks(data);

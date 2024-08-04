@@ -3,8 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
-import "./Modal.css";
-
+import "../../../components/Modal.css";
 export default function EditProjectModal({ showModal, setShowModal, project }) {
   const [projectName, setProjectName] = useState(project.name);
   const [projectDeadline, setProjectDeadline] = useState(project.deadline);

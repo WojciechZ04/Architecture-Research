@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Input from "@mui/material/Input";
-import Modal from "@mui/material/Modal";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
-import "./Modal.css";
-
+import { Box, Button, Modal, MenuItem, Select, Checkbox, TextField } from "@mui/material";
+import "../../../components/Modal.css";
 export default function CreateTaskModal({
   open,
   setOpen,
@@ -17,7 +10,8 @@ export default function CreateTaskModal({
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [projectId, setProjectId] = useState("");
-  const [deadline, setDeadline] = useState("");
+  const [taskDeadline, setTaskDeadline] = useState("");
+  const [hasDeadline, setHasDeadline] = useState(false);
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -46,7 +40,7 @@ export default function CreateTaskModal({
         description: taskDescription,
         projectId: projectId,
         status: taskStatus,
-        deadline: deadline,
+        deadline: taskDeadline,
       }),
     });
 
@@ -55,7 +49,7 @@ export default function CreateTaskModal({
       setTaskName("");
       setTaskDescription("");
       setProjectId("");
-      setDeadline("");
+      setTaskDeadline("");
       fetchTasks();
     } else {
       console.error("Failed to create task");
@@ -73,8 +67,8 @@ export default function CreateTaskModal({
     >
       <Box className="modal">
         <h2>Create task</h2>
-        <Input
-          placeholder="Task name"
+        <TextField
+          label="Task name"
           value={taskName}
           onChange={(e) => setTaskName(e.target.value)}
         />
@@ -94,16 +88,33 @@ export default function CreateTaskModal({
           ))}
         </Select>
         <br />
-        <Input
-          type="date"
-          value={deadline}
-          onChange={(e) => setDeadline(e.target.value)}
-        />
+        <label className="custom-checkbox">
+          <Checkbox
+            checked={hasDeadline}
+            onChange={(e) => setHasDeadline(e.target.checked)}
+            sx={{
+              color: "var(--neutral-color)",
+              "&.Mui-checked": {
+                color: "var(--neutral-color)",
+              },
+            }}
+          />
+          <span>Set a finish date</span>
+        </label>
+        {hasDeadline && (
+          <TextField
+            sx={{ marginTop: "10px" }}
+            type="date"
+            value={taskDeadline}
+            onChange={(e) => setTaskDeadline(e.target.value)}
+          />
+        )}
         <br />
-        <label>Description:</label>
-        <TextareaAutosize
+        <TextField
+          multiline
           minRows={4}
-          placeholder="(optional)"
+          maxRows={6}
+          label="Descripion (optional)"
           value={taskDescription}
           onChange={(e) => setTaskDescription(e.target.value)}
         />

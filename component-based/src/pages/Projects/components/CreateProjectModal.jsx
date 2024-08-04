@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import Checkbox from "@mui/material/Checkbox";
-import "./Modal.css";
+import "../../../components/Modal.css";
 
 export default function CreateProjectModal({ open, setOpen, fetchProjects }) {
   const [projectName, setProjectName] = useState("");
