@@ -10,6 +10,10 @@ export default function DeleteTaskModal({ showModal, setShowModal, task, fetchTa
 			`http://localhost:5000/api/tasks/${task.project_id}/${task.id}`,
 			{
 			  method: "DELETE",
+			  headers: {
+				Authorization: "Bearer " + localStorage.getItem("token"),
+				"Content-Type": "application/json",
+			  },
 			}
 		  );
 		  if (!response.ok) {

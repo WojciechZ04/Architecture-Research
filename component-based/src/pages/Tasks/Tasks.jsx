@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TaskColumn from "./components/TaskColumn";
 import "./Tasks.css";
 
-export default function Tasks(props) {
+export default function Tasks() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {

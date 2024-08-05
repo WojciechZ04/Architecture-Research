@@ -19,6 +19,7 @@ export default function Task({ task, fetchTasks }) {
         const response = await fetch(`http://localhost:5000/api/tasks/${task.id}`, {
           method: "PUT",
           headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ status: "Done" }),

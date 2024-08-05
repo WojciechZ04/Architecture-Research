@@ -13,11 +13,18 @@ export default function CreateTaskModal({
   const [taskDeadline, setTaskDeadline] = useState("");
   const [hasDeadline, setHasDeadline] = useState(false);
   const [projects, setProjects] = useState([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/projects");
+        const response = await fetch("http://localhost:5000/api/projects", {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "application/json",
+          },
+        });
         const data = await response.json();
         setProjects(data);
       } catch (error) {
@@ -30,9 +37,15 @@ export default function CreateTaskModal({
 
   if (!open) return null;
   const handleCreateTask = async () => {
+    if (!taskName.trim()) {
+      setError('Task name cannot be empty');
+      return;
+    }
+
     const response = await fetch("http://localhost:5000/api/tasks", {
       method: "POST",
       headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -40,7 +53,7 @@ export default function CreateTaskModal({
         description: taskDescription,
         projectId: projectId,
         status: taskStatus,
-        deadline: taskDeadline,
+        deadline: hasDeadline ? taskDeadline : null,
       }),
     });
 
@@ -56,7 +69,10 @@ export default function CreateTaskModal({
     }
   };
 
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false)
+    setError('');
+  };
 
   return (
     <Modal
@@ -72,6 +88,7 @@ export default function CreateTaskModal({
           value={taskName}
           onChange={(e) => setTaskName(e.target.value)}
         />
+        {error && <p className="error">{error}</p>}
         <br />
         <Select
           value={projectId}
