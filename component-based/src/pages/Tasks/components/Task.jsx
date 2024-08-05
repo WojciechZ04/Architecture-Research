@@ -12,27 +12,27 @@ export default function Task({ task, fetchTasks }) {
     setShowEditModal(false);
   };
 
-  
-  const handleCheckboxChange = async (e) => {
-    if (e.target.checked) {
-      try {
-        const response = await fetch(`http://localhost:5000/api/tasks/${task.id}`, {
+  const updateTaskStatus = async (taskId, status) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/tasks/${taskId}`,
+        {
           method: "PUT",
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ status: "Done" }),
-        });
-
-        if (response.ok) {
-          fetchTasks(); // Refresh the task list
-        } else {
-          console.error("Failed to update task status");
+          body: JSON.stringify({ status }),
         }
-      } catch (error) {
-        console.error("Error updating task status", error);
+      );
+
+      if (response.ok) {
+        fetchTasks(); // Refresh the task list
+      } else {
+        console.error("Failed to update task status");
       }
+    } catch (error) {
+      console.error("Error updating task status", error);
     }
   };
 
@@ -46,7 +46,12 @@ export default function Task({ task, fetchTasks }) {
       <div className="checkbox">
         <label class="checkbox-btn">
           <label for="checkbox"></label>
-          <input id="checkbox" type="checkbox" onChange={handleCheckboxChange} checked={task.status === "Done"}/>
+          <input
+            id="checkbox"
+            type="checkbox"
+            onChange={() => updateTaskStatus(task.id, "Done")}
+            checked={task.status === "Done"}
+          />
           <span class="checkmark"></span>
         </label>
       </div>
@@ -60,9 +65,7 @@ export default function Task({ task, fetchTasks }) {
           <h2 className="task__title">{task.name}</h2>
           <p className="task__deadline">
             {" "}
-            {task.deadline
-              ? new Date(task.deadline).toLocaleDateString()
-              : ""}
+            {task.deadline ? new Date(task.deadline).toLocaleDateString() : ""}
           </p>
         </div>
         <p className="task__description">{task.description}</p>
@@ -75,6 +78,16 @@ export default function Task({ task, fetchTasks }) {
         <span onClick={confirmDelete}>
           <i className="material-icons task-icon">close</i>
         </span>
+        {task.status === "Not started" && (
+          <span className="edit-status" onClick={() => updateTaskStatus(task.id, "In progress")} title="Start Task">
+            <i className="material-icons task-icon">arrow_forward</i>
+          </span>
+        )}
+        {task.status === "In progress" && (
+          <span className="edit-status" onClick={() => updateTaskStatus(task.id, "Not started")} title="Change status to not started">
+            <i className="material-icons task-icon">arrow_back</i>
+          </span>
+        )}
       </div>
 
       <DeleteTaskModal

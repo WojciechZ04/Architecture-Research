@@ -60,7 +60,7 @@ exports.deleteTask = async (req, res) => {
   }
 };
 
-exports.completeTask = async (req, res) => {
+exports.updateTaskStatus = async (req, res) => {
   const { taskId } = req.params;
   const { status } = req.body;
 
@@ -72,7 +72,7 @@ exports.completeTask = async (req, res) => {
     if (result.affectedRows > 0) {
       res
         .status(200)
-        .json({ message: `Task ${taskId} completed successfully.` });
+        .json({ message: `Task ${taskId} updated successfully.` });
     } else {
       res.status(404).json({ message: "Task not found." });
     }

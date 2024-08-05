@@ -36,8 +36,12 @@
 .task-controls {
 	width: 50px;
 	display: flex;
-	align-items:start;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+
+.task-controls .edit-status {
+	margin-top: auto;
 }
 
 .task-icon {
