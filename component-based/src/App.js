@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -22,8 +22,6 @@ import Organization from "./pages/Organizations/Organization";
 import Profile from "./pages/Profile/Profile";
 
 function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   function usePathname() {
     const location = useLocation();
     return location.pathname;
@@ -32,10 +30,11 @@ function App() {
   const Layout = () => {
     const pathname = usePathname();
     const showNavbar = pathname !== "/login" && pathname !== "/signup";
+
     return (
       <>
-        {showNavbar && <Navbar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />}
-        <div id="main" className={isSidebarOpen ? 'sidebar-open' : ''}>
+        {showNavbar && <Navbar />}
+        <div id="main">
           <Routes>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
@@ -48,7 +47,10 @@ function App() {
               ></Route>
               <Route path="/teams" element={<Teams />}></Route>
               <Route path="/projects" element={<Projects />}></Route>
-              <Route path="/projects/:projectId" element={<ProjectDetails />}></Route>
+              <Route
+                path="/projects/:projectId"
+                element={<ProjectDetails />}
+              ></Route>
               <Route path="/tasks" element={<Tasks />}></Route>
               <Route path="/" element={<Home />}></Route>
               <Route path="*" element={<NotFound />}></Route>

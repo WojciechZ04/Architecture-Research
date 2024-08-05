@@ -3,20 +3,20 @@
 	transition: width 0.5s ease;
 	width: 85px;
 	position: fixed;
-	z-index: 1;
+	z-index: 100;
 	top: 0;
 	left: 0;
 	background-color: var(--accent-color);
 	overflow-x: hidden;
 	padding-top: 60px;
 	white-space: nowrap;
-  }
+}
 
   .sidebar:hover {
 	width: 300px;
-  }
+}
   
-  .sidebar div {
+.sidebar div {
 	padding: 8px 8px 8px 32px;
 	text-decoration: none;
 	font-size: 25px;
@@ -24,44 +24,44 @@
 	display: block;
 	cursor: pointer;
 	caret-color: transparent;
-  }
+}
   
-  .sidebar div:hover {
+.sidebar div:hover {
 	color: var(--neutral-color);
-  }
+}
   
-  main .sidebar {
+main .sidebar {
 	position: absolute;
 	top: 0;
 	right: 25px;
 	font-size: 36px;
 	margin-left: 50px;
-  }
+}
   
-  .material-icons,
-  .icon-text {
+.material-icons,
+.icon-text {
 	vertical-align: middle;
-  }
+}
 
-  .icon-text {
+.icon-text {
 	margin-left: 30px;
-  }
+}
 
   
-  @media screen and (max-height: 450px) {
+@media screen and (max-height: 450px) {
 	.sidebar {
 	  padding-top: 15px;
-	}
+}
 	.sidebar a {
 	  font-size: 18px;
-	}
-  }
+}
+}
 
-  .navbar-avatar {
+.navbar-avatar {
 	cursor: pointer;
-  }
+}
   
-  .avatar-image {
+.avatar-image {
 	width: 24px; /* Adjust size as needed */
 	height: 24px;
 	border-radius: 50%; /* Circular avatar */
@@ -69,9 +69,9 @@
 	background-size: cover; 
 	position: absolute;
 	bottom: 110px;
-  }
+}
   
-  .dropdown-menu {
+.dropdown-menu {
 	position: absolute;
 	top: 68%; /* Position the dropdown below the avatar */
   	left: 24%;
@@ -80,10 +80,10 @@
 	background-color: var(--secondary-color);
 
 	z-index: 1;
-  }
+}
   
-  .dropdown-menu div {
+.dropdown-menu div {
 	padding: 12px 16px;
 	text-decoration: none;
 	display: block;
-  }
+}

@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useSignOut from 'react-auth-kit/hooks/useSignOut';
+import useSignOut from "react-auth-kit/hooks/useSignOut";
 
 import "./Navbar.css";
 
-export default function ResponsiveAppBar({ setIsSidebarOpen }) {
-  const [mini, setMini] = useState(true);
+export default function Navbar() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  
+
   const navigate = useNavigate();
   const signOut = useSignOut();
-  
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
   const handlePageChange = (page) => {
     if (page === "Home") {
       navigate("/");
@@ -21,21 +22,9 @@ export default function ResponsiveAppBar({ setIsSidebarOpen }) {
     }
   };
 
-  const toggleSidebar = (event) => {
-    let relatedTarget = event.relatedTarget;
-    while (relatedTarget && relatedTarget !== event.currentTarget) {
-      relatedTarget = relatedTarget.parentNode;
-    }
-    if (relatedTarget) return; // Mouse is still inside the div
-
-    
-    if (mini) {
-      setIsSidebarOpen(true);
-      setMini(false);
-    } else {
-      setIsSidebarOpen(false);
-      setMini(true);
-    }
+  const handleMouseLeave = () => {
+    setIsSidebarOpen(false);
+    setDropdownOpen(false);
   };
 
   return (
@@ -43,24 +32,24 @@ export default function ResponsiveAppBar({ setIsSidebarOpen }) {
     <div
       id="mySidebar"
       className="sidebar"
-      onMouseOver={toggleSidebar}
-      onMouseLeave={toggleSidebar}
+      onMouseOver={() => setIsSidebarOpen(true)}
+      onMouseLeave={() => handleMouseLeave(false)}
     >
-      <div onClick={() => handlePageChange('Home')}>
+      <div onClick={() => handlePageChange("Home")}>
         <span>
           <i className="material-icons">home</i>
           <span className="icon-text">Home</span>
         </span>
       </div>
       <br />
-      <div onClick={() => handlePageChange('Projects')}>
+      <div onClick={() => handlePageChange("Projects")}>
         <span>
           <i className="material-icons">folder</i>
           <span className="icon-text">Projects</span>
         </span>
       </div>
       <br />
-      <div onClick={() => handlePageChange('Tasks')}>
+      <div onClick={() => handlePageChange("Tasks")}>
         <span>
           <i className="material-icons">assignment</i>
           <span className="icon-text">Tasks</span>
@@ -83,12 +72,16 @@ export default function ResponsiveAppBar({ setIsSidebarOpen }) {
       <br /> */}
 
       <div className="navbar-avatar" onClick={toggleDropdown}>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png" alt="Profile" className="avatar-image" />
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png"
+          alt="Profile"
+          className="avatar-image"
+        />
       </div>
-      {dropdownOpen && (
+      {dropdownOpen && isSidebarOpen && (
         <div className="dropdown-menu">
-          <div onClick={() => handlePageChange('Profile')}>Profile</div>
-          <div onClick={() => handlePageChange('Settings')}>Settings</div>
+          <div onClick={() => handlePageChange("Profile")}>Profile</div>
+          <div onClick={() => handlePageChange("Settings")}>Settings</div>
           <div onClick={() => signOut()}>Logout</div>
         </div>
       )}

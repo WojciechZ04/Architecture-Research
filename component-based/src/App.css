@@ -9,6 +9,22 @@
     margin-right: auto;
 }
 
+#main {
+	position: fixed; /* Fix the main content to the viewport */
+	top: 0;
+	left: 0;
+	width: 100vw; /* Cover the entire viewport width */
+	height: 100vh; /* Cover the entire viewport height */
+	background-color: var(--primary-color); /* Set the main content background to white */
+	transition: opacity 0.5s ease; /* Smooth transition for opacity */
+	overflow-y: auto; /* Enable vertical scrolling if content overflows */
+	z-index: 1; /* Ensure it is above the body background */
+  }
+  
+  .sidebar:hover ~ #main {
+	opacity: 0.5; /* Adjust this value to control the darkness */
+  }
+
 .container {
 	margin-left: 85px;
 }
@@ -24,10 +40,6 @@
 	margin-top: 0;
 	margin-bottom: 20px;
 	padding: 30px 60px;
-}
-
-.sidebar-open {
-	opacity: 50%;
 }
 
 .error {
