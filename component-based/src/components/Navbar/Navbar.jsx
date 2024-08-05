@@ -8,8 +8,14 @@ export default function Navbar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const navigate = useNavigate();
+
   const signOut = useSignOut();
+
+  const navigate = useNavigate();
+  const handleSignOut = () => {
+    signOut();
+    navigate("/login");
+  };
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -82,7 +88,7 @@ export default function Navbar() {
         <div className="dropdown-menu">
           <div onClick={() => handlePageChange("Profile")}>Profile</div>
           <div onClick={() => handlePageChange("Settings")}>Settings</div>
-          <div onClick={() => signOut()}>Logout</div>
+          <div onClick={() => handleSignOut()}>Logout</div>
         </div>
       )}
     </div>

@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Input from '@mui/material/Input';
-import './Modal.css';
+import { Modal, Box, Button, TextField } from '@mui/material';
+import "../../../components/Modal.css";
 
-export default function EditModal({ isOpen, onClose, editType, onSave }) {
+export default function EditModal({ isOpen, onClose, editType, editValue, onSave }) {
 	const [value, setValue] = useState('');
 
 	const handleSave = () => {
@@ -23,9 +20,9 @@ export default function EditModal({ isOpen, onClose, editType, onSave }) {
     >
       <Box className="modal">
         <h2>Edit {editType}</h2>
-        <Input
-          placeholder={`Enter new ${editType}`}
-          value={value}
+        <TextField
+          value={editValue}
+          type={editType === 'password' ? 'password' : 'text'}
           onChange={(e) => setValue(e.target.value)}
         />
         <br />

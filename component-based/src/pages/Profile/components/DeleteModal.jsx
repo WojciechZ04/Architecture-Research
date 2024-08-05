@@ -1,7 +1,5 @@
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import { Button } from "@mui/material";
-import "./Modal.css";
+import { Button, Box, Modal } from "@mui/material";
+import "../../../components/Modal.css";
 
 export default function DeleteModal({ isOpen, onClose, onDelete }) {
   const handleDelete = () => {

@@ -9,6 +9,7 @@ export default function Profile() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [editType, setEditType] = useState("");
+  const [editValue, setEditValue] = useState("");
 
   useEffect(() => {
     fetchProfile();
@@ -30,8 +31,9 @@ export default function Profile() {
       });
   };
 
-  const handleEditClick = (type) => {
+  const handleEditClick = (type, value) => {
     setEditType(type);
+    setEditValue(value)
     setIsEditModalOpen(true);
   };
 
@@ -103,7 +105,7 @@ export default function Profile() {
           <p>{profile.username}</p>
           <i
             className="material-icons profile-icon"
-            onClick={() => handleEditClick("username")}
+            onClick={() => handleEditClick("username", profile.username)}
           >
             edit
           </i>
@@ -113,7 +115,7 @@ export default function Profile() {
           <p>{profile.email}</p>
           <i
             className="material-icons profile-icon"
-            onClick={() => handleEditClick("email")}
+            onClick={() => handleEditClick("email", profile.email)}
           >
             edit
           </i>
@@ -137,6 +139,7 @@ export default function Profile() {
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         editType={editType}
+        editValue={editValue}
         onSave={handleSave}
       />
       <DeleteModal

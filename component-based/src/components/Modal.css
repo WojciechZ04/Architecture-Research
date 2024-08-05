@@ -47,3 +47,21 @@
 .modal .MuiInputLabel-root.Mui-focused {
 	color: var(--neutral-color); 
 }
+
+.modal .yes-button {
+	color: green;
+	border-radius: 0;
+}
+
+.modal .yes-button:hover {
+	background-color: rgba(167, 250, 192, 0.192);
+}
+
+.modal .no-button {
+	color: red;
+	border-radius: 0;
+}
+
+.modal .no-button:hover {
+	background-color: rgba(250, 167, 167, 0.192);
+}

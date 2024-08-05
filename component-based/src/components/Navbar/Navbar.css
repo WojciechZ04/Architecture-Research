@@ -57,8 +57,9 @@ main .sidebar {
 }
 }
 
-.navbar-avatar {
+.avatar-image:hover {
 	cursor: pointer;
+	transform: scale(1.5);
 }
   
 .avatar-image {
@@ -69,6 +70,7 @@ main .sidebar {
 	background-size: cover; 
 	position: absolute;
 	bottom: 110px;
+	transition: transform 0.3s ease;
 }
   
 .dropdown-menu {
