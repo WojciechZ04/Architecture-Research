@@ -54,19 +54,25 @@ export default function Home() {
         <div className="home-content">
           <h2>Upcoming tasks</h2>
           <div className="home-tasks">
-            {tasks.map((task) => (
-              <Task key={task.id} task={task} />
-            ))}
+            {tasks.length === 0 ? (
+              <p>You don't have any tasks.</p>
+            ) : (
+              tasks.map((task) => <Task key={task.id} task={task} />)
+            )}
           </div>
           <h2>Active projects</h2>
           <div className="home-projects">
-            {projects.map((project) => (
-              <Project
-                key={project.id}
-                project={project}
-                completionPercentage={project.completionPercentage}
-              />
-            ))}
+            {projects.length === 0 ? (
+              <p>You don't have any projects.</p>
+            ) : (
+              projects.map((project) => (
+                <Project
+                  key={project.id}
+                  project={project}
+                  completionPercentage={project.completionPercentage}
+                />
+              ))
+            )}
           </div>
         </div>
         <div className="home-sidebar">

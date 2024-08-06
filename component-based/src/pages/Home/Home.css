@@ -1,5 +1,10 @@
 .home h1 {
+	padding: 40px;
 	text-align: center;
+}
+
+.home h2 {
+	font-size: 1.5rem;
 }
 
 .home-wrapper {
@@ -33,4 +38,24 @@
 	display: flex;
 	flex: 1 1 auto;
 	border-bottom: solid 1px var(--primary-color);
+	text-align: center;
+	justify-content: center;
+	min-height: 100px;
+}
+
+.home-projects {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	min-height: 100px;
+}
+
+.home-projects h3 {
+	text-align: left;
+}
+
+.home-projects p, .home-tasks p {
+	align-self: center;
+
 }

@@ -79,12 +79,20 @@ export default function Task({ task, fetchTasks }) {
           <i className="material-icons task-icon">close</i>
         </span>
         {task.status === "Not started" && (
-          <span className="edit-status" onClick={() => updateTaskStatus(task.id, "In progress")} title="Start Task">
+          <span
+            className="edit-status"
+            onClick={() => updateTaskStatus(task.id, "In progress")}
+            title="Start Task"
+          >
             <i className="material-icons task-icon">arrow_forward</i>
           </span>
         )}
         {task.status === "In progress" && (
-          <span className="edit-status" onClick={() => updateTaskStatus(task.id, "Not started")} title="Change status to not started">
+          <span
+            className="edit-status"
+            onClick={() => updateTaskStatus(task.id, "Not started")}
+            title="Change status to not started"
+          >
             <i className="material-icons task-icon">arrow_back</i>
           </span>
         )}

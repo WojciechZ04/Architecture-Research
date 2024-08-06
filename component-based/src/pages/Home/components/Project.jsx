@@ -7,7 +7,8 @@ export default function Project({ project, completionPercentage }) {
   return (
     <div className="home-project">
       <h3>{project.name}</h3>
-      <p>{project.deadline}</p>
+      <p className="deadline">{" "}
+      {project.deadline ? new Date(project.deadline).toLocaleDateString() : "-"}</p>
       <div className="progress-bar">
         <BorderLinearProgress
           className="border-linear-progress"

@@ -5,9 +5,11 @@ exports.getHome = async (req, res) => {
 	const userId = req.userId;
     const [users] = await promisePool.query("SELECT * FROM users WHERE id = ?", [userId]);
 
-    const [tasks] = await promisePool.query("SELECT * FROM tasks");
-
-    const [projects] = await promisePool.query("SELECT * FROM projects");
+    const [projects] = await promisePool.query("SELECT * FROM projects WHERE user_id = ?", [userId]);
+    
+    const [tasks] = await promisePool.query(
+      "SELECT * FROM tasks WHERE project_id IN (SELECT id FROM projects WHERE user_id = ?)", [userId]
+    );
 
     const data = {
       users,
