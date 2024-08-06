@@ -9,12 +9,14 @@
 
 .home-wrapper {
 	display: flex;
+	flex-wrap: wrap;
 	margin: 50px 100px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+	min-height: 400px;
 }
 
 .home-content {
-	flex: 0 0 80%;
+	width: 80%;
 	background-color: var(--primary-color-light);
 }
 
@@ -25,13 +27,15 @@
 }
   
 .home-sidebar {
-	flex: 0 0 20%;
-	background-color: #e0e0e0; 
-	margin-top: 20px;
+	width: 20%;
+	height: 100%;
 	display: flex;
+	padding: 20px;
 	align-items: center;
 	display: flex;
 	flex-direction: column;
+	box-sizing: border-box; 
+	position: relative;
 }	
 
 .home-tasks {
@@ -59,3 +63,88 @@
 	align-self: center;
 
 }
+
+.calendar-container {
+	position: relative;
+	width: 100%;
+}
+
+.calendar {
+	position: absolute;
+	top: 10px;
+	left: 0;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+.home-sidebar-header {
+	display: flex;
+  justify-content: space-between;
+  align-items: center; /* Optional: vertically center the icons */
+  width: 100%; /* Adjust as needed */
+}
+
+.home-sidebar-header i {
+	font-size: 2.5rem;
+}
+
+.home-sidebar-header i:hover {
+	color: var(--neutral-color);
+	cursor: pointer;
+}
+
+@media (max-width: 1600px) {
+	.home-sidebar {
+	  width: 10%; /* Adjust the width as needed */
+	  display: flex;
+	  flex-direction: column; /* Display icons in a column */
+	  align-items: center; /* Center icons horizontally */
+	}
+	.home-content {
+		width: 90%;
+	}
+  
+	.home-sidebar-header {
+	  flex-direction: column; /* Display icons in a column */
+	  justify-content: center; /* Center icons vertically */
+	  align-items: center; /* Center icons horizontally */
+	}
+  
+	.home-sidebar-header i {
+	  margin: 10px 0; /* Add some spacing between icons */
+	}
+  
+	.home-sidebar-header i:nth-child(2) {
+	  display: block; /* Show calendar icon */
+	}
+  
+	.calendar-container {
+		display: none; /* Hide calendar by default */
+		position: absolute;
+		width: 300px; /* Make it full width */
+		right: 100%; /* Position it next to the sidebar */
+		top: -10px; /* Align it with the top of the sidebar */
+		z-index: 1000; /* Ensure the calendar is above other elements */
+		
+	  }
+
+	  .calendar {
+		
+		background-color: var(--primary-color);
+	  }
+  
+	.calendar-container.visible {
+	  display: block; /* Show calendar when visible class is added */
+	}
+  }
+  
+  @media (min-width: 1601px) {
+	.home-sidebar-header i:nth-child(2) {
+	  display: none; /* Hide calendar icon */
+	}
+  
+	.calendar-container {
+	  display: block; /* Always show calendar */
+	}
+  }
