@@ -1,6 +1,11 @@
-.home h1 {
-	padding-top: 60px;
+.home {
 	text-align: center;
+  }	
+.home h1 {
+	display: inline-block;
+	text-align: center;
+	padding: 60px 10px 5px 10px;
+	box-shadow: 0 4px 4px -4px rgba(0, 0, 0, 0.5); /* Add this line */
 }
 
 .home h2 {
