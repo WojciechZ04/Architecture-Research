@@ -13,3 +13,19 @@
 .home-task h3 {
 	font-size: 1.5rem;
 }
+
+.home-task p {
+	margin: 0;
+}
+
+.days-left-orange {
+  color: orange;
+}
+
+.days-left-red {
+  color: red;
+}
+
+.days-left-dark-red {
+  color: darkred;
+}

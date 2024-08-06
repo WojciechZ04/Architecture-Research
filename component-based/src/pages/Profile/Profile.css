@@ -52,6 +52,7 @@
   }
 
   .profile-icon {
+	margin-left: 20px;
 	align-self: center;
 	color: var(--secondary-color);
 	opacity: 0.5;
@@ -68,6 +69,7 @@
 }
 
 .profile Button {
+	margin-top: 50px;
 	color: red;
 	border-radius: 0;
 }

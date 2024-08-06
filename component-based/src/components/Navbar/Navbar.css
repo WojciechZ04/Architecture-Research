@@ -59,10 +59,11 @@ main .sidebar {
 
 .avatar-image:hover {
 	cursor: pointer;
-	transform: scale(1.5);
+	transform: scale(2);
 }
   
 .avatar-image {
+	transform: scale(1.5);
 	width: 24px; /* Adjust size as needed */
 	height: 24px;
 	border-radius: 50%; /* Circular avatar */

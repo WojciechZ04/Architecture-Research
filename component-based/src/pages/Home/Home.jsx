@@ -39,11 +39,12 @@ export default function Home() {
         const filteredTasks = data.tasks.filter(
           (task) => task.status !== "Done"
         );
-        const sortedTasks = filteredTasks
-          .sort((a, b) => new Date(a.deadline) - new Date(b.deadline))
-          .slice(0, 3);
+        const tasksWithDeadline = filteredTasks.filter(task => task.deadline);
+        const tasksWithoutDeadline = filteredTasks.filter(task => !task.deadline);
+        tasksWithDeadline.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+        const combinedTasks = [...tasksWithDeadline, ...tasksWithoutDeadline].slice(0, 3);
 
-        setTasks(sortedTasks);
+        setTasks(combinedTasks);
 
         const projectsWithCompletion = data.projects.map((project) => {
           const projectTasks = data.tasks.filter(
