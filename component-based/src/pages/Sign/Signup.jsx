@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useSignIn from 'react-auth-kit/hooks/useSignIn';
-
+import useSignIn from "react-auth-kit/hooks/useSignIn";
 
 function Signup() {
   const [username, setUsername] = useState("");
@@ -15,7 +14,7 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/signup", {
+      const response = await fetch("http://localhost:5000/api/sign/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -25,7 +24,6 @@ function Signup() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Signup successful:", data);
         localStorage.setItem("token", data.token);
         if (
           signIn({
@@ -47,12 +45,12 @@ function Signup() {
   return (
     <div className="sign">
       <div className="sign-container">
-      <h2>Signup</h2>
-      {signupError && <p style={{ color: "red" }}>{signupError}</p>}
-      <form onSubmit={handleSubmit}>
-      <div class="input-group">
+        <h2>Signup</h2>
+        {signupError && <p style={{ color: "red" }}>{signupError}</p>}
+        <form onSubmit={handleSubmit}>
+          <div class="input-group">
             <label class="label">Username</label>
-      <input
+            <input
               autocomplete="off"
               name="Username"
               id="Username"
@@ -86,11 +84,13 @@ function Signup() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-        <button type="submit">Signup</button>
-      </form>
+          <button type="submit">Signup</button>
+        </form>
+      </div>
+      <p>
+        Already have an account? <a href="/signin">Sign Ip</a>
+      </p>
     </div>
-    <p>Already have an account? <a href="/signin">Sign Ip</a></p>
-  </div>
   );
 }
 

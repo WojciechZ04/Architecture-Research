@@ -5,7 +5,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { useNavigate } from "react-router-dom";
-import useSignOut from "react-auth-kit/hooks/useSignOut"; 
+import useSignOut from "react-auth-kit/hooks/useSignOut";
 import "./Home.css";
 
 export default function Home() {
@@ -27,10 +27,10 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     fetch("http://localhost:5000/api/home", {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: "Bearer " + localStorage.getItem("token"),
+        contentType: "application/json",
       },
     })
       .then((response) => response.json())
@@ -39,10 +39,17 @@ export default function Home() {
         const filteredTasks = data.tasks.filter(
           (task) => task.status !== "Done"
         );
-        const tasksWithDeadline = filteredTasks.filter(task => task.deadline);
-        const tasksWithoutDeadline = filteredTasks.filter(task => !task.deadline);
-        tasksWithDeadline.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
-        const combinedTasks = [...tasksWithDeadline, ...tasksWithoutDeadline].slice(0, 3);
+        const tasksWithDeadline = filteredTasks.filter((task) => task.deadline);
+        const tasksWithoutDeadline = filteredTasks.filter(
+          (task) => !task.deadline
+        );
+        tasksWithDeadline.sort(
+          (a, b) => new Date(a.deadline) - new Date(b.deadline)
+        );
+        const combinedTasks = [
+          ...tasksWithDeadline,
+          ...tasksWithoutDeadline,
+        ].slice(0, 3);
 
         setTasks(combinedTasks);
 
@@ -94,10 +101,18 @@ export default function Home() {
         <div className="home-sidebar">
           <div className="home-sidebar-header">
             <i className="material-icons">notifications</i>
-            <i className="material-icons" onClick={toggleCalendarVisibility}>calendar_month</i>
-            <i className="material-icons" onClick={() => handleSignOut()}>logout</i>
+            <i className="material-icons" onClick={toggleCalendarVisibility}>
+              calendar_month
+            </i>
+            <i className="material-icons" onClick={() => handleSignOut()}>
+              logout
+            </i>
           </div>
-          <div className={`calendar-container ${isCalendarVisible ? 'visible' : ''}`}>
+          <div
+            className={`calendar-container ${
+              isCalendarVisible ? "visible" : ""
+            }`}
+          >
             <div className="calenar-wrapper">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateCalendar className="calendar" />

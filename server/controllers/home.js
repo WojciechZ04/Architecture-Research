@@ -2,7 +2,8 @@ const promisePool = require("../database");
 
 exports.getHome = async (req, res) => {
   try {
-	const userId = req.userId;
+    const userId = req.userId;
+  
     const [users] = await promisePool.query("SELECT * FROM users WHERE id = ?", [userId]);
 
     const [projects] = await promisePool.query("SELECT * FROM projects WHERE user_id = ?", [userId]);

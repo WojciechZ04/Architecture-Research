@@ -13,7 +13,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch("http://localhost:5000/api/sign/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,7 +23,6 @@ function Login() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Login successful:", data);
         localStorage.setItem("token", data.token);
         if (
           signIn({
