@@ -5,7 +5,7 @@
 	display: inline-block;
 	text-align: center;
 	padding: 60px 10px 5px 10px;
-	box-shadow: 0 4px 4px -4px rgba(0, 0, 0, 0.5); /* Add this line */
+	box-shadow: 0 4px 4px -4px rgba(0, 0, 0, 0.5); 
 }
 
 .home h2 {
@@ -85,9 +85,9 @@
 
 .home-sidebar-header {
 	display: flex;
-  justify-content: space-between;
-  align-items: center; /* Optional: vertically center the icons */
-  width: 100%; /* Adjust as needed */
+	justify-content: space-between;
+	align-items: center;
+	width: 100%; 
 }
 
 .home-sidebar-header i {
@@ -101,36 +101,36 @@
 
 @media (max-width: 1600px) {
 	.home-sidebar {
-	  width: 10%; /* Adjust the width as needed */
+	  width: 10%; 
 	  display: flex;
-	  flex-direction: column; /* Display icons in a column */
-	  align-items: center; /* Center icons horizontally */
+	  flex-direction: column; 
+	  align-items: center;
 	}
 	.home-content {
 		width: 90%;
 	}
   
 	.home-sidebar-header {
-	  flex-direction: column; /* Display icons in a column */
-	  justify-content: center; /* Center icons vertically */
-	  align-items: center; /* Center icons horizontally */
+	  flex-direction: column; 
+	  justify-content: center; 
+	  align-items: center; 
 	}
   
 	.home-sidebar-header i {
-	  margin: 10px 0; /* Add some spacing between icons */
+	  margin: 10px 0; 
 	}
   
 	.home-sidebar-header i:nth-child(2) {
-	  display: block; /* Show calendar icon */
+	  display: block; 
 	}
   
 	.calendar-container {
-		display: none; /* Hide calendar by default */
+		display: none; 
 		position: absolute;
-		width: 300px; /* Make it full width */
-		right: 100%; /* Position it next to the sidebar */
-		top: -10px; /* Align it with the top of the sidebar */
-		z-index: 1000; /* Ensure the calendar is above other elements */
+		width: 300px; 
+		right: 100%; 
+		top: -10px; 
+		z-index: 1000; 
 		
 	  }
 
@@ -140,16 +140,16 @@
 	  }
   
 	.calendar-container.visible {
-	  display: block; /* Show calendar when visible class is added */
+	  display: block; 
 	}
   }
   
   @media (min-width: 1601px) {
 	.home-sidebar-header i:nth-child(2) {
-	  display: none; /* Hide calendar icon */
+	  display: none; 
 	}
   
 	.calendar-container {
-	  display: block; /* Always show calendar */
+	  display: block; 
 	}
   }

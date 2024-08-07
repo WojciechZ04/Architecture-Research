@@ -50,11 +50,9 @@ exports.getOrganization = async (req, res) => {
     const [organizations] = await promisePool.query(sql, values);
 
     if (organizations.length === 0) {
-      // No organization found with the given ID
       return res.status(404).json({ error: "Organization not found" });
     }
 
-    // Return the found organization
     res.json(organizations[0]);
   } catch (err) {
     console.error("Error fetching organizations from database:", err);
@@ -124,7 +122,6 @@ exports.joinOrganization = async (req, res) => {
         users: users,
       };
       
-      console.log('response', response);
       res.json(response);
     } catch (err) {
       console.error("Error fetching organization details:", err);

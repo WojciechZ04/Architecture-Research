@@ -9,11 +9,11 @@
 .inline {
 	display: grid;
   	grid-template-columns: repeat(3, 1fr);
-  	gap: 10px; /* Adjust the spacing between columns as needed */
+  	gap: 10px; 
   }
   
   .inline p {
-	margin-right: 10px; /* Adjust the spacing as needed */
+	margin-right: 10px; 
   }
 
   .profile-image {
@@ -43,7 +43,7 @@
 	opacity: 0;
 	transition: opacity 0.3s ease;
 	color: var(--secondary-color);
-	font-size: 24px; /* Adjust the size as needed */
+	font-size: 24px; 
   }
   
   .profile-image-container:hover .edit-icon {

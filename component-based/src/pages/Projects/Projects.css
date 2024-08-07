@@ -16,7 +16,7 @@
 
 .project-descriptions {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 53px; /* Adjust based on the number of columns */
+	grid-template-columns: 1fr 1fr 1fr 53px; 
 	text-align: center;  
 	font-size: 1.3rem;
 	font-weight: bold;
@@ -34,16 +34,16 @@
     color: var(--secondary-color);
     background-color: var(--primary-color);
     border: solid 3px var(--secondary-color);
-    opacity: 0.5; /* Reduce opacity */
+    opacity: 0.5; 
 }
 
 .new-project:hover {
 	cursor: pointer;
 	background-color: var(--primary-color-light);
-    opacity: 1	; /* Reduce opacity */
+    opacity: 1; 
 }
 
 .project-link {
-	text-decoration: none; /* Remove underline */
-	color: inherit; /* Inherit text color */
-  }
+	text-decoration: none; 
+	color: inherit; 
+}

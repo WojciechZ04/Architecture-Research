@@ -60,9 +60,6 @@ h2 {
 	margin: 0;
 }
 
-
-
-
 .checkbox {
 	width: 70px;
 	display: flex;
@@ -80,22 +77,22 @@ h2 {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-  }
+}
   
-  .checkbox-btn input {
+.checkbox-btn input {
 	position: absolute;
 	opacity: 0;
 	cursor: pointer;
 	height: 0;
 	width: 0;
-  }
+}
   
-  .checkbox-btn label {
+.checkbox-btn label {
 	cursor: pointer;
 	font-size: 14px;
-  }
+}
 
-  .checkmark {
+.checkmark {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -103,12 +100,12 @@ h2 {
 	width: 25px;
 	border: 2.5px solid var(--secondary-color);
 	transition: .2s linear;
-  }
-  .checkbox-btn input:checked ~ .checkmark {
+}
+.checkbox-btn input:checked ~ .checkmark {
 	background-color: transparent;
-  }
+}
   
-  .checkmark:after {
+.checkmark:after {
 	content: "";
 	position: absolute;
 	visibility: hidden;
@@ -122,21 +119,21 @@ h2 {
 	border-width: 0 2.5px 2.5px 0;
 	transition: .2s linear;
 	transform: translate(-50%, -50%) rotate(-90deg) scale(0.2);
-  }
+}
   
-  .checkbox-btn input:checked ~ .checkmark:after {
+.checkbox-btn input:checked ~ .checkmark:after {
 	visibility: visible;
 	opacity: 1;
 	transform: translate(-50%, -50%) rotate(0deg) scale(1);
 	animation: pulse 1s ease-in;
-  }
+}
   
-  .checkbox-btn input:checked ~ .checkmark {
+.checkbox-btn input:checked ~ .checkmark {
 	transform: rotate(45deg);
 	border: none;
-  }
+}
   
-  @keyframes pulse {
+@keyframes pulse {
 	0%,
 	100% {
 	  transform: translate(-50%, -50%) rotate(0deg) scale(1);
@@ -144,4 +141,4 @@ h2 {
 	50% {
 	  transform: translate(-50%, -50%) rotate(0deg) scale(1.6);
 	}
-  }
+}

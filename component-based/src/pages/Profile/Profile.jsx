@@ -76,7 +76,6 @@ export default function Profile() {
     })
     .then((res) => {
       if (res.ok) {
-        console.log("Profile deleted successfully");
         window.location.href = "/login";
       } else {
         return res.json().then((data) => {

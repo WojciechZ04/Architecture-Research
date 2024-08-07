@@ -1,15 +1,12 @@
 import "./Task.css";
 import React, { useState } from "react";
 import DeleteTaskModal from "./DeleteTaskModal";
-import EditTaskModal from "./EditTaskModal";
 
 export default function Task({ task, fetchTasks }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
 
   const confirmDelete = () => {
     setShowDeleteModal(true);
-    setShowEditModal(false);
   };
 
   const updateTaskStatus = async (taskId, status) => {
@@ -27,7 +24,7 @@ export default function Task({ task, fetchTasks }) {
       );
 
       if (response.ok) {
-        fetchTasks(); // Refresh the task list
+        fetchTasks(); 
       } else {
         console.error("Failed to update task status");
       }
@@ -35,11 +32,6 @@ export default function Task({ task, fetchTasks }) {
       console.error("Error updating task status", error);
     }
   };
-
-  // const confirmEdit = () => {
-  //   setShowEditModal(true);
-  //   setShowDeleteModal(false);
-  // };
 
   return (
     <div className="task">
@@ -72,9 +64,6 @@ export default function Task({ task, fetchTasks }) {
       </div>
 
       <div className="task-controls">
-        {/* <span onClick={confirmEdit}>
-          <i className="material-icons task-icon">edit</i>
-        </span> */}
         <span onClick={confirmDelete}>
           <i className="material-icons task-icon">close</i>
         </span>
@@ -101,12 +90,6 @@ export default function Task({ task, fetchTasks }) {
       <DeleteTaskModal
         showModal={showDeleteModal}
         setShowModal={setShowDeleteModal}
-        task={task}
-        fetchTasks={fetchTasks}
-      />
-      <EditTaskModal
-        showModal={showEditModal}
-        setShowModal={setShowEditModal}
         task={task}
         fetchTasks={fetchTasks}
       />

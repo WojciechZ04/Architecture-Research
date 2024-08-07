@@ -11,20 +11,20 @@
 }
 
 #main {
-	position: fixed; /* Fix the main content to the viewport */
+	position: fixed; 
 	top: 0;
 	left: 0;
-	width: 100vw; /* Cover the entire viewport width */
-	height: 100vh; /* Cover the entire viewport height */
-	background-color: var(--primary-color); /* Set the main content background to white */
-	transition: opacity 0.5s ease; /* Smooth transition for opacity */
-	overflow-y: auto; /* Enable vertical scrolling if content overflows */
-	z-index: 1; /* Ensure it is above the body background */
-  }
+	width: 100vw; 
+	height: 100vh; 
+	background-color: var(--primary-color); 
+	transition: opacity 0.5s ease; 
+	overflow-y: auto; 
+	z-index: 1; 
+}
   
-  .sidebar:hover ~ #main {
-	opacity: 0.5; /* Adjust this value to control the darkness */
-  }
+.sidebar:hover ~ #main {
+	opacity: 0.5; 
+}
 
 .container {
 	margin-left: 85px;
