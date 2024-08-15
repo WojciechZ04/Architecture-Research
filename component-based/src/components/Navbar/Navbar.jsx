@@ -34,7 +34,6 @@ export default function Navbar() {
   };
 
   return (
-    //edit anchors!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     <div
       id="mySidebar"
       className="sidebar"
@@ -62,20 +61,6 @@ export default function Navbar() {
         </span>
       </div>
       <br />
-      {/* <div onClick={() => handlePageChange('Teams')}>
-        <span>
-          <i className="material-icons">people</i>
-          <span className="icon-text">Teams</span>
-        </span>
-      </div>
-      <br />
-      <div onClick={() => handlePageChange('Organizations')}>
-        <span>
-          <i className="material-icons">work</i>
-          <span className="icon-text">Organizations</span>
-        </span>
-      </div>
-      <br /> */}
 
       <div className="navbar-avatar" onClick={toggleDropdown}>
         <img

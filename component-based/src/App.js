@@ -16,9 +16,6 @@ import ProjectDetails from "./pages/ProjectDetails/ProjectDetails";
 import Tasks from "./pages/Tasks/Tasks";
 import Navbar from "./components/Navbar/Navbar";
 import NotFound from "./pages/NotFound";
-import Teams from "./pages/Teams";
-import Organizations from "./pages/Organizations/Organizations";
-import Organization from "./pages/Organizations/Organization";
 import Profile from "./pages/Profile/Profile";
 
 function App() {
@@ -40,12 +37,6 @@ function App() {
             <Route path="/signup" element={<Signup />}></Route>
             <Route element={<AuthOutlet fallbackPath="/login" />}>
               <Route path="/profile" element={<Profile />}></Route>
-              <Route path="/organizations" element={<Organizations />}></Route>
-              <Route
-                path="/organizations/:id"
-                element={<Organization />}
-              ></Route>
-              <Route path="/teams" element={<Teams />}></Route>
               <Route path="/projects" element={<Projects />}></Route>
               <Route
                 path="/projects/:projectId"

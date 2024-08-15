@@ -9,7 +9,7 @@
 }
 
 .Mui-selected {
-    background-color: var(--neutral-color-background) !important; /* Change this to your desired color */
+    background-color: var(--neutral-color-background) !important;
 }
 
 .search-bar .MuiOutlinedInput-root {
