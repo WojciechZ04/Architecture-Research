@@ -102,7 +102,7 @@ export default function Organizations() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Organizations</h1>
       {organizations === null ? (
         <p>Loading organizations...</p>

@@ -3,8 +3,9 @@ const router = express.Router();
 const tasksController = require('../controllers/tasks');
 const authenticateToken = require('../authenticateToken');
 
-router.get('/', tasksController.getTasks);
-router.post('/', tasksController.createTask);
-router.delete('/:projectId/:taskId', tasksController.deleteTask)
+router.get('/', authenticateToken, tasksController.getTasks);
+router.post('/', authenticateToken, tasksController.createTask);
+router.delete('/:projectId/:taskId', authenticateToken, tasksController.deleteTask)
+router.put('/:taskId/', authenticateToken, tasksController.updateTaskStatus);
 
 module.exports = router;

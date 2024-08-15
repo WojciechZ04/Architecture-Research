@@ -1,18 +1,22 @@
 .sidebar {
 	height: 100%;
+	transition: width 0.5s ease;
 	width: 85px;
 	position: fixed;
-	z-index: 1;
+	z-index: 100;
 	top: 0;
 	left: 0;
 	background-color: var(--accent-color);
-	transition: 0.5s;
 	overflow-x: hidden;
 	padding-top: 60px;
 	white-space: nowrap;
-  }
+}
+
+  .sidebar:hover {
+	width: 300px;
+}
   
-  .sidebar div {
+.sidebar div {
 	padding: 8px 8px 8px 32px;
 	text-decoration: none;
 	font-size: 25px;
@@ -20,67 +24,69 @@
 	display: block;
 	cursor: pointer;
 	caret-color: transparent;
-  }
+}
   
-  .sidebar div:hover {
+.sidebar div:hover {
 	color: var(--neutral-color);
-  }
+}
   
-  main .sidebar {
+main .sidebar {
 	position: absolute;
 	top: 0;
 	right: 25px;
 	font-size: 36px;
 	margin-left: 50px;
-  }
+}
   
-  .material-icons,
-  .icon-text {
+.material-icons,
+.icon-text {
 	vertical-align: middle;
-  }
+}
+
+.icon-text {
+	margin-left: 30px;
+}
+
   
-  .material-icons {
-	padding-bottom: 3px;
-	margin-right: 30px;
-  }
-  
-  #main {
-	margin-left: 85px;
-	transition: margin-left 0.5s;
-  }
-  
-  @media screen and (max-height: 450px) {
+@media screen and (max-height: 450px) {
 	.sidebar {
 	  padding-top: 15px;
-	}
+}
 	.sidebar a {
 	  font-size: 18px;
-	}
-  }
+}
+}
 
-  .navbar-avatar {
+.avatar-image:hover {
 	cursor: pointer;
-	/* Positioning and styling for the avatar */
-  }
+	transform: scale(2);
+}
   
-  .avatar-image {
-	width: 40px; /* Adjust size as needed */
-	height: 40px;
+.avatar-image {
+	transform: scale(1.5);
+	width: 24px; /* Adjust size as needed */
+	height: 24px;
 	border-radius: 50%; /* Circular avatar */
 	background-image: url('https://example.com/path/to/image.jpg');
-	background-size: cover; /* Cover the entire area of the element */
-  }
-  
-  .dropdown-menu {
+	background-size: cover; 
 	position: absolute;
-	right: 0;
+	bottom: 110px;
+	transition: transform 0.3s ease;
+}
+  
+.dropdown-menu {
+	position: absolute;
+	top: 68%; /* Position the dropdown below the avatar */
+  	left: 24%;
 	min-width: 160px;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	background-color: var(--secondary-color);
+
 	z-index: 1;
-  }
+}
   
-  .dropdown-menu div {
+.dropdown-menu div {
 	padding: 12px 16px;
 	text-decoration: none;
 	display: block;
-  }
+}

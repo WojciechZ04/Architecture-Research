@@ -1,8 +1,15 @@
 const promisePool = require("../database");
 
 exports.getTasks = async (req, res) => {
+  const userId = req.userId;
   try {
-    const [tasks] = await promisePool.query("SELECT * FROM tasks");
+    const sql = `
+      SELECT tasks.*, projects.name AS project_name
+      FROM tasks
+      LEFT JOIN projects ON tasks.project_id = projects.id
+      WHERE projects.user_id = ?
+    `;
+    const [tasks] = await promisePool.query(sql, [userId]);
     res.json(tasks);
   } catch (err) {
     console.error("Error fetching tasks from database:", err);
@@ -11,12 +18,12 @@ exports.getTasks = async (req, res) => {
 };
 
 exports.createTask = async (req, res) => {
-  const { name, description, projectId, status } = req.body;
+  const { name, description, projectId, deadline, status } = req.body;
 
   try {
     const sql =
-      "INSERT INTO tasks (name, description, project_id, status) VALUES (?, ?, ?, ?)";
-    const values = [name, description, projectId, status];
+      "INSERT INTO tasks (name, description, project_id, deadline, status) VALUES (?, ?, ?, ?, ?)";
+    const values = [name, description, projectId, deadline, status];
     const [result] = await promisePool.query(sql, values);
 
     const insertedTask = {
@@ -24,6 +31,7 @@ exports.createTask = async (req, res) => {
       name,
       description,
       projectId,
+      deadline,
       status,
     };
 
@@ -48,6 +56,28 @@ exports.deleteTask = async (req, res) => {
     }
   } catch (err) {
     console.error("Error deleting task from database:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+exports.updateTaskStatus = async (req, res) => {
+  const { taskId } = req.params;
+  const { status } = req.body;
+
+  try {
+    const sql = "UPDATE tasks SET status = ? WHERE id = ?";
+    const values = [status, taskId];
+    const [result] = await promisePool.query(sql, values);
+
+    if (result.affectedRows > 0) {
+      res
+        .status(200)
+        .json({ message: `Task ${taskId} updated successfully.` });
+    } else {
+      res.status(404).json({ message: "Task not found." });
+    }
+  } catch (err) {
+    console.error("Error completing task from database:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 };
