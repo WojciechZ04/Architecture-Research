@@ -1,6 +1,7 @@
 import "./Task.css";
 import React, { useState } from "react";
 import DeleteTaskModal from "./DeleteTaskModal";
+import { updateTaskStatus as updateTaskStatusInModel } from "../../../../models/TaskModel";
 
 export default function Task({ task, fetchTasks }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -10,53 +11,35 @@ export default function Task({ task, fetchTasks }) {
   };
 
   const updateTaskStatus = async (taskId, status) => {
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/tasks/${taskId}`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ status }),
-        }
-      );
-
-      if (response.ok) {
-        fetchTasks(); 
-      } else {
-        console.error("Failed to update task status");
-      }
-    } catch (error) {
-      console.error("Error updating task status", error);
+    const success = await updateTaskStatusInModel(taskId, status);
+    if (success) {
+      fetchTasks();
+    } else {
+      console.error("Failed to update task status");
     }
   };
 
   return (
     <div className="task">
       <div className="checkbox">
-        <label class="checkbox-btn">
-          <label for="checkbox"></label>
+        <label className="checkbox-btn">
           <input
-            id="checkbox"
+            id={`checkbox-${task.id}`}
             type="checkbox"
             onChange={() => updateTaskStatus(task.id, "Done")}
             checked={task.status === "Done"}
           />
-          <span class="checkmark"></span>
+          <span className="checkmark"></span>
         </label>
       </div>
       <div className="task-details">
         <div className="grid">
           <p className="project-assigned">
             {" "}
-            {">"}
-            {task.project_name}
+            {">"} {task.project_name}
           </p>
           <h2 className="task__title">{task.name}</h2>
           <p className="task__deadline">
-            {" "}
             {task.deadline ? new Date(task.deadline).toLocaleDateString() : ""}
           </p>
         </div>

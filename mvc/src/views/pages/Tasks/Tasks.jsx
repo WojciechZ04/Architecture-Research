@@ -1,38 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import TaskColumn from "./components/TaskColumn";
 import "./Tasks.css";
+import { useTasksController } from "../../../controllers/TaskController";
 
 export default function Tasks() {
-  const [tasks, setTasks] = useState([]);
-
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
-  const fetchTasks = () => {
-    fetch("http://localhost:5000/api/tasks", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setTasks(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
-
-  const notStartedTasks = tasks
-    ? tasks.filter((task) => task.status === "Not started")
-    : [];
-  const inProgressTasks = tasks
-    ? tasks.filter((task) => task.status === "In progress")
-    : [];
-  const doneTasks = tasks ? tasks.filter((task) => task.status === "Done") : [];
+  const { notStartedTasks, inProgressTasks, doneTasks, reloadTasks } = useTasksController();
 
   return (
     <div className="container">
@@ -44,17 +16,17 @@ export default function Tasks() {
         <TaskColumn
           value="Not started"
           tasks={notStartedTasks}
-          fetchTasks={fetchTasks}
+          fetchTasks={reloadTasks}
         />
         <TaskColumn
           value="In progress"
           tasks={inProgressTasks}
-          fetchTasks={fetchTasks}
+          fetchTasks={reloadTasks}
         />
-        <TaskColumn 
-          value="Done" 
-          tasks={doneTasks} 
-          fetchTasks={fetchTasks} 
+        <TaskColumn
+          value="Done"
+          tasks={doneTasks}
+          fetchTasks={reloadTasks}
         />
       </div>
     </div>
