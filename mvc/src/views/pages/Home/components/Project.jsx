@@ -1,14 +1,16 @@
-import "./Project.css";
+import React from "react";
+import { getFormattedDeadline, getRoundedCompletionPercentage } from "../../../../controllers/HomeController";
 import BorderLinearProgress from "../../../components/BorderLinearProgress";
+import "./Project.css";
 
 export default function Project({ project, completionPercentage }) {
-  const roundedCompletionPercentage = Math.ceil(completionPercentage);
+  const formattedDeadline = getFormattedDeadline(project.deadline);
+  const roundedCompletionPercentage = getRoundedCompletionPercentage(completionPercentage);
 
   return (
     <div className="home-project">
       <h3>{project.name}</h3>
-      <p className="deadline">{" "}
-      {project.deadline ? new Date(project.deadline).toLocaleDateString() : "-"}</p>
+      <p className="deadline">{formattedDeadline}</p>
       <div className="progress-bar">
         <BorderLinearProgress
           className="border-linear-progress"

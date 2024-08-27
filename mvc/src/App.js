@@ -12,7 +12,6 @@ import Home from "./views/pages/Home/Home";
 import Login from "./views/pages/Sign/Login";
 import Signup from "./views/pages/Sign/Signup";
 import Projects from "./views/pages/Projects/Projects";
-import ProjectDetails from "./views/pages/ProjectDetails/ProjectDetails";
 import Tasks from "./views/pages/Tasks/Tasks";
 import Navbar from "./views/components/Navbar/Navbar";
 import NotFound from "./views/pages/NotFound";
@@ -38,10 +37,6 @@ function App() {
             <Route element={<AuthOutlet fallbackPath="/login" />}>
               <Route path="/profile" element={<Profile />}></Route>
               <Route path="/projects" element={<Projects />}></Route>
-              <Route
-                path="/projects/:projectId"
-                element={<ProjectDetails />}
-              ></Route>
               <Route path="/tasks" element={<Tasks />}></Route>
               <Route path="/" element={<Home />}></Route>
               <Route path="*" element={<NotFound />}></Route>
