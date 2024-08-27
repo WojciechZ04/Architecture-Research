@@ -1,38 +1,29 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "./Project.css";
 import EditProjectModal from "./EditProjectModal";
 import DeleteProjectModal from "./DeleteProjectModal";
 import BorderLinearProgress from "../../../components/BorderLinearProgress";
+import { useProjectController } from "../../../../controllers/ProjectController";
 
 export default function Project({ project }) {
-  const [showPanel, setShowPanel] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const panelRef = useRef(null);
-
-  const confirmDelete = () => {
-    setShowPanel(false);
-    setShowDeleteModal(true);
-    setShowEditModal(false);
-  };
-
-  const confirmEdit = () => {
-    setShowPanel(false);
-    setShowEditModal(true);
-    setShowDeleteModal(false);
-  };
-
-  const togglePanel = () => {
-    setShowPanel(!showPanel);
-  };
+  const {
+    showPanel,
+    showDeleteModal,
+    showEditModal,
+    panelRef,
+    togglePanel,
+    confirmDelete,
+    confirmEdit,
+    closePanelOnMouseLeave,
+    setShowDeleteModal,
+    setShowEditModal,
+  } = useProjectController();
 
   return (
     <div
       className={`project ${project.status}`}
-      onMouseLeave={() => {
-        setShowPanel(false);
-      }}
+      onMouseLeave={closePanelOnMouseLeave}
     >
       <Link
         key={project.id}
@@ -45,7 +36,6 @@ export default function Project({ project }) {
           </div>
           <div className="project__deadline">
             <p>
-              {" "}
               {project.deadline
                 ? new Date(project.deadline).toLocaleDateString()
                 : "-"}

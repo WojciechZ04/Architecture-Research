@@ -1,5 +1,3 @@
-// Projects.jsx
-
 import { useState, useEffect, useCallback } from "react";
 import Project from "./components/Project";
 import DataControls from "./components/DataControls";

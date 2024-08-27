@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import Checkbox from "@mui/material/Checkbox";
+import { handleCreateProject } from '../../../../controllers/ProjectController';
 import "../../../components/Modal.css";
 
 export default function CreateProjectModal({ open, setOpen, fetchProjects }) {
@@ -13,35 +14,29 @@ export default function CreateProjectModal({ open, setOpen, fetchProjects }) {
   const [hasDeadline, setHasDeadline] = useState(false);
   const [error, setError] = useState("");
 
+  const resetForm = () => {
+    setProjectName("");
+    setProjectDeadline("");
+    setProjectDescription("");
+    setHasDeadline(false);
+    setError("");
+  };
+
   if (!open) return null;
-  const handleCreateProject = async () => {
+
+  const onCreateProject = () => {
     if (!projectName.trim()) {
       setError("Project name is required");
       return;
     }
 
-    const response = await fetch("http://localhost:5000/api/projects", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: projectName,
-        deadline: hasDeadline ? projectDeadline : null,
-        description: projectDescription,
-      }),
-    });
+    const projectData = {
+      name: projectName,
+      deadline: hasDeadline ? projectDeadline : null,
+      description: projectDescription,
+    };
 
-    if (response.ok) {
-      handleClose();
-      setProjectName("");
-      setProjectDeadline("");
-      setProjectDescription("");
-      fetchProjects();
-    } else {
-      console.error("Failed to create project");
-    }
+    handleCreateProject(projectData, fetchProjects, setOpen, resetForm, setError);
   };
 
   const handleClose = () => setOpen(false);
@@ -88,13 +83,13 @@ export default function CreateProjectModal({ open, setOpen, fetchProjects }) {
           multiline
           minRows={4}
           maxRows={6}
-          label="Descripion (optional)"
+          label="Description (optional)"
           value={projectDescription}
           onChange={(e) => setProjectDescription(e.target.value)}
         />
         <div className="modal-buttons">
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleCreateProject}>Create</Button>
+          <Button onClick={onCreateProject}>Create</Button>
         </div>
       </Box>
     </Modal>

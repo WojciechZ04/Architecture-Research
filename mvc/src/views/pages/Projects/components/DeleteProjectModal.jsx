@@ -1,34 +1,14 @@
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { handleDeleteProject } from '../../../../controllers/ProjectController';
 import "../../../components/Modal.css";
-export default function DeleteProjectModal({
-  showModal,
-  setShowModal,
-  project,
-}) {
+
+export default function DeleteProjectModal({ showModal, setShowModal, project }) {
   if (!showModal) return null;
 
-  const handleDelete = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/projects/${project.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to delete task");
-      }
-      window.location.reload();
-    } catch (error) {
-      console.error("Failed to delete task:", error);
-    } finally {
-      setShowModal(false);
-    }
+  const onDelete = () => {
+    handleDeleteProject(project.id, setShowModal);
   };
 
   return (
@@ -41,9 +21,9 @@ export default function DeleteProjectModal({
       <Box className="modal">
         <h2 id="modal-modal-title">Confirm Delete</h2>
         <p id="modal-modal-description">
-          Are you sure you want to delete this task?
+          Are you sure you want to delete this project?
         </p>
-        <Button onClick={handleDelete}>Yes</Button>
+        <Button onClick={onDelete}>Yes</Button>
         <Button onClick={() => setShowModal(false)}>No</Button>
       </Box>
     </Modal>
