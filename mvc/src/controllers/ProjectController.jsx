@@ -7,16 +7,47 @@ import {
 } from "../models/ProjectModel";
 import { useState, useRef } from "react";
 
+// Function to calculate project status based on tasks
+export const getProjectStatus = (project) => {
+  if (
+    project.tasks.length > 0 &&
+    project.tasks.every((task) => task.status === "Done")
+  ) {
+    return "completed";
+  }
+  if (
+    project.tasks.length > 0 &&
+    project.tasks.some(
+      (task) => task.status === "In progress" || task.status === "Done"
+    ) &&
+    !project.tasks.every((task) => task.status === "Done")
+  ) {
+    return "active";
+  }
+  return "inactive";
+};
+
+// Fetch projects and add status to each project
 export const fetchProjects = async (sortValue, setProjects) => {
   try {
     const data = await fetchProjectsFromAPI();
     const processedProjects = processProjects(data, sortValue);
-    setProjects(processedProjects);
+    
+    // Add status to each project
+    const projectsWithStatus = processedProjects.map((project) => ({
+      ...project,
+      status: getProjectStatus(project),
+    }));
+
+    setProjects(projectsWithStatus);
+    console.log(projectsWithStatus);
+    
   } catch (error) {
     console.error("Error fetching data:", error);
   }
 };
 
+// Filter and search projects by status and name
 export const filterAndSearchProjects = (projects, filterValue, searchTerm) => {
   const filteredProjects = projects.filter((project) => {
     if (filterValue === "all") return true;
@@ -43,6 +74,7 @@ export const filterAndSearchProjects = (projects, filterValue, searchTerm) => {
   );
 };
 
+// Handle project creation
 export const handleCreateProject = async (
   projectData,
   fetchProjects,
@@ -61,6 +93,7 @@ export const handleCreateProject = async (
   }
 };
 
+// Handle project deletion
 export const handleDeleteProject = async (projectId, setShowModal) => {
   try {
     const success = await deleteProject(projectId);
@@ -74,6 +107,7 @@ export const handleDeleteProject = async (projectId, setShowModal) => {
   }
 };
 
+// Handle project editing
 export const handleEditProject = async (
   projectId,
   projectData,
@@ -90,6 +124,7 @@ export const handleEditProject = async (
   }
 };
 
+// Custom hook for managing project-related UI states
 export const useProjectController = () => {
   const [showPanel, setShowPanel] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
