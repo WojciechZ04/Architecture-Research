@@ -6,6 +6,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { useNavigate } from "react-router-dom";
 import useSignOut from "react-auth-kit/hooks/useSignOut";
+import { loadHomeData } from "../../../controllers/HomeController";
 import "./Home.css";
 
 export default function Home() {
@@ -15,8 +16,8 @@ export default function Home() {
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
 
   const signOut = useSignOut();
-
   const navigate = useNavigate();
+
   const handleSignOut = () => {
     signOut();
     navigate("/login");
@@ -27,47 +28,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/home", {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-        contentType: "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setUser(data.users[0]);
-        const filteredTasks = data.tasks.filter(
-          (task) => task.status !== "Done"
-        );
-        const tasksWithDeadline = filteredTasks.filter((task) => task.deadline);
-        const tasksWithoutDeadline = filteredTasks.filter(
-          (task) => !task.deadline
-        );
-        tasksWithDeadline.sort(
-          (a, b) => new Date(a.deadline) - new Date(b.deadline)
-        );
-        const combinedTasks = [
-          ...tasksWithDeadline,
-          ...tasksWithoutDeadline,
-        ].slice(0, 3);
-
-        setTasks(combinedTasks);
-
-        const projectsWithCompletion = data.projects.map((project) => {
-          const projectTasks = data.tasks.filter(
-            (task) => task.project_id === project.id
-          );
-          const completedTasks = projectTasks.filter(
-            (task) => task.status === "Done"
-          ).length;
-          const totalTasks = projectTasks.length;
-          const completionPercentage =
-            totalTasks === 0 ? 0 : (completedTasks / totalTasks) * 100;
-          return { ...project, completionPercentage };
-        });
-
-        setProjects(projectsWithCompletion);
-      });
+    loadHomeData(setUser, setTasks, setProjects);
   }, []);
 
   return (
@@ -113,7 +74,7 @@ export default function Home() {
               isCalendarVisible ? "visible" : ""
             }`}
           >
-            <div className="calenar-wrapper">
+            <div className="calendar-wrapper">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateCalendar className="calendar" />
               </LocalizationProvider>

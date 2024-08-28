@@ -1,81 +1,51 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import useSignOut from "react-auth-kit/hooks/useSignOut";
-
 import "./Navbar.css";
+import { useNavbarController } from "../../../controllers/NavbarController";
+import NavbarItem from "./NavbarItem";
+import ProfileDropdown from "./ProfileDropdown";
 
 export default function Navbar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const { handlePageChange, handleSignOut } = useNavbarController();
 
-  const signOut = useSignOut();
-
-  const navigate = useNavigate();
-  const handleSignOut = () => {
-    signOut();
-    navigate("/login");
-  };
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-  const handlePageChange = (page) => {
-    if (page === "Home") {
-      navigate("/");
-    } else {
-      navigate(`/${page.toLowerCase()}`);
-    }
-  };
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
   const handleMouseLeave = () => {
     setIsSidebarOpen(false);
     setDropdownOpen(false);
   };
 
+  const sidebarItems = [
+    { icon: "home", label: "Home", page: "Home" },
+    { icon: "folder", label: "Projects", page: "Projects" },
+    { icon: "assignment", label: "Tasks", page: "Tasks" },
+  ];
+
   return (
     <div
       id="mySidebar"
       className="sidebar"
       onMouseOver={() => setIsSidebarOpen(true)}
-      onMouseLeave={() => handleMouseLeave(false)}
+      onMouseLeave={handleMouseLeave}
     >
-      <div onClick={() => handlePageChange("Home")}>
-        <span>
-          <i className="material-icons">home</i>
-          <span className="icon-text">Home</span>
-        </span>
-      </div>
-      <br />
-      <div onClick={() => handlePageChange("Projects")}>
-        <span>
-          <i className="material-icons">folder</i>
-          <span className="icon-text">Projects</span>
-        </span>
-      </div>
-      <br />
-      <div onClick={() => handlePageChange("Tasks")}>
-        <span>
-          <i className="material-icons">assignment</i>
-          <span className="icon-text">Tasks</span>
-        </span>
-      </div>
-      <br />
-
-      <div className="navbar-avatar" onClick={toggleDropdown}>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png"
-          alt="Profile"
-          className="avatar-image"
+      {sidebarItems.map((item, index) => (
+        <NavbarItem
+          key={index}
+          icon={item.icon}
+          label={item.label}
+          onClick={() => handlePageChange(item.page)}
         />
-      </div>
-      {dropdownOpen && isSidebarOpen && (
-        <div className="dropdown-menu">
-          <div onClick={() => handlePageChange("Profile")}>Profile</div>
-          <div onClick={() => handlePageChange("Settings")}>Settings</div>
-          <div onClick={() => handleSignOut()}>Logout</div>
-        </div>
-      )}
+      ))}
+      <br />
+      <ProfileDropdown
+        isSidebarOpen={isSidebarOpen}
+        dropdownOpen={dropdownOpen}
+        toggleDropdown={toggleDropdown}
+        handlePageChange={handlePageChange}
+        handleSignOut={handleSignOut}
+      />
     </div>
   );
 }
