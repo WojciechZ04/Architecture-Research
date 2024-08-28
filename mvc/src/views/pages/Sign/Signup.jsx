@@ -1,6 +1,9 @@
+// views/Signup.jsx
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
+import { handleSignup } from "../../../controllers/SignController";
 
 function Signup() {
   const [username, setUsername] = useState("");
@@ -14,31 +17,9 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/sign/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, email, password }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem("token", data.token);
-        if (
-          signIn({
-            auth: {
-              token: data.token,
-              type: "Bearer",
-            },
-          })
-        ) {
-          navigate("/");
-        }
-      }
+      await handleSignup(username, email, password, signIn, navigate);
     } catch (error) {
-      console.error("Signup error:", error);
-      setSignupError("An error occurred. Please try again later.");
+      setSignupError(error.message || "An error occurred. Please try again later.");
     }
   };
 
@@ -48,37 +29,37 @@ function Signup() {
         <h2>Signup</h2>
         {signupError && <p style={{ color: "red" }}>{signupError}</p>}
         <form onSubmit={handleSubmit}>
-          <div class="input-group">
-            <label class="label">Username</label>
+          <div className="input-group">
+            <label className="label">Username</label>
             <input
-              autocomplete="off"
+              autoComplete="off"
               name="Username"
               id="Username"
-              class="input"
+              className="input"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          <div class="input-group">
-            <label class="label">Email</label>
+          <div className="input-group">
+            <label className="label">Email</label>
             <input
-              autocomplete="off"
+              autoComplete="off"
               name="Email"
               id="Email"
-              class="input"
+              className="input"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div class="input-group">
-            <label class="label">Password</label>
+          <div className="input-group">
+            <label className="label">Password</label>
             <input
-              autocomplete="off"
+              autoComplete="off"
               name="Password"
               id="Password"
-              class="input"
+              className="input"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -88,7 +69,7 @@ function Signup() {
         </form>
       </div>
       <p>
-        Already have an account? <a href="/signin">Sign Ip</a>
+        Already have an account? <a href="/signin">Sign In</a>
       </p>
     </div>
   );

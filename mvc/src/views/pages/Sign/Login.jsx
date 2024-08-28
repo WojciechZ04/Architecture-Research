@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
+import { handleLogin } from "../../../controllers/SignController";
 import "./Sign.css";
 
 function Login() {
@@ -13,33 +14,9 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/sign/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem("token", data.token);
-        if (
-          signIn({
-            auth: {
-              token: data.token,
-              type: "Bearer",
-            },
-          })
-        ) {
-          navigate("/");
-        }
-      } else {
-        setLoginError("Invalid username or password");
-      }
+      await handleLogin(username, password, signIn, navigate);
     } catch (error) {
-      console.error("Login error:", error);
-      setLoginError("An error occurred. Please try again later.");
+      setLoginError(error.message || "An error occurred. Please try again later.");
     }
   };
 
@@ -52,9 +29,9 @@ function Login() {
           <div className="input-group">
             <label className="label">Username</label>
             <input
-              autocomplete="off"
-              name="Email"
-              id="Email"
+              autoComplete="off"
+              name="Username"
+              id="Username"
               className="input"
               type="text"
               value={username}
@@ -64,7 +41,7 @@ function Login() {
           <div className="input-group">
             <label className="label">Password</label>
             <input
-              autocomplete="off"
+              autoComplete="off"
               name="Password"
               id="Password"
               className="input"
