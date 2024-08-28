@@ -49,25 +49,25 @@ function Login() {
         <h2>Login</h2>
         {loginError && <p style={{ color: "red" }}>{loginError}</p>}
         <form onSubmit={handleSubmit}>
-          <div class="input-group">
-            <label class="label">Username</label>
+          <div className="input-group">
+            <label className="label">Username</label>
             <input
               autocomplete="off"
               name="Email"
               id="Email"
-              class="input"
+              className="input"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          <div class="input-group">
-            <label class="label">Password</label>
+          <div className="input-group">
+            <label className="label">Password</label>
             <input
               autocomplete="off"
               name="Password"
               id="Password"
-              class="input"
+              className="input"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

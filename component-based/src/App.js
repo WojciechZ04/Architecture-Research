@@ -12,7 +12,6 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Sign/Login";
 import Signup from "./pages/Sign/Signup";
 import Projects from "./pages/Projects/Projects";
-import ProjectDetails from "./pages/ProjectDetails/ProjectDetails";
 import Tasks from "./pages/Tasks/Tasks";
 import Navbar from "./components/Navbar/Navbar";
 import NotFound from "./pages/NotFound";
@@ -38,10 +37,6 @@ function App() {
             <Route element={<AuthOutlet fallbackPath="/login" />}>
               <Route path="/profile" element={<Profile />}></Route>
               <Route path="/projects" element={<Projects />}></Route>
-              <Route
-                path="/projects/:projectId"
-                element={<ProjectDetails />}
-              ></Route>
               <Route path="/tasks" element={<Tasks />}></Route>
               <Route path="/" element={<Home />}></Route>
               <Route path="*" element={<NotFound />}></Route>
