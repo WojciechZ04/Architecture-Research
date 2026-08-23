@@ -1,19 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { Box, Button, Modal, MenuItem, Select, Checkbox, TextField } from "@mui/material";
+import { useState, useEffect } from "react";
+import { Box, Button, Modal, MenuItem, Select, Checkbox, TextField, SelectChangeEvent } from "@mui/material";
 import "../../../components/Modal.css";
+
+interface ProjectDropdownData {
+  id: string;
+  name: string;
+}
+
+interface CreateTaskModalProps {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  taskStatus: string;
+  fetchTasks: () => void;
+}
+
 export default function CreateTaskModal({
   open,
   setOpen,
   taskStatus,
   fetchTasks,
-}) {
-  const [taskName, setTaskName] = useState("");
-  const [taskDescription, setTaskDescription] = useState("");
-  const [projectId, setProjectId] = useState("");
-  const [taskDeadline, setTaskDeadline] = useState("");
-  const [hasDeadline, setHasDeadline] = useState(false);
-  const [projects, setProjects] = useState([]);
-  const [error, setError] = useState("");
+}: CreateTaskModalProps) {
+  const [taskName, setTaskName] = useState<string>("");
+  const [taskDescription, setTaskDescription] = useState<string>("");
+  const [projectId, setProjectId] = useState<string>("");
+  const [taskDeadline, setTaskDeadline] = useState<string>("");
+  const [hasDeadline, setHasDeadline] = useState<boolean>(false);
+  const [projects, setProjects] = useState<ProjectDropdownData[]>([]);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -25,7 +38,7 @@ export default function CreateTaskModal({
             "Content-Type": "application/json",
           },
         });
-        const data = await response.json();
+        const data: ProjectDropdownData[] = await response.json();
         setProjects(data);
       } catch (error) {
         console.error("Failed to fetch projects", error);
@@ -36,6 +49,7 @@ export default function CreateTaskModal({
   }, []);
 
   if (!open) return null;
+
   const handleCreateTask = async () => {
     if (!taskName.trim()) {
       setError('Task name cannot be empty');
@@ -70,7 +84,7 @@ export default function CreateTaskModal({
   };
 
   const handleClose = () => {
-    setOpen(false)
+    setOpen(false);
     setError('');
   };
 
@@ -92,7 +106,7 @@ export default function CreateTaskModal({
         <br />
         <Select
           value={projectId}
-          onChange={(e) => setProjectId(e.target.value)}
+          onChange={(e: SelectChangeEvent) => setProjectId(e.target.value as string)}
           displayEmpty
         >
           <MenuItem value="" disabled>
@@ -131,7 +145,7 @@ export default function CreateTaskModal({
           multiline
           minRows={4}
           maxRows={6}
-          label="Descripion (optional)"
+          label="Description (optional)"
           value={taskDescription}
           onChange={(e) => setTaskDescription(e.target.value)}
         />

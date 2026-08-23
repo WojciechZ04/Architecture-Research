@@ -1,15 +1,27 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Project.css";
 import EditProjectModal from "./EditProjectModal";
 import DeleteProjectModal from "./DeleteProjectModal";
 import BorderLinearProgress from "../../../components/BorderLinearProgress";
 
-export default function Project({ project }) {
-  const [showPanel, setShowPanel] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const panelRef = useRef(null);
+interface ProjectData {
+  id: string;
+  name: string;
+  deadline: string;
+  status: string;
+  roundedCompletionPercentage: number;
+}
+
+interface ProjectProps {
+  project: ProjectData;
+}
+
+export default function Project({ project }: ProjectProps) {
+  const [showPanel, setShowPanel] = useState<boolean>(false);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   const confirmDelete = () => {
     setShowPanel(false);
@@ -45,7 +57,6 @@ export default function Project({ project }) {
           </div>
           <div className="project__deadline">
             <p>
-              {" "}
               {project.deadline
                 ? new Date(project.deadline).toLocaleDateString()
                 : "-"}

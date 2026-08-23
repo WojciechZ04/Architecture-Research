@@ -1,7 +1,13 @@
 import { Button, Box, Modal } from "@mui/material";
 import "../../../components/Modal.css";
 
-export default function DeleteModal({ isOpen, onClose, onDelete }) {
+interface DeleteModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onDelete: () => void;
+}
+
+export default function DeleteModal({ isOpen, onClose, onDelete }: DeleteModalProps) {
   const handleDelete = () => {
     onDelete();
     onClose();

@@ -2,11 +2,22 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import "../../../components/Modal.css";
+
+interface ProjectData {
+  id: string;
+}
+
+interface DeleteProjectModalProps {
+  showModal: boolean;
+  setShowModal: (show: boolean) => void;
+  project: ProjectData;
+}
+
 export default function DeleteProjectModal({
   showModal,
   setShowModal,
   project,
-}) {
+}: DeleteProjectModalProps) {
   if (!showModal) return null;
 
   const handleDelete = async () => {
@@ -21,11 +32,11 @@ export default function DeleteProjectModal({
         }
       );
       if (!response.ok) {
-        throw new Error("Failed to delete task");
+        throw new Error("Failed to delete project");
       }
       window.location.reload();
     } catch (error) {
-      console.error("Failed to delete task:", error);
+      console.error("Failed to delete project:", error);
     } finally {
       setShowModal(false);
     }
@@ -41,7 +52,7 @@ export default function DeleteProjectModal({
       <Box className="modal">
         <h2 id="modal-modal-title">Confirm Delete</h2>
         <p id="modal-modal-description">
-          Are you sure you want to delete this task?
+          Are you sure you want to delete this project?
         </p>
         <Button onClick={handleDelete}>Yes</Button>
         <Button onClick={() => setShowModal(false)}>No</Button>

@@ -2,16 +2,20 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 
+interface SignupResponse {
+  token: string;
+}
+
 function Signup() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [signupError, setSignupError] = useState("");
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [signupError, setSignupError] = useState<string>("");
 
   const navigate = useNavigate();
   const signIn = useSignIn();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const response = await fetch("http://localhost:5000/api/sign/signup", {
@@ -23,8 +27,9 @@ function Signup() {
       });
 
       if (response.ok) {
-        const data = await response.json();
+        const data: SignupResponse = await response.json();
         localStorage.setItem("token", data.token);
+        
         if (
           signIn({
             auth: {
@@ -35,6 +40,8 @@ function Signup() {
         ) {
           navigate("/");
         }
+      } else {
+        setSignupError("Registration failed. Please check your details.");
       }
     } catch (error) {
       console.error("Signup error:", error);
@@ -48,37 +55,37 @@ function Signup() {
         <h2>Signup</h2>
         {signupError && <p style={{ color: "red" }}>{signupError}</p>}
         <form onSubmit={handleSubmit}>
-          <div class="input-group">
-            <label class="label">Username</label>
+          <div className="input-group">
+            <label className="label">Username</label>
             <input
-              autocomplete="off"
+              autoComplete="off"
               name="Username"
               id="Username"
-              class="input"
+              className="input"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          <div class="input-group">
-            <label class="label">Email</label>
+          <div className="input-group">
+            <label className="label">Email</label>
             <input
-              autocomplete="off"
+              autoComplete="off"
               name="Email"
               id="Email"
-              class="input"
+              className="input"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div class="input-group">
-            <label class="label">Password</label>
+          <div className="input-group">
+            <label className="label">Password</label>
             <input
-              autocomplete="off"
+              autoComplete="off"
               name="Password"
               id="Password"
-              class="input"
+              className="input"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

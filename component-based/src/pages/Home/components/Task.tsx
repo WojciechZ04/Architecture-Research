@@ -1,16 +1,25 @@
 import "./Task.css";
 
-export default function Task({ task }) {
+interface DashboardTaskData {
+  id?: string;
+  name: string;
+  deadline?: string | null;
+}
 
-  const calculateDaysLeft = (deadline) => {
+interface DashboardTaskProps {
+  task: DashboardTaskData;
+}
+
+export default function Task({ task }: DashboardTaskProps) {
+  const calculateDaysLeft = (deadline: string): number => {
     const currentDate = new Date();
     const deadlineDate = new Date(deadline);
-    const timeDifference = deadlineDate - currentDate;
+    const timeDifference = deadlineDate.getTime() - currentDate.getTime();
     const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
     return daysLeft;
   };
 
-  const formatDaysLeft = (daysLeft) => {
+  const formatDaysLeft = (daysLeft: number): string => {
     if (daysLeft === 0) {
       return "Task due today";
     } else if (daysLeft > 0) {
@@ -22,7 +31,7 @@ export default function Task({ task }) {
     }
   };
 
-  const getClassName = (daysLeft) => {
+  const getClassName = (daysLeft: number): string => {
     if (daysLeft > 3) {
       return "days-left-orange";
     } else if (daysLeft >= 0) {
@@ -31,7 +40,7 @@ export default function Task({ task }) {
       return "days-left-dark-red";
     }
   };
-  
+
   return (
     <div className="home-task">
       <h3>{task.name}</h3>

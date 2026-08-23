@@ -1,22 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal, Box, Button, TextField } from '@mui/material';
 import "../../../components/Modal.css";
 
-export default function EditModal({ isOpen, onClose, editType, editValue, onSave }) {
-	const [value, setValue] = useState('');
+interface EditModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  editType: string;
+  editValue?: string;
+  onSave: (editType: string, value: string) => void;
+}
+
+export default function EditModal({ 
+  isOpen, 
+  onClose, 
+  editType, 
+  editValue, 
+  onSave 
+}: EditModalProps) {
+  const [value, setValue] = useState<string>('');
 
   useEffect(() => {
     setValue(editValue || '');
   }, [editValue]);
 
-	const handleSave = () => {
-		onSave(editType, value);
+  const handleSave = () => {
+    onSave(editType, value);
     setValue('');
-		onClose();
-	  };
+    onClose();
+  };
 
   return (
-	<Modal
+    <Modal
       open={isOpen}
       onClose={onClose}
       aria-labelledby="modal-modal-name"

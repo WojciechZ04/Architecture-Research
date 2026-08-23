@@ -4,12 +4,24 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import "../../../components/Modal.css";
-export default function EditProjectModal({ showModal, setShowModal, project }) {
-  const [projectName, setProjectName] = useState(project.name);
-  const [projectDeadline, setProjectDeadline] = useState(project.deadline);
-  const [projectDescription, setProjectDescription] = useState(
-    project.description
-  );
+
+interface ProjectData {
+  id: string;
+  name: string;
+  deadline?: string;
+  description?: string;
+}
+
+interface EditProjectModalProps {
+  showModal: boolean;
+  setShowModal: (show: boolean) => void;
+  project: ProjectData;
+}
+
+ export default function EditProjectModal({ showModal, setShowModal, project }: EditProjectModalProps) {
+  const [projectName, setProjectName] = useState<string>(project?.name || "");
+  const [projectDeadline, setProjectDeadline] = useState<string>(project?.deadline || "");
+  const [projectDescription, setProjectDescription] = useState<string>(project?.description || "");
 
   useEffect(() => {
     if (project) {
@@ -21,11 +33,12 @@ export default function EditProjectModal({ showModal, setShowModal, project }) {
       } else {
         setProjectDeadline("");
       }
-      setProjectDescription(project.description);
+      setProjectDescription(project.description || "");
     }
   }, [project]);
 
   if (!showModal) return null;
+
   const handleEditProject = async () => {
     const response = await fetch(
       `http://localhost:5000/api/projects/${project.id}`,
@@ -62,7 +75,7 @@ export default function EditProjectModal({ showModal, setShowModal, project }) {
       aria-describedby="modal-modal-description"
     >
       <Box className="modal">
-        <h2>Create project</h2>
+        <h2>Edit project</h2>
         <TextField
           label="Project name"
           value={projectName}
@@ -80,7 +93,7 @@ export default function EditProjectModal({ showModal, setShowModal, project }) {
           multiline
           minRows={4}
           maxRows={6}
-          label="Descripion (optional)"
+          label="Description (optional)"
           value={projectDescription}
           onChange={(e) => setProjectDescription(e.target.value)}
         />

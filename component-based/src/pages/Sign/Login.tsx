@@ -3,14 +3,19 @@ import { useNavigate } from "react-router-dom";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import "./Sign.css";
 
+interface LoginResponse {
+  token: string;
+}
+
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [loginError, setLoginError] = useState("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [loginError, setLoginError] = useState<string>("");
+  
   const signIn = useSignIn();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const response = await fetch("http://localhost:5000/api/sign/login", {
@@ -22,8 +27,9 @@ function Login() {
       });
 
       if (response.ok) {
-        const data = await response.json();
+        const data: LoginResponse = await response.json();
         localStorage.setItem("token", data.token);
+        
         if (
           signIn({
             auth: {
@@ -52,7 +58,7 @@ function Login() {
           <div className="input-group">
             <label className="label">Username</label>
             <input
-              autocomplete="off"
+              autoComplete="off"
               name="Email"
               id="Email"
               className="input"
@@ -64,7 +70,7 @@ function Login() {
           <div className="input-group">
             <label className="label">Password</label>
             <input
-              autocomplete="off"
+              autoComplete="off"
               name="Password"
               id="Password"
               className="input"

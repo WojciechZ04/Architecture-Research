@@ -1,15 +1,30 @@
 import "./Task.css";
-import React, { useState } from "react";
+import { useState } from "react";
 import DeleteTaskModal from "./DeleteTaskModal";
 
-export default function Task({ task, fetchTasks }) {
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+interface TaskData {
+  id: string;
+  name: string;
+  project_id: string;
+  project_name?: string;
+  deadline?: string;
+  description?: string;
+  status: "Not started" | "In progress" | "Done";
+}
+
+interface TaskProps {
+  task: TaskData;
+  fetchTasks: () => void;
+}
+
+export default function Task({ task, fetchTasks }: TaskProps) {
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
   const confirmDelete = () => {
     setShowDeleteModal(true);
   };
 
-  const updateTaskStatus = async (taskId, status) => {
+  const updateTaskStatus = async (taskId: string, status: string) => {
     try {
       const response = await fetch(
         `http://localhost:5000/api/tasks/${taskId}`,
@@ -36,27 +51,25 @@ export default function Task({ task, fetchTasks }) {
   return (
     <div className="task">
       <div className="checkbox">
-        <label class="checkbox-btn">
-          <label for="checkbox"></label>
+        <label className="checkbox-btn">
+          <label htmlFor="checkbox"></label>
           <input
             id="checkbox"
             type="checkbox"
             onChange={() => updateTaskStatus(task.id, "Done")}
             checked={task.status === "Done"}
           />
-          <span class="checkmark"></span>
+          <span className="checkmark"></span>
         </label>
       </div>
       <div className="task-details">
         <div className="grid">
           <p className="project-assigned">
-            {" "}
             {">"}
             {task.project_name}
           </p>
           <h2 className="task__title">{task.name}</h2>
           <p className="task__deadline">
-            {" "}
             {task.deadline ? new Date(task.deadline).toLocaleDateString() : ""}
           </p>
         </div>

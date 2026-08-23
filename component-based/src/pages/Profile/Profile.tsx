@@ -1,39 +1,49 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import EditModal from "./components/EditModal";
 import DeleteModal from "./components/DeleteModal";
 import Button from "@mui/material/Button";
 import "./Profile.css";
 
+interface UserProfile {
+  id?: string;
+  username?: string;
+  email?: string;
+  password?: string;
+  // Pozwala na dynamiczne aktualizowanie kluczy obiektu np. [type]: newValue
+  [key: string]: any; //???????
+}
+
 export default function Profile() {
-  const [profile, setProfile] = useState({});
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [editType, setEditType] = useState("");
-  const [editValue, setEditValue] = useState("");
+  const [profile, setProfile] = useState<UserProfile>({});
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [editType, setEditType] = useState<string>("");
+  const [editValue, setEditValue] = useState<string>("");
 
   useEffect(() => {
     fetchProfile();
   }, []);
 
-  const fetchProfile = () => {
+  const fetchProfile = async () => {
     const token = localStorage.getItem("token");
-    fetch("http://localhost:5000/api/profile", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setProfile(data[0]);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
+    try {
+      const response = await fetch("http://localhost:5000/api/profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+      if (!response.ok) throw new Error("Failed to fetch profile");
+      
+      const data = await response.json();
+      setProfile(data[0] || {});
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
-  const handleEditClick = (type, value) => {
+  const handleEditClick = (type: string, value?: string) => {
     setEditType(type);
-    setEditValue(value)
+    setEditValue(value || "");
     setIsEditModalOpen(true);
   };
 
@@ -41,52 +51,53 @@ export default function Profile() {
     setIsDeleteModalOpen(true);
   };
 
-  const handleSave = (type, newValue) => {
-    const updatedProfile = {
+  const handleSave = async (type: string, newValue: string) => {
+    const updatedProfile: UserProfile = {
       ...profile,
       [type]: newValue,
     };
 
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:5000/api/profile/${profile.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(updatedProfile),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setProfile(data);
-        setIsEditModalOpen(false);
-      })
-      .catch((error) => {
-        console.error("Error updating data:", error);
+    try {
+      const response = await fetch(`http://localhost:5000/api/profile/${profile.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedProfile),
       });
+
+      if (!response.ok) throw new Error("Failed to update profile");
+      
+      const data = await response.json();
+      setProfile(data);
+      setIsEditModalOpen(false);
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:5000/api/profile/${profile.id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((res) => {
-      if (res.ok) {
+    try {
+      const response = await fetch(`http://localhost:5000/api/profile/${profile.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
         window.location.href = "/login";
       } else {
-        return res.json().then((data) => {
-          throw new Error(data.message);
-        });
+        const data = await response.json();
+        throw new Error(data.message || "Failed to delete profile");
       }
-    })
-    .catch((error) => {
+    } catch (error) {
       console.error("Error deleting profile:", error);
-    });
-    };
+    }
+  };
 
   return (
     <div className="container profile">

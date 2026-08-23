@@ -17,29 +17,29 @@ import Navbar from "./components/Navbar/Navbar";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile/Profile";
 
-function App() {
-  function usePathname() {
+const App: React.FC = () => {
+    const usePathname = (): string => {
     const location = useLocation();
     return location.pathname;
-  }
+  };
 
-  const Layout = () => {
+  const Layout: React.FC = () => {
     const pathname = usePathname();
-    const showNavbar = pathname !== "/login" && pathname !== "/signup";
+    const showNavbar: boolean = pathname !== "/login" && pathname !== "/signup";
 
     return (
       <>
         {showNavbar && <Navbar />}
         <div id="main">
           <Routes>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/signup" element={<Signup />}></Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             <Route element={<AuthOutlet fallbackPath="/login" />}>
-              <Route path="/profile" element={<Profile />}></Route>
-              <Route path="/projects" element={<Projects />}></Route>
-              <Route path="/tasks" element={<Tasks />}></Route>
-              <Route path="/" element={<Home />}></Route>
-              <Route path="*" element={<NotFound />}></Route>
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/tasks" element={<Tasks />} />
+              <Route path="/" element={<Home />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
         </div>
@@ -54,6 +54,6 @@ function App() {
       </Router>
     </div>
   );
-}
+};
 
 export default App;
