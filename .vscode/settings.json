@@ -15,5 +15,6 @@
 			"password": "password",
 			"connectionTimeout": 30
 		}
-	]
+	],
+	"cSpell.enabled": false
 }
